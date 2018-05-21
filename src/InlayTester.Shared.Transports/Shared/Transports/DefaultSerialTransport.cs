@@ -78,9 +78,9 @@ namespace InlayTester.Shared.Transports
 				mStream.PortName = mSettings.PortName;
 				mStream.BaudRate = mSettings.Baud;
 				mStream.DataBits = mSettings.DataBits;
-				mStream.Parity = mSettings.Parity;
-				mStream.StopBits = mSettings.StopBits;
-				mStream.Handshake = mSettings.Handshake;
+				mStream.Parity = _Convert(mSettings.Parity);
+				mStream.StopBits = _Convert(mSettings.StopBits);
+				mStream.Handshake = _Convert(mSettings.Handshake);
 
 				mStream.DiscardNull = false;
 				mStream.ParityReplace = 0xff;
@@ -121,6 +121,61 @@ namespace InlayTester.Shared.Transports
 				throw;
 			}
 		}
+
+		private static Parity _Convert(System.IO.Ports.Parity value)
+		{
+			switch (value)
+			{
+				case System.IO.Ports.Parity.Even:
+					return Parity.Even;
+				case System.IO.Ports.Parity.Mark:
+					return Parity.Mark;
+				case System.IO.Ports.Parity.None:
+					return Parity.None;
+				case System.IO.Ports.Parity.Odd:
+					return Parity.Odd;
+				case System.IO.Ports.Parity.Space:
+					return Parity.Space;
+				default:
+					throw ExceptionFactory.NotSupportedException(
+						"The given Parity '{0}' is not supported.", null, value);
+			}
+		}
+
+		private static StopBits _Convert(System.IO.Ports.StopBits value)
+		{
+			switch (value)
+			{
+				case System.IO.Ports.StopBits.One:
+					return StopBits.One;
+				case System.IO.Ports.StopBits.OnePointFive:
+					return StopBits.One5;
+				case System.IO.Ports.StopBits.Two:
+					return StopBits.Two;
+				default:
+					throw ExceptionFactory.NotSupportedException(
+						"The given StopBits '{0}' is not supported.", null, value);
+			}
+		}
+
+		private static Handshake _Convert(System.IO.Ports.Handshake value)
+		{
+			switch (value)
+			{
+				case System.IO.Ports.Handshake.None:
+					return Handshake.None;
+				case System.IO.Ports.Handshake.RequestToSend:
+					return Handshake.Rts;
+				case System.IO.Ports.Handshake.RequestToSendXOnXOff:
+					return Handshake.RtsXOn;
+				case System.IO.Ports.Handshake.XOnXOff:
+					return Handshake.XOn;
+				default:
+					throw ExceptionFactory.NotSupportedException(
+						"The given Parity '{0}' is not supported.", null, value);
+			}
+		}
+
 
 		/// <summary>
 		/// Closes the transport. A transport can be opened and closed multiple times.

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InlayTester.Shared.Transports", "src\InlayTester.Shared.Transports\InlayTester.Shared.Transports.csproj", "{350569D0-BA88-4C76-A946-E67AA003314C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InlayTester.Shared.Transports", "src\Tests.InlayTester.Shared.Transports\Tests.InlayTester.Shared.Transports.csproj", "{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{350569D0-BA88-4C76-A946-E67AA003314C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{350569D0-BA88-4C76-A946-E67AA003314C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{350569D0-BA88-4C76-A946-E67AA003314C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

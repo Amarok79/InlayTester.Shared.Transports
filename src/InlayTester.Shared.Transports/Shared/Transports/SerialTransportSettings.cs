@@ -25,8 +25,7 @@
 #pragma warning disable CS3003 // Type is not CLS-compliant
 
 using System;
-using RJCP.IO.Ports;
-
+using System.IO.Ports;
 
 namespace InlayTester.Shared.Transports
 {
