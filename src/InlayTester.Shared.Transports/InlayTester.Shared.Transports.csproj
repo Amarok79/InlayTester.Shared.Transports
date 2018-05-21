@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>InlayTester</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Amarok.InlayTester.Shared.Transports</PackageId>
+    <Authors>Olaf Kober</Authors>
+    <Company>&lt;none&gt;</Company>
+    <Product>Inlay Tester</Product>
+    <Description>A shared library to abstract (serial) communication.</Description>
+    <Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Amarok79/InlayTester.Shared.Transports/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</PackageProjectUrl>
+	<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\bin\lib\</OutputPath>
+    <DocumentationFile>..\..\bin\lib\netstandard2.0\InlayTester.Shared.Transports.xml</DocumentationFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <LangVersion>7.3</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\bin\lib\</OutputPath>
+    <DocumentationFile>..\..\bin\lib\netstandard2.0\InlayTester.Shared.Transports.xml</DocumentationFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\InlayTester.Shared.Transports.licenseheader" Link="InlayTester.Shared.Transports.licenseheader" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amarok.InlayTester.Shared" Version="1.0.0" />
+    <PackageReference Include="Common.Logging" Version="3.4.1" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
+    <PackageReference Include="SerialPortStream" Version="2.1.3" />
+  </ItemGroup>
+
+</Project>
