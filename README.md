@@ -22,7 +22,7 @@ An abstraction of serial communication that can be opened and closed and that ca
         Handshake = Handshake.None
     };
     
-    using(var transport = Transport.Create(settings))
+    using(ITransport transport = Transport.Create(settings))
     {
         // register event handler for received data
         transport.Received += (sender, e) => {
