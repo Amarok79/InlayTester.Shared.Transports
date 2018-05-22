@@ -37,3 +37,5 @@ An abstraction of serial communication that can be opened and closed and that ca
         // send data
         transport.Send(BufferSpan.From(0x11, 0x22, 0x33));
     }
+
+Internally, transports use the excellent [SerialPortStream](https://github.com/jcurl/SerialPortStream) library for serial communication.
