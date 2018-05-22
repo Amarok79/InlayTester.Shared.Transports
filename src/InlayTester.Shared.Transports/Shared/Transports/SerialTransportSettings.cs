@@ -1,7 +1,7 @@
 ﻿/* MIT License
  * 
  * Copyright (c) 2018, Olaf Kober
- * https://github.com/Amarok79/InlayTester.Shared
+ * https://github.com/Amarok79/InlayTester.Shared.Transports
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,9 @@
  * SOFTWARE.
 */
 
-#pragma warning disable CS3003 // Type is not CLS-compliant
-
 using System;
 using System.IO.Ports;
+
 
 namespace InlayTester.Shared.Transports
 {

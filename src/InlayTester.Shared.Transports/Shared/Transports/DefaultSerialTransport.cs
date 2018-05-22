@@ -1,7 +1,7 @@
 ﻿/* MIT License
  * 
  * Copyright (c) 2018, Olaf Kober
- * https://github.com/Amarok79/InlayTester.Shared
+ * https://github.com/Amarok79/InlayTester.Shared.Transports
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -137,8 +137,7 @@ namespace InlayTester.Shared.Transports
 				case System.IO.Ports.Parity.Space:
 					return Parity.Space;
 				default:
-					throw ExceptionFactory.NotSupportedException(
-						"The given Parity '{0}' is not supported.", null, value);
+					throw ExceptionFactory.NotSupportedException("The given Parity '{0}' is not supported.", null, value);
 			}
 		}
 
@@ -153,8 +152,7 @@ namespace InlayTester.Shared.Transports
 				case System.IO.Ports.StopBits.Two:
 					return StopBits.Two;
 				default:
-					throw ExceptionFactory.NotSupportedException(
-						"The given StopBits '{0}' is not supported.", null, value);
+					throw ExceptionFactory.NotSupportedException("The given StopBits '{0}' is not supported.", null, value);
 			}
 		}
 
@@ -171,8 +169,7 @@ namespace InlayTester.Shared.Transports
 				case System.IO.Ports.Handshake.XOnXOff:
 					return Handshake.XOn;
 				default:
-					throw ExceptionFactory.NotSupportedException(
-						"The given Parity '{0}' is not supported.", null, value);
+					throw ExceptionFactory.NotSupportedException("The given Handshake '{0}' is not supported.", null, value);
 			}
 		}
 
@@ -256,11 +253,14 @@ namespace InlayTester.Shared.Transports
 
 				#region (logging)
 				{
-					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"Sent data via serial transport on '{0}'; Data={1}.",
-						mSettings.PortName,
-						data
-					);
+					if (mLog.IsTraceEnabled)
+					{
+						mLog.TraceFormat(CultureInfo.InvariantCulture,
+							"Sent data via serial transport on '{0}'; Data={1}.",
+							mSettings.PortName,
+							data
+						);
+					}
 				}
 				#endregion
 			}
@@ -309,11 +309,14 @@ namespace InlayTester.Shared.Transports
 
 				#region (logging)
 				{
-					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"Received data via serial transport on '{0}'; Data={1}.",
-						mSettings.PortName,
-						data
-					);
+					if (mLog.IsTraceEnabled)
+					{
+						mLog.TraceFormat(CultureInfo.InvariantCulture,
+							"Received data via serial transport on '{0}'; Data={1}.",
+							mSettings.PortName,
+							data
+						);
+					}
 				}
 				#endregion
 
@@ -347,7 +350,7 @@ namespace InlayTester.Shared.Transports
 				#region (logging)
 				{
 					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"Invoked user code for event 'Received' on serial transport on '{0}' threw an exception.",
+						"User code invoked for event 'Received' on serial transport on '{0}' threw an exception.",
 						exception,
 						mSettings.PortName
 					);
@@ -366,7 +369,7 @@ namespace InlayTester.Shared.Transports
 
 			#region (logging)
 			{
-				mLog.ErrorFormat(CultureInfo.InvariantCulture,
+				mLog.WarnFormat(CultureInfo.InvariantCulture,
 					"A serial error of type '{0}' occurred on serial transport on '{1}'.",
 					e.EventType,
 					mSettings.PortName
