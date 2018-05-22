@@ -22,7 +22,6 @@
  * SOFTWARE.
 */
 
-using System.IO.Ports;
 using NFluent;
 using NUnit.Framework;
 
@@ -38,7 +37,7 @@ namespace InlayTester.Shared.Transports
 			var settings = new SerialTransportSettings();
 
 			Check.That(settings.PortName)
-				.IsNull();
+				.IsEqualTo("COM1");
 			Check.That(settings.Baud)
 				.IsEqualTo(9600);
 			Check.That(settings.DataBits)
@@ -49,6 +48,9 @@ namespace InlayTester.Shared.Transports
 				.IsEqualTo(StopBits.One);
 			Check.That(settings.Handshake)
 				.IsEqualTo(Handshake.None);
+
+			Check.That(settings.ToString())
+				.IsEqualTo("COM1,9600,8,None,One,None");
 		}
 
 		[Test]
@@ -75,6 +77,9 @@ namespace InlayTester.Shared.Transports
 				.IsEqualTo(StopBits.Two);
 			Check.That(settings.Handshake)
 				.IsEqualTo(Handshake.XOnXOff);
+
+			Check.That(settings.ToString())
+				.IsEqualTo("COM12,38400,7,Even,Two,XOnXOff");
 		}
 
 		[Test]

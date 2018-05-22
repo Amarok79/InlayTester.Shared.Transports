@@ -23,8 +23,7 @@
 */
 
 using System;
-using System.IO.Ports;
-
+using System.Globalization;
 
 namespace InlayTester.Shared.Transports
 {
@@ -35,6 +34,7 @@ namespace InlayTester.Shared.Transports
 	{
 		/// <summary>
 		/// Gets or sets the name of the serial port, i.e. "COM1".
+		/// Defaults to "COM1".
 		/// </summary>
 		public String PortName { get; set; }
 
@@ -74,6 +74,7 @@ namespace InlayTester.Shared.Transports
 		/// </summary>
 		public SerialTransportSettings()
 		{
+			this.PortName = "COM1";
 			this.Baud = 9600;
 			this.DataBits = 8;
 			this.Parity = Parity.None;
@@ -92,6 +93,23 @@ namespace InlayTester.Shared.Transports
 			this.Parity = settings.Parity;
 			this.StopBits = settings.StopBits;
 			this.Handshake = settings.Handshake;
+		}
+
+
+		/// <summary>
+		/// Returns a string that represents the current instance.
+		/// </summary>
+		public override String ToString()
+		{
+			return String.Format(CultureInfo.InvariantCulture,
+				"{0},{1},{2},{3},{4},{5}",
+				this.PortName,
+				this.Baud,
+				this.DataBits,
+				this.Parity,
+				this.StopBits,
+				this.Handshake
+			);
 		}
 	}
 }

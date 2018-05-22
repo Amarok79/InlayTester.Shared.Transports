@@ -28,7 +28,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using Common.Logging;
-using RJCP.IO.Ports;
+using Serial = RJCP.IO.Ports;
 
 
 namespace InlayTester.Shared.Transports
@@ -37,7 +37,7 @@ namespace InlayTester.Shared.Transports
 		ITransport
 	{
 		// data
-		private readonly SerialPortStream mStream = new SerialPortStream();
+		private readonly Serial.SerialPortStream mStream = new Serial.SerialPortStream();
 		private readonly SerialTransportSettings mSettings;
 		private readonly ILog mLog;
 
@@ -122,52 +122,52 @@ namespace InlayTester.Shared.Transports
 			}
 		}
 
-		private static Parity _Convert(System.IO.Ports.Parity value)
+		private static Serial.Parity _Convert(Parity value)
 		{
 			switch (value)
 			{
-				case System.IO.Ports.Parity.Even:
-					return Parity.Even;
-				case System.IO.Ports.Parity.Mark:
-					return Parity.Mark;
-				case System.IO.Ports.Parity.None:
-					return Parity.None;
-				case System.IO.Ports.Parity.Odd:
-					return Parity.Odd;
-				case System.IO.Ports.Parity.Space:
-					return Parity.Space;
+				case Parity.Even:
+					return Serial.Parity.Even;
+				case Parity.Mark:
+					return Serial.Parity.Mark;
+				case Parity.None:
+					return Serial.Parity.None;
+				case Parity.Odd:
+					return Serial.Parity.Odd;
+				case Parity.Space:
+					return Serial.Parity.Space;
 				default:
 					throw ExceptionFactory.NotSupportedException("The given Parity '{0}' is not supported.", null, value);
 			}
 		}
 
-		private static StopBits _Convert(System.IO.Ports.StopBits value)
+		private static Serial.StopBits _Convert(StopBits value)
 		{
 			switch (value)
 			{
-				case System.IO.Ports.StopBits.One:
-					return StopBits.One;
-				case System.IO.Ports.StopBits.OnePointFive:
-					return StopBits.One5;
-				case System.IO.Ports.StopBits.Two:
-					return StopBits.Two;
+				case StopBits.One:
+					return Serial.StopBits.One;
+				case StopBits.OnePointFive:
+					return Serial.StopBits.One5;
+				case StopBits.Two:
+					return Serial.StopBits.Two;
 				default:
 					throw ExceptionFactory.NotSupportedException("The given StopBits '{0}' is not supported.", null, value);
 			}
 		}
 
-		private static Handshake _Convert(System.IO.Ports.Handshake value)
+		private static Serial.Handshake _Convert(Handshake value)
 		{
 			switch (value)
 			{
-				case System.IO.Ports.Handshake.None:
-					return Handshake.None;
-				case System.IO.Ports.Handshake.RequestToSend:
-					return Handshake.Rts;
-				case System.IO.Ports.Handshake.RequestToSendXOnXOff:
-					return Handshake.RtsXOn;
-				case System.IO.Ports.Handshake.XOnXOff:
-					return Handshake.XOn;
+				case Handshake.None:
+					return Serial.Handshake.None;
+				case Handshake.RequestToSend:
+					return Serial.Handshake.Rts;
+				case Handshake.RequestToSendXOnXOff:
+					return Serial.Handshake.RtsXOn;
+				case Handshake.XOnXOff:
+					return Serial.Handshake.XOn;
 				default:
 					throw ExceptionFactory.NotSupportedException("The given Handshake '{0}' is not supported.", null, value);
 			}
@@ -282,11 +282,11 @@ namespace InlayTester.Shared.Transports
 		}
 
 
-		private void _HandleDataReceived(Object sender, SerialDataReceivedEventArgs e)
+		private void _HandleDataReceived(Object sender, Serial.SerialDataReceivedEventArgs e)
 		{
 			try
 			{
-				if (e.EventType == SerialData.NoData)
+				if (e.EventType == Serial.SerialData.NoData)
 					return;
 
 				var data = _ReadDataReceived();
@@ -362,9 +362,9 @@ namespace InlayTester.Shared.Transports
 		}
 
 
-		private void _HandleErrorReceived(Object sender, SerialErrorReceivedEventArgs e)
+		private void _HandleErrorReceived(Object sender, Serial.SerialErrorReceivedEventArgs e)
 		{
-			if (e.EventType == SerialError.NoError)
+			if (e.EventType == Serial.SerialError.NoError)
 				return;
 
 			#region (logging)

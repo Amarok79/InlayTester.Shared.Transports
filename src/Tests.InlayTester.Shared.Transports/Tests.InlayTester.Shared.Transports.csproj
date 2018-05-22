@@ -2,6 +2,8 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <RuntimeIdentifier>win</RuntimeIdentifier>
+    <PackageTargetFallback>net471;$(PackageTargetFallback)</PackageTargetFallback>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}</ProjectGuid>
@@ -11,6 +13,7 @@
     <AssemblyName>Tests.InlayTester.Shared.Transports</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,14 +45,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InlayTester.Shared.Transports\InlayTester.Shared.Transports.csproj">
-      <Project>{350569d0-ba88-4c76-a946-e67aa003314c}</Project>
-      <Name>InlayTester.Shared.Transports</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shared\Transports\Test_SerialTransportImpl.cs" />
+    <Compile Include="Shared\Transports\Test_Handshake.cs" />
+    <Compile Include="Shared\Transports\Test_DefaultSerialTransport.cs" />
     <Compile Include="Shared\Transports\Test_SerialTransportSettings.cs" />
+    <Compile Include="Shared\Transports\Test_Parity.cs" />
+    <Compile Include="Shared\Transports\Test_StopBits.cs" />
     <Compile Include="Shared\Transports\Test_Transport.cs" />
     <Compile Include="Shared\Transports\Test_TransportDataReceivedEventArgs.cs" />
   </ItemGroup>
@@ -68,6 +68,12 @@
     <None Include="..\InlayTester.Shared.Transports.licenseheader">
       <Link>InlayTester.Shared.Transports.licenseheader</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InlayTester.Shared.Transports\InlayTester.Shared.Transports.csproj">
+      <Project>{350569d0-ba88-4c76-a946-e67aa003314c}</Project>
+      <Name>InlayTester.Shared.Transports</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
