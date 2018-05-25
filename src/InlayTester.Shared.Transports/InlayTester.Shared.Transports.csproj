@@ -13,6 +13,7 @@
 		<PackageLicenseUrl>https://raw.githubusercontent.com/Amarok79/InlayTester.Shared.Transports/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</PackageProjectUrl>
 		<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
+		<Version>1.0.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
