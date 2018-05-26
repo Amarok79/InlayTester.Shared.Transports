@@ -8,12 +8,12 @@
 		<Authors>Olaf Kober</Authors>
 		<Company>&lt;none&gt;</Company>
 		<Product>Inlay Tester</Product>
-		<Description>A shared library to abstract (serial) communication.</Description>
+		<Description>A library to abstract (serial) communication to increase testability.</Description>
 		<Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
 		<PackageLicenseUrl>https://raw.githubusercontent.com/Amarok79/InlayTester.Shared.Transports/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</PackageProjectUrl>
 		<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
