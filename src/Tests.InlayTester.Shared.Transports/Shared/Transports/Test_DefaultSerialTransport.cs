@@ -25,306 +25,383 @@
 using System;
 using System.IO;
 using System.Threading;
+using Common.Logging;
 using Common.Logging.Simple;
 using NCrunch.Framework;
 using NFluent;
 using NUnit.Framework;
+using Lib = RJCP.IO.Ports;
 
 
 namespace InlayTester.Shared.Transports
 {
-	[TestFixture]
 	public class Test_DefaultSerialTransport
 	{
-		[Test, Serial]
-		public void Open_Close_Dispose()
+		[TestFixture]
+		public class Convert_Parity
 		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+			[Test]
+			public void Test()
 			{
-				transportA.Open();
-				transportA.Close();
+				Check.That(DefaultSerialTransport.Convert(Parity.None))
+					.IsEqualTo(Lib.Parity.None);
+				Check.That(DefaultSerialTransport.Convert(Parity.Even))
+					.IsEqualTo(Lib.Parity.Even);
+				Check.That(DefaultSerialTransport.Convert(Parity.Odd))
+					.IsEqualTo(Lib.Parity.Odd);
+				Check.That(DefaultSerialTransport.Convert(Parity.Mark))
+					.IsEqualTo(Lib.Parity.Mark);
+				Check.That(DefaultSerialTransport.Convert(Parity.Space))
+					.IsEqualTo(Lib.Parity.Space);
+				Check.ThatCode(() => DefaultSerialTransport.Convert((Parity)123))
+					.Throws<NotSupportedException>();
 			}
 		}
 
-		[Test, Serial]
-		public void Open_Close_Open_Dispose()
+		[TestFixture]
+		public class Convert_StopBits
 		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+			[Test]
+			public void Test()
 			{
-				transportA.Open();
-				transportA.Close();
-				transportA.Open();
+				Check.That(DefaultSerialTransport.Convert(StopBits.One))
+					.IsEqualTo(Lib.StopBits.One);
+				Check.That(DefaultSerialTransport.Convert(StopBits.OnePointFive))
+					.IsEqualTo(Lib.StopBits.One5);
+				Check.That(DefaultSerialTransport.Convert(StopBits.Two))
+					.IsEqualTo(Lib.StopBits.Two);
+				Check.ThatCode(() => DefaultSerialTransport.Convert((StopBits)123))
+					.Throws<NotSupportedException>();
 			}
 		}
 
-		[Test, Serial]
-		public void OpenThrowsException_When_AlreadyOpen()
+		[TestFixture]
+		public class Convert_Handshake
 		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+			[Test]
+			public void Test()
 			{
-				transportA.Open();
-
-				Check.ThatCode(() => transportA.Open())
-					.Throws<InvalidOperationException>();
+				Check.That(DefaultSerialTransport.Convert(Handshake.None))
+					.IsEqualTo(Lib.Handshake.None);
+				Check.That(DefaultSerialTransport.Convert(Handshake.RequestToSend))
+					.IsEqualTo(Lib.Handshake.Rts);
+				Check.That(DefaultSerialTransport.Convert(Handshake.RequestToSendXOnXOff))
+					.IsEqualTo(Lib.Handshake.RtsXOn);
+				Check.That(DefaultSerialTransport.Convert(Handshake.XOnXOff))
+					.IsEqualTo(Lib.Handshake.XOn);
+				Check.ThatCode(() => DefaultSerialTransport.Convert((Handshake)123))
+					.Throws<NotSupportedException>();
 			}
 		}
 
-		[Test, Serial]
-		public void OpenThrowsException_When_AlreadyDisposed()
+		[TestFixture]
+		public class OpenClose
 		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+			[Test, Serial]
+			public void Open_Close_Dispose()
 			{
-				transportA.Dispose();
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
 
-				Check.ThatCode(() => transportA.Open())
-					.Throws<ObjectDisposedException>();
-			}
-		}
-
-		[Test, Serial]
-		public void OpenThrowsException_When_SettingsAreInvalid()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "ABC",
-			};
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
-			{
-				Check.ThatCode(() => transportA.Open())
-					.Throws<IOException>();
-			}
-		}
-
-		[Test, Serial]
-		public void CloseThrowsException_When_AlreadyDisposed()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
-			{
-				transportA.Dispose();
-
-				Check.ThatCode(() => transportA.Close())
-					.Throws<ObjectDisposedException>();
-			}
-		}
-
-		[Test, Serial]
-		public void Close_When_NotOpened()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
-			{
-				Check.ThatCode(() => transportA.Close())
-					.DoesNotThrow();
-
-				transportA.Open();
-			}
-		}
-
-		[Test, Serial]
-		public void Dispose_When_NotOpened()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
-			{
-				Check.ThatCode(() => transportA.Dispose())
-					.DoesNotThrow();
-			}
-		}
-
-		[Test, Serial]
-		public void SendThrowsException_When_NotOpened()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			var data = BufferSpan.From(0x12);
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
-			{
-				Check.ThatCode(() => transportA.Send(data))
-					.Throws<InvalidOperationException>();
-			}
-		}
-
-		[Test, Serial]
-		public void SendThrowsException_When_AlreadyDisposed()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-
-			var data = BufferSpan.From(0x12);
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
-			{
-				transportA.Dispose();
-
-				Check.ThatCode(() => transportA.Send(data))
-					.Throws<ObjectDisposedException>();
-			}
-		}
-
-		[Test, Serial]
-		public void SendReceive_SingleByte()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-			var settingsB = new SerialTransportSettings {
-				PortName = "COMB",
-			};
-
-			var data = BufferSpan.From(0x12);
-			var log = new ConsoleOutLogger("Test", Common.Logging.LogLevel.Info, false, false, false, "U");
-
-			using (var transportA = new DefaultSerialTransport(settingsA, log))
-			{
-				using (var transportB = new DefaultSerialTransport(settingsB, log))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
 				{
-					var received = BufferSpan.Empty;
-					transportB.Received += (sender, e) => received = received.Append(e.Data);
+					transportA.Open();
+					transportA.Close();
+				}
 
-					transportB.Open();
+				Assert.Pass();
+			}
+
+			[Test, Serial]
+			public void Open_Close_Open_Dispose()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				{
+					transportA.Open();
+					transportA.Close();
+					transportA.Open();
+				}
+
+				Assert.Pass();
+			}
+
+			[Test, Serial]
+			public void OpenThrowsException_When_AlreadyOpen()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				{
 					transportA.Open();
 
-					transportA.Send(data);
+					Check.ThatCode(() => transportA.Open())
+						.Throws<InvalidOperationException>();
+				}
+			}
 
-					SpinWait.SpinUntil(() => received.Count == 1, 5000);
+			[Test, Serial]
+			public void OpenThrowsException_When_AlreadyDisposed()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
 
-					Check.That(received.ToArray())
-						.ContainsExactly(0x12);
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				{
+					transportA.Dispose();
+
+					Check.ThatCode(() => transportA.Open())
+						.Throws<ObjectDisposedException>();
+				}
+			}
+
+			[Test, Serial]
+			public void OpenThrowsException_When_SettingsAreInvalid()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "ABC",
+				};
+
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				{
+					Check.ThatCode(() => transportA.Open())
+						.Throws<IOException>();
+				}
+			}
+
+			[Test, Serial]
+			public void CloseThrowsException_When_AlreadyDisposed()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				{
+					transportA.Dispose();
+
+					Check.ThatCode(() => transportA.Close())
+						.Throws<ObjectDisposedException>();
+				}
+			}
+
+			[Test, Serial]
+			public void Close_When_NotOpened()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				{
+					Check.ThatCode(() => transportA.Close())
+						.DoesNotThrow();
+
+					transportA.Open();
+				}
+			}
+
+			[Test, Serial]
+			public void Dispose_When_NotOpened()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				{
+					Check.ThatCode(() => transportA.Dispose())
+						.DoesNotThrow();
 				}
 			}
 		}
 
-		[Test, Serial]
-		public void SendReceive_MultipleBytes()
+		[TestFixture]
+		public class SendReceive
 		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-			var settingsB = new SerialTransportSettings {
-				PortName = "COMB",
-			};
-
-			var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+			[Test, Serial]
+			public void SendThrowsException_When_NotOpened()
 			{
-				using (var transportB = new DefaultSerialTransport(settingsB, new NoOpLogger()))
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+
+				var data = BufferSpan.From(0x12);
+
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
 				{
-					var received = BufferSpan.Empty;
-					transportB.Received += (sender, e) => received = received.Append(e.Data);
-
-					transportB.Open();
-					transportA.Open();
-
-					transportA.Send(data);
-
-					SpinWait.SpinUntil(() => received.Count == 8, 5000);
-
-					Check.That(received.ToArray())
-						.ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+					Check.ThatCode(() => transportA.Send(data))
+						.Throws<InvalidOperationException>();
 				}
 			}
-		}
 
-		[Test, Serial]
-		public void SendReceive_ManyBytes()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-			var settingsB = new SerialTransportSettings {
-				PortName = "COMB",
-			};
-
-			var random = new Random();
-			var buffer = new Byte[1024];
-			random.NextBytes(buffer);
-			var data = BufferSpan.From(buffer);
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+			[Test, Serial]
+			public void SendThrowsException_When_AlreadyDisposed()
 			{
-				using (var transportB = new DefaultSerialTransport(settingsB, new NoOpLogger()))
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+
+				var data = BufferSpan.From(0x12);
+
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
 				{
-					var received = BufferSpan.Empty;
-					transportB.Received += (sender, e) => received = received.Append(e.Data);
+					transportA.Dispose();
 
-					transportB.Open();
-					transportA.Open();
-
-					transportA.Send(data);
-
-					SpinWait.SpinUntil(() => received.Count == buffer.Length, 5000);
-
-					Check.That(received.ToArray())
-						.ContainsExactly(buffer);
+					Check.ThatCode(() => transportA.Send(data))
+						.Throws<ObjectDisposedException>();
 				}
 			}
-		}
 
-		[Test, Serial]
-		public void SendReceive_MultipleTransfers()
-		{
-			var settingsA = new SerialTransportSettings {
-				PortName = "COMA",
-			};
-			var settingsB = new SerialTransportSettings {
-				PortName = "COMB",
-			};
-
-			var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-
-			using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+			[Test, Serial]
+			public void SendReceive_SingleByte()
 			{
-				using (var transportB = new DefaultSerialTransport(settingsB, new NoOpLogger()))
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+				var settingsB = new SerialTransportSettings {
+					PortName = "COMB",
+				};
+
+				var data = BufferSpan.From(0x12);
+				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+
+				using (var transportA = new DefaultSerialTransport(settingsA, log))
 				{
-					var received = BufferSpan.Empty;
-					transportB.Received += (sender, e) => received = received.Append(e.Data);
+					using (var transportB = new DefaultSerialTransport(settingsB, log))
+					{
+						var received = BufferSpan.Empty;
+						transportB.Received += (sender, e) => received = received.Append(e.Data);
 
-					transportB.Open();
-					transportA.Open();
+						transportB.Open();
+						transportA.Open();
 
-					transportA.Send(data);
-					transportA.Send(data);
-					transportA.Send(data);
+						transportA.Send(data);
 
-					SpinWait.SpinUntil(() => received.Count == 3 * 8, 5000);
+						SpinWait.SpinUntil(() => received.Count == 1, 5000);
 
-					Check.That(received.ToArray())
-						.ContainsExactly(
-							0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,
-							0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,
-							0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88
-						);
+						Check.That(received.ToArray())
+							.ContainsExactly(0x12);
+					}
+				}
+			}
+
+			[Test, Serial]
+			public void SendReceive_MultipleBytes()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+				var settingsB = new SerialTransportSettings {
+					PortName = "COMB",
+				};
+
+				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+
+				using (var transportA = new DefaultSerialTransport(settingsA, log))
+				{
+					using (var transportB = new DefaultSerialTransport(settingsB, log))
+					{
+						var received = BufferSpan.Empty;
+						transportB.Received += (sender, e) => received = received.Append(e.Data);
+
+						transportB.Open();
+						transportA.Open();
+
+						transportA.Send(data);
+
+						SpinWait.SpinUntil(() => received.Count == 8, 5000);
+
+						Check.That(received.ToArray())
+							.ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+
+						transportA.Close();
+						transportB.Close();
+					}
+				}
+			}
+
+			[Test, Serial]
+			public void SendReceive_ManyBytes()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+				var settingsB = new SerialTransportSettings {
+					PortName = "COMB",
+				};
+
+				var random = new Random();
+				var buffer = new Byte[1024];
+				random.NextBytes(buffer);
+				var data = BufferSpan.From(buffer);
+
+				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+
+				using (var transportA = new DefaultSerialTransport(settingsA, log))
+				{
+					using (var transportB = new DefaultSerialTransport(settingsB, log))
+					{
+						var received = BufferSpan.Empty;
+						transportB.Received += (sender, e) => received = received.Append(e.Data);
+
+						transportB.Open();
+						transportA.Open();
+
+						transportA.Send(data);
+
+						SpinWait.SpinUntil(() => received.Count == buffer.Length, 5000);
+
+						Check.That(received.ToArray())
+							.ContainsExactly(buffer);
+					}
+				}
+			}
+
+			[Test, Serial]
+			public void SendReceive_MultipleTransfers()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+				var settingsB = new SerialTransportSettings {
+					PortName = "COMB",
+				};
+
+				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+
+				using (var transportA = new DefaultSerialTransport(settingsA, log))
+				{
+					using (var transportB = new DefaultSerialTransport(settingsB, log))
+					{
+						var received = BufferSpan.Empty;
+						transportB.Received += (sender, e) => received = received.Append(e.Data);
+
+						transportB.Open();
+						transportA.Open();
+
+						transportA.Send(data);
+						transportA.Send(data);
+						transportA.Send(data);
+
+						SpinWait.SpinUntil(() => received.Count == 3 * 8, 5000);
+
+						Check.That(received.ToArray())
+							.ContainsExactly(
+								0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,
+								0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,
+								0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88
+							);
+					}
 				}
 			}
 		}

@@ -28,7 +28,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using Common.Logging;
-using Serial = RJCP.IO.Ports;
+using Lib = RJCP.IO.Ports;
 
 
 namespace InlayTester.Shared.Transports
@@ -37,15 +37,20 @@ namespace InlayTester.Shared.Transports
 		ITransport
 	{
 		// data
-		private readonly Serial.SerialPortStream mStream = new Serial.SerialPortStream();
+		private readonly Lib.SerialPortStream mStream = new Lib.SerialPortStream();
 		private readonly SerialTransportSettings mSettings;
 		private readonly ILog mLog;
 
 
-		public DefaultSerialTransport(SerialTransportSettings settings, ILog log)
+		public SerialTransportSettings Settings => mSettings;
+
+		public ILog Logger => mLog;
+
+
+		public DefaultSerialTransport(SerialTransportSettings settings, ILog logger)
 		{
 			mSettings = settings;
-			mLog = log;
+			mLog = logger;
 
 			mStream.DataReceived += _HandleDataReceived;
 			mStream.ErrorReceived += _HandleErrorReceived;
@@ -78,9 +83,9 @@ namespace InlayTester.Shared.Transports
 				mStream.PortName = mSettings.PortName;
 				mStream.BaudRate = mSettings.Baud;
 				mStream.DataBits = mSettings.DataBits;
-				mStream.Parity = _Convert(mSettings.Parity);
-				mStream.StopBits = _Convert(mSettings.StopBits);
-				mStream.Handshake = _Convert(mSettings.Handshake);
+				mStream.Parity = Convert(mSettings.Parity);
+				mStream.StopBits = Convert(mSettings.StopBits);
+				mStream.Handshake = Convert(mSettings.Handshake);
 
 				mStream.DiscardNull = false;
 				mStream.ParityReplace = 0xff;
@@ -90,13 +95,9 @@ namespace InlayTester.Shared.Transports
 				#region (logging)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"Opened serial transport on '{0}' with {1},{2},{3},{4},{5}.",
+						"[{0}]  OPENED    {1}",
 						mSettings.PortName,
-						mSettings.Baud,
-						mSettings.DataBits,
-						mSettings.Parity,
-						mSettings.StopBits,
-						mSettings.Handshake
+						mSettings
 					);
 				}
 				#endregion
@@ -106,14 +107,10 @@ namespace InlayTester.Shared.Transports
 				#region (logging)
 				{
 					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"FAILED to open serial transport on '{0}' with {1},{2},{3},{4},{5}.",
+						"[{0}]  FAILED to open. Settings: '{1}'.",
 						exception,
 						mSettings.PortName,
-						mSettings.Baud,
-						mSettings.DataBits,
-						mSettings.Parity,
-						mSettings.StopBits,
-						mSettings.Handshake
+						mSettings
 					);
 				}
 				#endregion
@@ -122,54 +119,54 @@ namespace InlayTester.Shared.Transports
 			}
 		}
 
-		private static Serial.Parity _Convert(Parity value)
+		internal static Lib.Parity Convert(Parity value)
 		{
 			switch (value)
 			{
 				case Parity.Even:
-					return Serial.Parity.Even;
+					return Lib.Parity.Even;
 				case Parity.Mark:
-					return Serial.Parity.Mark;
+					return Lib.Parity.Mark;
 				case Parity.None:
-					return Serial.Parity.None;
+					return Lib.Parity.None;
 				case Parity.Odd:
-					return Serial.Parity.Odd;
+					return Lib.Parity.Odd;
 				case Parity.Space:
-					return Serial.Parity.Space;
+					return Lib.Parity.Space;
 				default:
-					throw ExceptionFactory.NotSupportedException("The given Parity '{0}' is not supported.", null, value);
+					throw ExceptionFactory.NotSupportedException("The given Parity '{0}' is not supported.", value);
 			}
 		}
 
-		private static Serial.StopBits _Convert(StopBits value)
+		internal static Lib.StopBits Convert(StopBits value)
 		{
 			switch (value)
 			{
 				case StopBits.One:
-					return Serial.StopBits.One;
+					return Lib.StopBits.One;
 				case StopBits.OnePointFive:
-					return Serial.StopBits.One5;
+					return Lib.StopBits.One5;
 				case StopBits.Two:
-					return Serial.StopBits.Two;
+					return Lib.StopBits.Two;
 				default:
-					throw ExceptionFactory.NotSupportedException("The given StopBits '{0}' is not supported.", null, value);
+					throw ExceptionFactory.NotSupportedException("The given StopBits '{0}' is not supported.", value);
 			}
 		}
 
-		private static Serial.Handshake _Convert(Handshake value)
+		internal static Lib.Handshake Convert(Handshake value)
 		{
 			switch (value)
 			{
 				case Handshake.None:
-					return Serial.Handshake.None;
+					return Lib.Handshake.None;
 				case Handshake.RequestToSend:
-					return Serial.Handshake.Rts;
+					return Lib.Handshake.Rts;
 				case Handshake.RequestToSendXOnXOff:
-					return Serial.Handshake.RtsXOn;
+					return Lib.Handshake.RtsXOn;
 				case Handshake.XOnXOff:
-					return Serial.Handshake.XOn;
+					return Lib.Handshake.XOn;
 				default:
-					throw ExceptionFactory.NotSupportedException("The given Handshake '{0}' is not supported.", null, value);
+					throw ExceptionFactory.NotSupportedException("The given Handshake '{0}' is not supported.", value);
 			}
 		}
 
@@ -191,7 +188,7 @@ namespace InlayTester.Shared.Transports
 				#region (logging)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"Closed serial transport on '{0}'.",
+						"[{0}]  CLOSED",
 						mSettings.PortName
 					);
 				}
@@ -202,7 +199,7 @@ namespace InlayTester.Shared.Transports
 				#region (logging)
 				{
 					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"FAILED to close serial transport on '{0}'.",
+						"[{0}]  FAILED to close.",
 						exception,
 						mSettings.PortName
 					);
@@ -223,7 +220,7 @@ namespace InlayTester.Shared.Transports
 			#region (logging)
 			{
 				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"Disposed serial transport on '{0}'.",
+					"[{0}]  DISPOSED",
 					mSettings.PortName
 				);
 			}
@@ -256,7 +253,7 @@ namespace InlayTester.Shared.Transports
 					if (mLog.IsTraceEnabled)
 					{
 						mLog.TraceFormat(CultureInfo.InvariantCulture,
-							"Sent data via serial transport on '{0}'; Data={1}.",
+							"[{0}]  SENT      {1}",
 							mSettings.PortName,
 							data
 						);
@@ -269,7 +266,7 @@ namespace InlayTester.Shared.Transports
 				#region (logging)
 				{
 					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"FAILED to send data via serial transport on '{0}'; Data={1}.",
+						"[{0}]  FAILED to send. Data: '{1}'.",
 						exception,
 						mSettings.PortName,
 						data
@@ -282,11 +279,11 @@ namespace InlayTester.Shared.Transports
 		}
 
 
-		private void _HandleDataReceived(Object sender, Serial.SerialDataReceivedEventArgs e)
+		private void _HandleDataReceived(Object sender, Lib.SerialDataReceivedEventArgs e)
 		{
 			try
 			{
-				if (e.EventType == Serial.SerialData.NoData)
+				if (e.EventType == Lib.SerialData.NoData)
 					return;
 
 				var data = _ReadDataReceived();
@@ -312,7 +309,7 @@ namespace InlayTester.Shared.Transports
 					if (mLog.IsTraceEnabled)
 					{
 						mLog.TraceFormat(CultureInfo.InvariantCulture,
-							"Received data via serial transport on '{0}'; Data={1}.",
+							"[{0}]  RECEIVED  {1}",
 							mSettings.PortName,
 							data
 						);
@@ -327,7 +324,7 @@ namespace InlayTester.Shared.Transports
 				#region (logging)
 				{
 					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"FAILED to receive data via serial transport on '{0}'.",
+						"[{0}]  FAILED to receive.",
 						exception,
 						mSettings.PortName
 					);
@@ -350,7 +347,7 @@ namespace InlayTester.Shared.Transports
 				#region (logging)
 				{
 					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"User code invoked for event 'Received' on serial transport on '{0}' threw an exception.",
+						"[{0}]  User code invoked for event 'Received' threw an exception.",
 						exception,
 						mSettings.PortName
 					);
@@ -362,17 +359,17 @@ namespace InlayTester.Shared.Transports
 		}
 
 
-		private void _HandleErrorReceived(Object sender, Serial.SerialErrorReceivedEventArgs e)
+		private void _HandleErrorReceived(Object sender, Lib.SerialErrorReceivedEventArgs e)
 		{
-			if (e.EventType == Serial.SerialError.NoError)
+			if (e.EventType == Lib.SerialError.NoError)
 				return;
 
 			#region (logging)
 			{
 				mLog.WarnFormat(CultureInfo.InvariantCulture,
-					"A serial error of type '{0}' occurred on serial transport on '{1}'.",
-					e.EventType,
-					mSettings.PortName
+					"[{0}]  SERIAL ERROR  '{1}'",
+					mSettings.PortName,
+					e.EventType
 				);
 			}
 			#endregion
