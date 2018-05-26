@@ -39,3 +39,11 @@ An abstraction of serial communication that can be opened and closed and that ca
     }
 
 Internally, transports use the excellent [SerialPortStream](https://github.com/jcurl/SerialPortStream) library for serial communication.
+
+If you want to get logging information for transport operations, you can specify an **ILog** on **Transport.Create()**.
+
+    var log = // obtain from Common.Logging
+    
+    using(ITransport transport = Transport.Create(settings, log))
+    {
+    }
