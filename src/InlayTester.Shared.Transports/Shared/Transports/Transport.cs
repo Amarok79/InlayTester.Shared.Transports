@@ -38,6 +38,9 @@ namespace InlayTester.Shared.Transports
 		/// Creates a new serial <see cref="ITransport"/> for the given <paramref name="settings"/>.
 		/// </summary>
 		/// 
+		/// <param name="settings">
+		/// The settings for the serial transport to create.</param>
+		/// 
 		/// <exception cref="ArgumentNullException">
 		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static ITransport Create(SerialTransportSettings settings)
@@ -51,6 +54,11 @@ namespace InlayTester.Shared.Transports
 		/// <summary>
 		/// Creates a new serial <see cref="ITransport"/> for the given <paramref name="settings"/>.
 		/// </summary>
+		/// 
+		/// <param name="settings">
+		/// The settings for the serial transport to create.</param>
+		/// <param name="logger">
+		/// The logger that should be used for logging transport operations.</param>
 		/// 
 		/// <exception cref="ArgumentNullException">
 		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
