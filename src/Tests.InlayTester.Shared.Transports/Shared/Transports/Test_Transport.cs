@@ -23,6 +23,7 @@
 */
 
 using System;
+using Common.Logging;
 using Common.Logging.Simple;
 using NFluent;
 using NUnit.Framework;
@@ -30,52 +31,76 @@ using NUnit.Framework;
 
 namespace InlayTester.Shared.Transports
 {
-	[TestFixture]
 	public class Test_Transport
 	{
-		[Test]
-		public void Create()
+		[TestFixture]
+		public class Create_Settings
 		{
-			var settings = new SerialTransportSettings {
-				PortName = "COM12"
-			};
+			[Test]
+			public void Create()
+			{
+				// act
+				var settings = new SerialTransportSettings();
+				var transport = Transport.Create(settings);
 
-			var transport = Transport.Create(settings);
+				// assert
+				Check.That(transport)
+					.IsInstanceOf<DefaultSerialTransport>();
 
-			Check.That(transport)
-				.IsInstanceOf<DefaultSerialTransport>();
+				var transportImpl = (DefaultSerialTransport)transport;
+
+				Check.That(transportImpl.Settings)
+					.Not.IsSameReferenceAs(settings);
+				Check.That(transportImpl.Logger)
+					.IsInstanceOf<NoOpLogger>();
+			}
+
+			[Test]
+			public void Exception_For_NullSettings()
+			{
+				Check.ThatCode(() => Transport.Create(null))
+					.Throws<ArgumentNullException>();
+			}
 		}
 
-		[Test]
-		public void Exception_For_NullSettings()
+		[TestFixture]
+		public class Create_Settings_Logger
 		{
-			Check.ThatCode(() => Transport.Create(null))
-				.Throws<ArgumentNullException>();
-		}
+			[Test]
+			public void Create_With_Logger()
+			{
+				// act
+				var settings = new SerialTransportSettings();
+				var logger = new ConsoleOutLogger("Foo", LogLevel.All, false, false, false, "G");
+				var transport = Transport.Create(settings, logger);
 
-		[Test]
-		public void Create_With_Logger()
-		{
-			var settings = new SerialTransportSettings {
-				PortName = "COM12"
-			};
+				// assert
+				Check.That(transport)
+					.IsInstanceOf<DefaultSerialTransport>();
 
-			var logger = new NoOpLogger();
-			var transport = Transport.Create(settings, logger);
+				var transportImpl = (DefaultSerialTransport)transport;
 
-			Check.That(transport)
-				.IsInstanceOf<DefaultSerialTransport>();
-		}
+				Check.That(transportImpl.Settings)
+					.Not.IsSameReferenceAs(settings);
+				Check.That(transportImpl.Logger)
+					.IsSameReferenceAs(logger);
+			}
 
-		[Test]
-		public void Exception_For_NullLogger()
-		{
-			var settings = new SerialTransportSettings {
-				PortName = "COM12"
-			};
+			[Test]
+			public void Exception_For_NullSettings()
+			{
+				Check.ThatCode(() => Transport.Create(null, new NoOpLogger()))
+					.Throws<ArgumentNullException>();
+			}
 
-			Check.ThatCode(() => Transport.Create(settings, null))
-				.Throws<ArgumentNullException>();
+			[Test]
+			public void Exception_For_NullLogger()
+			{
+				var settings = new SerialTransportSettings();
+
+				Check.ThatCode(() => Transport.Create(settings, null))
+					.Throws<ArgumentNullException>();
+			}
 		}
 	}
 }

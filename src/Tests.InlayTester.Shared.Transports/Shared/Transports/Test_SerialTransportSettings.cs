@@ -34,8 +34,10 @@ namespace InlayTester.Shared.Transports
 		[Test]
 		public void Construction_Default()
 		{
+			// act
 			var settings = new SerialTransportSettings();
 
+			// assert
 			Check.That(settings.PortName)
 				.IsEqualTo("COM1");
 			Check.That(settings.Baud)
@@ -56,6 +58,7 @@ namespace InlayTester.Shared.Transports
 		[Test]
 		public void Construction()
 		{
+			// act
 			var settings = new SerialTransportSettings {
 				PortName = "COM12",
 				Baud = 38400,
@@ -65,6 +68,7 @@ namespace InlayTester.Shared.Transports
 				Handshake = Handshake.XOnXOff,
 			};
 
+			// assert
 			Check.That(settings.PortName)
 				.IsEqualTo("COM12");
 			Check.That(settings.Baud)
@@ -83,8 +87,9 @@ namespace InlayTester.Shared.Transports
 		}
 
 		[Test]
-		public void Construction_CopyConstructor()
+		public void Construction_Copy()
 		{
+			// act
 			var org = new SerialTransportSettings {
 				PortName = "COM12",
 				Baud = 38400,
@@ -96,6 +101,7 @@ namespace InlayTester.Shared.Transports
 
 			var settings = new SerialTransportSettings(org);
 
+			// assert
 			Check.That(settings.PortName)
 				.IsEqualTo("COM12");
 			Check.That(settings.Baud)

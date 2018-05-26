@@ -34,9 +34,11 @@ namespace InlayTester.Shared.Transports
 		[Test]
 		public void Construction()
 		{
+			// act
 			var data = BufferSpan.From(0x11, 0x22, 0x33);
 			var args = new TransportDataReceivedEventArgs(data);
 
+			// assert
 			Check.That(args.Data.ToArray())
 				.ContainsExactly(0x11, 0x22, 0x33);
 		}

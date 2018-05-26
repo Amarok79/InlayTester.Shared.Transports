@@ -25,6 +25,7 @@
 using System;
 using System.Globalization;
 
+
 namespace InlayTester.Shared.Transports
 {
 	/// <summary>
@@ -85,8 +86,16 @@ namespace InlayTester.Shared.Transports
 		/// <summary>
 		/// Initializes a new instance.
 		/// </summary>
+		/// 
+		/// <param name="settings">
+		/// The settings to copy from.</param>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public SerialTransportSettings(SerialTransportSettings settings)
 		{
+			Verify.NotNull(settings, nameof(settings));
+
 			this.PortName = settings.PortName;
 			this.Baud = settings.Baud;
 			this.DataBits = settings.DataBits;
