@@ -39,7 +39,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Amarok.InlayTester.Shared" Version="1.4.0" />
+		<PackageReference Include="Amarok.InlayTester.Shared" Version="1.4.1" />
 		<PackageReference Include="Amarok.SerialPortStream" Version="2.1.5" />
 		<PackageReference Include="Common.Logging" Version="3.4.1" />
 		<PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
