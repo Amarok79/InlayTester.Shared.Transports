@@ -52,3 +52,22 @@ If you want to get logging information for transport operations, you can specify
     {
     }
 ````
+
+If you want to monitor or even manipulate data being sent and received, you can implement **ITransportHooks** and provide your implementation on `Transport.Create(..)`.
+
+````cs
+public sealed class FooTransportHooks : ITransportHooks
+{
+    public void BeforeSend(ref BufferSpan data)
+    {
+        Console.WriteLine("SENT: " + data.ToString());
+    }
+    
+    public void AfterReceived(ref BufferSpan data)
+    {
+        Console.WriteLine("RECEIVED: " + data.ToString());
+    }
+}
+
+var transport = Transport.Create(settings, new FooTransportHooks());
+````
