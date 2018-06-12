@@ -104,7 +104,7 @@ namespace InlayTester.Shared.Transports
 					PortName = "COMA",
 				};
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					transportA.Open();
 					transportA.Close();
@@ -120,7 +120,7 @@ namespace InlayTester.Shared.Transports
 					PortName = "COMA",
 				};
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					transportA.Open();
 					transportA.Close();
@@ -137,7 +137,7 @@ namespace InlayTester.Shared.Transports
 					PortName = "COMA",
 				};
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					transportA.Open();
 
@@ -153,7 +153,7 @@ namespace InlayTester.Shared.Transports
 					PortName = "COMA",
 				};
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					transportA.Dispose();
 
@@ -169,7 +169,7 @@ namespace InlayTester.Shared.Transports
 					PortName = "ABC",
 				};
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					Check.ThatCode(() => transportA.Open())
 						.Throws<IOException>();
@@ -183,7 +183,7 @@ namespace InlayTester.Shared.Transports
 					PortName = "COMA",
 				};
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					transportA.Dispose();
 
@@ -199,7 +199,7 @@ namespace InlayTester.Shared.Transports
 					PortName = "COMA",
 				};
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					Check.ThatCode(() => transportA.Close())
 						.DoesNotThrow();
@@ -215,7 +215,7 @@ namespace InlayTester.Shared.Transports
 					PortName = "COMA",
 				};
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					Check.ThatCode(() => transportA.Dispose())
 						.DoesNotThrow();
@@ -235,7 +235,7 @@ namespace InlayTester.Shared.Transports
 
 				var data = BufferSpan.From(0x12);
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					Check.ThatCode(() => transportA.Send(data))
 						.Throws<InvalidOperationException>();
@@ -251,7 +251,7 @@ namespace InlayTester.Shared.Transports
 
 				var data = BufferSpan.From(0x12);
 
-				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger()))
+				using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
 				{
 					transportA.Dispose();
 
@@ -273,9 +273,9 @@ namespace InlayTester.Shared.Transports
 				var data = BufferSpan.From(0x12);
 				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
 
-				using (var transportA = new DefaultSerialTransport(settingsA, log))
+				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{
-					using (var transportB = new DefaultSerialTransport(settingsB, log))
+					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
 						var received = BufferSpan.Empty;
 						transportB.Received += (sender, e) => received = received.Append(e.Data);
@@ -306,9 +306,9 @@ namespace InlayTester.Shared.Transports
 				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
 
-				using (var transportA = new DefaultSerialTransport(settingsA, log))
+				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{
-					using (var transportB = new DefaultSerialTransport(settingsB, log))
+					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
 						var received = BufferSpan.Empty;
 						transportB.Received += (sender, e) => received = received.Append(e.Data);
@@ -346,9 +346,9 @@ namespace InlayTester.Shared.Transports
 
 				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
 
-				using (var transportA = new DefaultSerialTransport(settingsA, log))
+				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{
-					using (var transportB = new DefaultSerialTransport(settingsB, log))
+					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
 						var received = BufferSpan.Empty;
 						transportB.Received += (sender, e) => received = received.Append(e.Data);
@@ -379,9 +379,9 @@ namespace InlayTester.Shared.Transports
 				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
 
-				using (var transportA = new DefaultSerialTransport(settingsA, log))
+				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{
-					using (var transportB = new DefaultSerialTransport(settingsB, log))
+					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
 						var received = BufferSpan.Empty;
 						transportB.Received += (sender, e) => received = received.Append(e.Data);
@@ -401,6 +401,126 @@ namespace InlayTester.Shared.Transports
 								0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,
 								0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88
 							);
+					}
+				}
+			}
+
+
+			private class FakeSendHook : ITransportHooks
+			{
+				public BufferSpan SentData;
+				public BufferSpan DataToSend;
+
+				public void AfterReceived(ref BufferSpan data)
+				{
+					// Method intentionally left empty.
+				}
+
+				public void BeforeSend(ref BufferSpan data)
+				{
+					SentData = data;
+					data = DataToSend;
+				}
+			}
+
+			private class FakeReceiveHook : ITransportHooks
+			{
+				public BufferSpan DataReceived;
+				public BufferSpan DataToReceive;
+
+				public void AfterReceived(ref BufferSpan data)
+				{
+					DataReceived = data;
+					data = DataToReceive;
+				}
+
+				public void BeforeSend(ref BufferSpan data)
+				{
+					// Method intentionally left empty.
+				}
+			}
+
+
+			[Test, Serial]
+			public void SendReceive_BeforeSendHook()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+				var settingsB = new SerialTransportSettings {
+					PortName = "COMB",
+				};
+
+				var hook = new FakeSendHook();
+				hook.DataToSend = BufferSpan.From(0x55, 0x55, 0x55);
+
+				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+
+				using (var transportA = new DefaultSerialTransport(settingsA, log, hook))
+				{
+					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
+					{
+						var received = BufferSpan.Empty;
+						transportB.Received += (sender, e) => received = received.Append(e.Data);
+
+						transportB.Open();
+						transportA.Open();
+
+						transportA.Send(data);
+
+						SpinWait.SpinUntil(() => received.Count == 8, 5000);
+
+						Check.That(received.ToArray())
+							.ContainsExactly(0x55, 0x55, 0x55);
+
+						transportA.Close();
+						transportB.Close();
+
+						Check.That(hook.SentData.ToArray())
+							.ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+					}
+				}
+			}
+
+			[Test, Serial]
+			public void SendReceive_AfterReceivedHook()
+			{
+				var settingsA = new SerialTransportSettings {
+					PortName = "COMA",
+				};
+				var settingsB = new SerialTransportSettings {
+					PortName = "COMB",
+				};
+
+				var hook = new FakeReceiveHook();
+				hook.DataToReceive = BufferSpan.From(0x55, 0x55, 0x55);
+
+				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+
+				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
+				{
+					using (var transportB = new DefaultSerialTransport(settingsB, log, hook))
+					{
+						var received = BufferSpan.Empty;
+						transportB.Received += (sender, e) => received = received.Append(e.Data);
+
+						transportB.Open();
+						transportA.Open();
+
+						transportA.Send(data);
+
+						SpinWait.SpinUntil(() => received.Count == 8, 5000);
+
+						Check.That(received.ToArray())
+							.ContainsExactly(0x55, 0x55, 0x55);
+
+						transportA.Close();
+						transportB.Close();
+
+						Check.That(hook.DataReceived.ToArray())
+							.ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 					}
 				}
 			}

@@ -48,7 +48,7 @@ namespace InlayTester.Shared.Transports
 			Verify.NotNull(settings, nameof(settings));
 
 			var clone = new SerialTransportSettings(settings);
-			return new DefaultSerialTransport(clone, new NoOpLogger());
+			return new DefaultSerialTransport(clone, new NoOpLogger(), null);
 		}
 
 		/// <summary>
@@ -68,7 +68,7 @@ namespace InlayTester.Shared.Transports
 			Verify.NotNull(logger, nameof(logger));
 
 			var clone = new SerialTransportSettings(settings);
-			return new DefaultSerialTransport(clone, logger);
+			return new DefaultSerialTransport(clone, logger, null);
 		}
 	}
 }

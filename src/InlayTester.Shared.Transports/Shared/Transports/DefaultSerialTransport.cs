@@ -40,6 +40,7 @@ namespace InlayTester.Shared.Transports
 		private readonly Lib.SerialPortStream mStream = new Lib.SerialPortStream();
 		private readonly SerialTransportSettings mSettings;
 		private readonly ILog mLog;
+		private readonly ITransportHooks mHooks;
 
 
 		public SerialTransportSettings Settings => mSettings;
@@ -47,10 +48,11 @@ namespace InlayTester.Shared.Transports
 		public ILog Logger => mLog;
 
 
-		public DefaultSerialTransport(SerialTransportSettings settings, ILog logger)
+		public DefaultSerialTransport(SerialTransportSettings settings, ILog logger, ITransportHooks hooks)
 		{
 			mSettings = settings;
 			mLog = logger;
+			mHooks = hooks;
 
 			mStream.DataReceived += _HandleDataReceived;
 			mStream.ErrorReceived += _HandleErrorReceived;
@@ -246,6 +248,10 @@ namespace InlayTester.Shared.Transports
 
 			try
 			{
+				// invoke hook
+				mHooks?.BeforeSend(ref data);
+
+				// send data
 				mStream.Write(data.Buffer, data.Offset, data.Count);
 
 				#region (logging)
@@ -299,10 +305,14 @@ namespace InlayTester.Shared.Transports
 		{
 			try
 			{
+				// receive data
 				var bytesToRead = mStream.BytesToRead;
 				var buffer = new Byte[bytesToRead];
 				var bytesRead = mStream.Read(buffer, 0, bytesToRead);
 				var data = BufferSpan.From(buffer, bytesRead);
+
+				// invoke hook
+				mHooks?.AfterReceived(ref data);
 
 				#region (logging)
 				{
