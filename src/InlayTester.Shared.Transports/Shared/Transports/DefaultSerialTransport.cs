@@ -47,6 +47,8 @@ namespace InlayTester.Shared.Transports
 
 		public ILog Logger => mLog;
 
+		public ITransportHooks Hooks => mHooks;
+
 
 		public DefaultSerialTransport(SerialTransportSettings settings, ILog logger, ITransportHooks hooks)
 		{

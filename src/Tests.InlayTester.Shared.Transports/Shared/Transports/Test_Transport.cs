@@ -25,6 +25,7 @@
 using System;
 using Common.Logging;
 using Common.Logging.Simple;
+using Moq;
 using NFluent;
 using NUnit.Framework;
 
@@ -53,12 +54,58 @@ namespace InlayTester.Shared.Transports
 					.Not.IsSameReferenceAs(settings);
 				Check.That(transportImpl.Logger)
 					.IsInstanceOf<NoOpLogger>();
+				Check.That(transportImpl.Hooks)
+					.IsNull();
 			}
 
 			[Test]
 			public void Exception_For_NullSettings()
 			{
 				Check.ThatCode(() => Transport.Create(null))
+					.Throws<ArgumentNullException>();
+			}
+		}
+
+		[TestFixture]
+		public class Create_Settings_Hooks
+		{
+			[Test]
+			public void Create()
+			{
+				// act
+				var hooks = new Mock<ITransportHooks>();
+				var settings = new SerialTransportSettings();
+				var transport = Transport.Create(settings, hooks.Object);
+
+				// assert
+				Check.That(transport)
+					.IsInstanceOf<DefaultSerialTransport>();
+
+				var transportImpl = (DefaultSerialTransport)transport;
+
+				Check.That(transportImpl.Settings)
+					.Not.IsSameReferenceAs(settings);
+				Check.That(transportImpl.Logger)
+					.IsInstanceOf<NoOpLogger>();
+				Check.That(transportImpl.Hooks)
+					.IsSameReferenceAs(hooks.Object);
+			}
+
+			[Test]
+			public void Exception_For_NullSettings()
+			{
+				var hooks = new Mock<ITransportHooks>().Object;
+
+				Check.ThatCode(() => Transport.Create(null, hooks))
+					.Throws<ArgumentNullException>();
+			}
+
+			[Test]
+			public void Exception_For_NullHooks()
+			{
+				var settings = new SerialTransportSettings();
+
+				Check.ThatCode(() => Transport.Create(settings, (ITransportHooks)null))
 					.Throws<ArgumentNullException>();
 			}
 		}
@@ -84,6 +131,8 @@ namespace InlayTester.Shared.Transports
 					.Not.IsSameReferenceAs(settings);
 				Check.That(transportImpl.Logger)
 					.IsSameReferenceAs(logger);
+				Check.That(transportImpl.Hooks)
+					.IsNull();
 			}
 
 			[Test]
@@ -98,7 +147,62 @@ namespace InlayTester.Shared.Transports
 			{
 				var settings = new SerialTransportSettings();
 
-				Check.ThatCode(() => Transport.Create(settings, null))
+				Check.ThatCode(() => Transport.Create(settings, (ILog)null))
+					.Throws<ArgumentNullException>();
+			}
+		}
+
+		[TestFixture]
+		public class Create_Settings_Logger_Hooks
+		{
+			[Test]
+			public void Create_With_Logger()
+			{
+				// act
+				var hooks = new Mock<ITransportHooks>();
+				var settings = new SerialTransportSettings();
+				var logger = new ConsoleOutLogger("Foo", LogLevel.All, false, false, false, "G");
+				var transport = Transport.Create(settings, logger, hooks.Object);
+
+				// assert
+				Check.That(transport)
+					.IsInstanceOf<DefaultSerialTransport>();
+
+				var transportImpl = (DefaultSerialTransport)transport;
+
+				Check.That(transportImpl.Settings)
+					.Not.IsSameReferenceAs(settings);
+				Check.That(transportImpl.Logger)
+					.IsSameReferenceAs(logger);
+				Check.That(transportImpl.Hooks)
+					.IsSameReferenceAs(hooks.Object);
+			}
+
+			[Test]
+			public void Exception_For_NullSettings()
+			{
+				var hooks = new Mock<ITransportHooks>();
+
+				Check.ThatCode(() => Transport.Create(null, new NoOpLogger(), hooks.Object))
+					.Throws<ArgumentNullException>();
+			}
+
+			[Test]
+			public void Exception_For_NullLogger()
+			{
+				var settings = new SerialTransportSettings();
+				var hooks = new Mock<ITransportHooks>();
+
+				Check.ThatCode(() => Transport.Create(settings, (ILog)null, hooks.Object))
+					.Throws<ArgumentNullException>();
+			}
+
+			[Test]
+			public void Exception_For_NullHooks()
+			{
+				var settings = new SerialTransportSettings();
+
+				Check.ThatCode(() => Transport.Create(settings, new NoOpLogger(), null))
 					.Throws<ArgumentNullException>();
 			}
 		}

@@ -57,6 +57,26 @@ namespace InlayTester.Shared.Transports
 		/// 
 		/// <param name="settings">
 		/// The settings for the serial transport to create.</param>
+		/// <param name="hooks">
+		/// A hooks implementation being called for sent or received data.</param>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+		public static ITransport Create(SerialTransportSettings settings, ITransportHooks hooks)
+		{
+			Verify.NotNull(settings, nameof(settings));
+			Verify.NotNull(hooks, nameof(hooks));
+
+			var clone = new SerialTransportSettings(settings);
+			return new DefaultSerialTransport(clone, new NoOpLogger(), hooks);
+		}
+
+		/// <summary>
+		/// Creates a new serial <see cref="ITransport"/> for the given <paramref name="settings"/>.
+		/// </summary>
+		/// 
+		/// <param name="settings">
+		/// The settings for the serial transport to create.</param>
 		/// <param name="logger">
 		/// The logger that should be used for logging transport operations.</param>
 		/// 
@@ -69,6 +89,29 @@ namespace InlayTester.Shared.Transports
 
 			var clone = new SerialTransportSettings(settings);
 			return new DefaultSerialTransport(clone, logger, null);
+		}
+
+		/// <summary>
+		/// Creates a new serial <see cref="ITransport"/> for the given <paramref name="settings"/>.
+		/// </summary>
+		/// 
+		/// <param name="settings">
+		/// The settings for the serial transport to create.</param>
+		/// <param name="logger">
+		/// The logger that should be used for logging transport operations.</param>
+		/// <param name="hooks">
+		/// A hooks implementation being called for sent or received data.</param>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+		public static ITransport Create(SerialTransportSettings settings, ILog logger, ITransportHooks hooks)
+		{
+			Verify.NotNull(settings, nameof(settings));
+			Verify.NotNull(logger, nameof(logger));
+			Verify.NotNull(hooks, nameof(hooks));
+
+			var clone = new SerialTransportSettings(settings);
+			return new DefaultSerialTransport(clone, logger, hooks);
 		}
 	}
 }
