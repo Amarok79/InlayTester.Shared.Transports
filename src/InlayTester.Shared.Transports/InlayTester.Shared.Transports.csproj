@@ -13,7 +13,7 @@
 		<PackageLicenseUrl>https://raw.githubusercontent.com/Amarok79/InlayTester.Shared.Transports/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</PackageProjectUrl>
 		<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
-		<Version>1.3.0</Version>
+		<Version>1.3.1</Version>
 		<PackageIconUrl>https://amarok.blob.core.windows.net/public/inlaytester.ico</PackageIconUrl>
 		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 	</PropertyGroup>
