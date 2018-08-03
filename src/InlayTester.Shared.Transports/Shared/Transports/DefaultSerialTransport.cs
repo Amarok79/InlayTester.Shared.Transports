@@ -27,6 +27,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using Amarok.Events;
 using Common.Logging;
 using Lib = RJCP.IO.Ports;
 
@@ -41,6 +42,7 @@ namespace InlayTester.Shared.Transports
 		private readonly SerialTransportSettings mSettings;
 		private readonly ILog mLog;
 		private readonly ITransportHooks mHooks;
+		private readonly EventSource<BufferSpan> mReceivedEvent = new EventSource<BufferSpan>();
 
 
 		public SerialTransportSettings Settings => mSettings;
@@ -64,7 +66,7 @@ namespace InlayTester.Shared.Transports
 		/// <summary>
 		/// An event that is raised for data that has been received.
 		/// </summary>
-		public event EventHandler<TransportDataReceivedEventArgs> Received;
+		public Event<BufferSpan> Received => mReceivedEvent.Event;
 
 
 		/// <summary>
@@ -295,7 +297,7 @@ namespace InlayTester.Shared.Transports
 					return;
 
 				var data = _ReadDataReceived();
-				_RaiseReceivedEvent(data);
+				mReceivedEvent.Invoke(data);
 			}
 			catch (Exception)
 			{
@@ -337,29 +339,6 @@ namespace InlayTester.Shared.Transports
 				{
 					mLog.ErrorFormat(CultureInfo.InvariantCulture,
 						"[{0}]  FAILED to receive.",
-						exception,
-						mSettings.PortName
-					);
-				}
-				#endregion
-
-				throw;
-			}
-		}
-
-		private void _RaiseReceivedEvent(BufferSpan data)
-		{
-			try
-			{
-				if (!data.IsEmpty)
-					this.Received?.Invoke(this, new TransportDataReceivedEventArgs(data));
-			}
-			catch (Exception exception)
-			{
-				#region (logging)
-				{
-					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"[{0}]  User code invoked for event 'Received' threw an exception.",
 						exception,
 						mSettings.PortName
 					);

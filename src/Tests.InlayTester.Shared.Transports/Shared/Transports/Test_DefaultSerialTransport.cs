@@ -25,6 +25,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using Amarok.Events;
 using Common.Logging;
 using Common.Logging.Simple;
 using NCrunch.Framework;
@@ -277,17 +278,16 @@ namespace InlayTester.Shared.Transports
 				{
 					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
-						var received = BufferSpan.Empty;
-						transportB.Received += (sender, e) => received = received.Append(e.Data);
+						var recorder = EventRecorder.From(transportB.Received);
 
 						transportB.Open();
 						transportA.Open();
 
 						transportA.Send(data);
 
-						SpinWait.SpinUntil(() => received.Count == 1, 5000);
+						SpinWait.SpinUntil(() => recorder.Count == 1, 5000);
 
-						Check.That(received.ToArray())
+						Check.That(recorder.Events[0].ToArray())
 							.ContainsExactly(0x12);
 					}
 				}
@@ -310,17 +310,16 @@ namespace InlayTester.Shared.Transports
 				{
 					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
-						var received = BufferSpan.Empty;
-						transportB.Received += (sender, e) => received = received.Append(e.Data);
+						var recorder = EventRecorder.From(transportB.Received);
 
 						transportB.Open();
 						transportA.Open();
 
 						transportA.Send(data);
 
-						SpinWait.SpinUntil(() => received.Count == 8, 5000);
+						SpinWait.SpinUntil(() => recorder.Count == 8, 5000);
 
-						Check.That(received.ToArray())
+						Check.That(recorder.Events[0].ToArray())
 							.ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
 						transportA.Close();
@@ -351,7 +350,7 @@ namespace InlayTester.Shared.Transports
 					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
 						var received = BufferSpan.Empty;
-						transportB.Received += (sender, e) => received = received.Append(e.Data);
+						transportB.Received.Subscribe(x => received = received.Append(x));
 
 						transportB.Open();
 						transportA.Open();
@@ -384,7 +383,7 @@ namespace InlayTester.Shared.Transports
 					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
 						var received = BufferSpan.Empty;
-						transportB.Received += (sender, e) => received = received.Append(e.Data);
+						transportB.Received.Subscribe(x => received = received.Append(x));
 
 						transportB.Open();
 						transportA.Open();
@@ -462,7 +461,7 @@ namespace InlayTester.Shared.Transports
 					using (var transportB = new DefaultSerialTransport(settingsB, log, null))
 					{
 						var received = BufferSpan.Empty;
-						transportB.Received += (sender, e) => received = received.Append(e.Data);
+						transportB.Received.Subscribe(x => received = received.Append(x));
 
 						transportB.Open();
 						transportA.Open();
@@ -504,7 +503,7 @@ namespace InlayTester.Shared.Transports
 					using (var transportB = new DefaultSerialTransport(settingsB, log, hook))
 					{
 						var received = BufferSpan.Empty;
-						transportB.Received += (sender, e) => received = received.Append(e.Data);
+						transportB.Received.Subscribe(x => received = received.Append(x));
 
 						transportB.Open();
 						transportA.Open();

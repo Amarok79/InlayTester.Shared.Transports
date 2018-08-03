@@ -24,6 +24,7 @@
 
 using System;
 using System.IO;
+using Amarok.Events;
 
 
 namespace InlayTester.Shared.Transports
@@ -37,7 +38,7 @@ namespace InlayTester.Shared.Transports
 		/// <summary>
 		/// An event that is raised for data that has been received.
 		/// </summary>
-		event EventHandler<TransportDataReceivedEventArgs> Received;
+		Event<BufferSpan> Received { get; }
 
 
 		/// <summary>
