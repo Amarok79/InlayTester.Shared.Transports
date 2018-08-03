@@ -55,7 +55,6 @@
     <Compile Include="Shared\Transports\Test_Parity.cs" />
     <Compile Include="Shared\Transports\Test_StopBits.cs" />
     <Compile Include="Shared\Transports\Test_Transport.cs" />
-    <Compile Include="Shared\Transports\Test_TransportDataReceivedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Moq">
