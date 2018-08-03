@@ -37,6 +37,12 @@
     <CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,6 +72,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\amarok.snk">
+      <Link>amarok.snk</Link>
+    </None>
     <None Include="..\InlayTester.Shared.Transports.licenseheader">
       <Link>InlayTester.Shared.Transports.licenseheader</Link>
     </None>
