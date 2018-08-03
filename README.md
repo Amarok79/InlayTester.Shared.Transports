@@ -27,9 +27,9 @@ An abstraction of serial communication that can be opened and closed and that ca
     using(ITransport transport = Transport.Create(settings))
     {
         // register event handler for received data
-        transport.Received += (sender, e) => {
-            Console.WriteLine("Received: {0}", e.Data);
-        };
+        transport.Received.Subscribe(x => {
+            Console.WriteLine("Received: {0}", x);
+        });
 
         // a transport can be opened and closed multiple times, but diposed only once
         transport.Open();
