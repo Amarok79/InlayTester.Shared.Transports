@@ -22,6 +22,8 @@
  * SOFTWARE.
 */
 
+#pragma warning disable S3874 // "out" and "ref" parameters should not be used
+
 
 namespace InlayTester.Shared.Transports
 {
