@@ -1,3 +1,8 @@
+[![Build Status](https://dev.azure.com/amarok79/Amarok/_apis/build/status/InlayTester.Shared.Transports?branchName=master)](https://dev.azure.com/amarok79/Amarok/_build/latest?definitionId=13&branchName=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Amarok79_InlayTester.Shared.Transports&metric=alert_status)](https://sonarcloud.io/dashboard?id=Amarok79_InlayTester.Shared.Transports)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Amarok79_InlayTester.Shared.Transports&metric=coverage)](https://sonarcloud.io/dashboard?id=Amarok79_InlayTester.Shared.Transports)
+[![NuGet](https://img.shields.io/nuget/v/Amarok.InlayTester.Shared.Transports.svg?logo=)](https://www.nuget.org/packages/Amarok.InlayTester.Shared.Transports/)
+
 ## Introduction
 
 This library is available as NuGet package:
