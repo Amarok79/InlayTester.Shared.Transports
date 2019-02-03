@@ -59,7 +59,7 @@ namespace InlayTester.Shared.Transports
 		public void Construction()
 		{
 			// act
-			var settings = new SerialTransportSettings {
+			var settings = new SerialTransportSettings() {
 				PortName = "COM12",
 				Baud = 38400,
 				DataBits = 7,
@@ -90,7 +90,7 @@ namespace InlayTester.Shared.Transports
 		public void Construction_Copy()
 		{
 			// act
-			var org = new SerialTransportSettings {
+			var org = new SerialTransportSettings() {
 				PortName = "COM12",
 				Baud = 38400,
 				DataBits = 7,
