@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
@@ -8,7 +8,7 @@
 		<Authors>Olaf Kober</Authors>
 		<Company>&lt;none&gt;</Company>
 		<Product>Inlay Tester</Product>
-		<Description>A library to abstract (serial) communication to increase testability.</Description>
+		<Description>A library to abstract (serial) communication to increase testability. Part of Inlay Tester software application.</Description>
 		<Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
 		<PackageLicenseUrl>https://raw.githubusercontent.com/Amarok79/InlayTester.Shared.Transports/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</PackageProjectUrl>
@@ -16,16 +16,17 @@
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
-		<Version>2.1.0</Version>
+		<Version>2.1.1</Version>
 		<PackageIconUrl>https://amarok.blob.core.windows.net/public/inlaytester.ico</PackageIconUrl>
 		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<OutputPath>..\..\bin\lib\</OutputPath>
-		<DocumentationFile>..\..\bin\lib\netstandard2.0\InlayTester.Shared.Transports.xml</DocumentationFile>
+		<DocumentationFile>..\..\bin\lib\InlayTester.Shared.Transports.xml</DocumentationFile>
 		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 		<LangVersion>latest</LangVersion>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -34,7 +35,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<OutputPath>..\..\bin\lib\</OutputPath>
-		<DocumentationFile>..\..\bin\lib\netstandard2.0\InlayTester.Shared.Transports.xml</DocumentationFile>
+		<DocumentationFile>..\..\bin\lib\InlayTester.Shared.Transports.xml</DocumentationFile>
 		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>

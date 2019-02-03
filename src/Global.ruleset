@@ -1,6 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Global Rules" ToolsVersion="15.0">
   <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="ClrHeapAllocationAnalyzer" RuleNamespace="ClrHeapAllocationAnalyzer">
+    <Rule Id="HAA0101" Action="Info" />
+    <Rule Id="HAA0102" Action="Info" />
+    <Rule Id="HAA0201" Action="Info" />
+    <Rule Id="HAA0202" Action="Info" />
+    <Rule Id="HAA0301" Action="Info" />
+    <Rule Id="HAA0302" Action="None" />
+    <Rule Id="HAA0303" Action="Info" />
+    <Rule Id="HAA0401" Action="Info" />
+    <Rule Id="HAA0501" Action="None" />
+    <Rule Id="HAA0502" Action="None" />
+    <Rule Id="HAA0503" Action="None" />
+    <Rule Id="HAA0504" Action="None" />
+    <Rule Id="HAA0601" Action="Info" />
+    <Rule Id="HAA0602" Action="Info" />
+    <Rule Id="HAA0603" Action="Info" />
+  </Rules>
   <Rules AnalyzerId="DevExpress.CodeAnalysis.CSharp.Diagnostics" RuleNamespace="DevExpress.CodeAnalysis.CSharp.Diagnostics">
     <Rule Id="CRR0013" Action="None" />
     <Rule Id="CRR0014" Action="None" />
@@ -45,6 +62,14 @@
     <Rule Id="CR0008" Action="None" />
     <Rule Id="CR0009" Action="None" />
     <Rule Id="CR0010" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="ErrorProne.Net.StructAnalyzers" RuleNamespace="ErrorProne.Net.StructAnalyzers">
+    <Rule Id="EPS01" Action="Info" />
+    <Rule Id="EPS02" Action="Info" />
+    <Rule Id="EPS03" Action="Info" />
+    <Rule Id="EPS05" Action="Info" />
+    <Rule Id="EPS06" Action="Info" />
+    <Rule Id="ESP04" Action="Info" />
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1000" Action="Warning" />
@@ -727,7 +752,6 @@
     <Rule Id="THR016" Action="None" />
   </Rules>
   <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
-    <Rule Id="S104" Action="Warning" />
     <Rule Id="S107" Action="Warning" />
     <Rule Id="S1109" Action="Warning" />
     <Rule Id="S113" Action="Warning" />
