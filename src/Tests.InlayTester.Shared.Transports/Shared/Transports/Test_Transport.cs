@@ -37,7 +37,7 @@ namespace InlayTester.Shared.Transports
 		[TestFixture]
 		public class Create_Settings
 		{
-			[Test]
+			[Test, Category("com0com")]
 			public void Create()
 			{
 				// act
@@ -69,7 +69,7 @@ namespace InlayTester.Shared.Transports
 		[TestFixture]
 		public class Create_Settings_Hooks
 		{
-			[Test]
+			[Test, Category("com0com")]
 			public void Create()
 			{
 				// act
@@ -113,7 +113,7 @@ namespace InlayTester.Shared.Transports
 		[TestFixture]
 		public class Create_Settings_Logger
 		{
-			[Test]
+			[Test, Category("com0com")]
 			public void Create_With_Logger()
 			{
 				// act
@@ -155,7 +155,7 @@ namespace InlayTester.Shared.Transports
 		[TestFixture]
 		public class Create_Settings_Logger_Hooks
 		{
-			[Test]
+			[Test, Category("com0com")]
 			public void Create_With_Logger()
 			{
 				// act

@@ -98,7 +98,7 @@ namespace InlayTester.Shared.Transports
 		[TestFixture]
 		public class OpenClose
 		{
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void Open_Close_Dispose()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -114,7 +114,7 @@ namespace InlayTester.Shared.Transports
 				Assert.Pass();
 			}
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void Open_Close_Open_Dispose()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -131,7 +131,7 @@ namespace InlayTester.Shared.Transports
 				Assert.Pass();
 			}
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void OpenThrowsException_When_AlreadyOpen()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -193,7 +193,7 @@ namespace InlayTester.Shared.Transports
 				}
 			}
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void Close_When_NotOpened()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -261,7 +261,7 @@ namespace InlayTester.Shared.Transports
 				}
 			}
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_SingleByte()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -293,7 +293,7 @@ namespace InlayTester.Shared.Transports
 				}
 			}
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_MultipleBytes()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -328,7 +328,7 @@ namespace InlayTester.Shared.Transports
 				}
 			}
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_ManyBytes()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -365,7 +365,7 @@ namespace InlayTester.Shared.Transports
 				}
 			}
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_MultipleTransfers()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -440,7 +440,7 @@ namespace InlayTester.Shared.Transports
 			}
 
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_BeforeSendHook()
 			{
 				var settingsA = new SerialTransportSettings() {
@@ -482,7 +482,7 @@ namespace InlayTester.Shared.Transports
 				}
 			}
 
-			[Test, Serial]
+			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_AfterReceivedHook()
 			{
 				var settingsA = new SerialTransportSettings() {
