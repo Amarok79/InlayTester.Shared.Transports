@@ -80,6 +80,7 @@
     <None Include="..\InlayTester.Shared.Transports.licenseheader">
       <Link>InlayTester.Shared.Transports.licenseheader</Link>
     </None>
+    <None Include="azure-devops.playlist" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InlayTester.Shared.Transports\InlayTester.Shared.Transports.csproj">
