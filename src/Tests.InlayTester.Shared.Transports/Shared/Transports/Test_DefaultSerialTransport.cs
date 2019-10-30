@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Shared.Transports
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,6 +26,7 @@ using System;
 using System.IO;
 using System.Threading;
 using Amarok.Events;
+using Amarok.Shared;
 using Common.Logging;
 using Common.Logging.Simple;
 using NCrunch.Framework;
@@ -272,7 +273,7 @@ namespace InlayTester.Shared.Transports
 				};
 
 				var data = BufferSpan.From(0x12);
-				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+				var log = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
 
 				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{
@@ -304,7 +305,7 @@ namespace InlayTester.Shared.Transports
 				};
 
 				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+				var log = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
 
 				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{
@@ -343,7 +344,7 @@ namespace InlayTester.Shared.Transports
 				random.NextBytes(buffer);
 				var data = BufferSpan.From(buffer);
 
-				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+				var log = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
 
 				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{
@@ -376,7 +377,7 @@ namespace InlayTester.Shared.Transports
 				};
 
 				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+				var log = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
 
 				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{
@@ -454,7 +455,7 @@ namespace InlayTester.Shared.Transports
 				hook.DataToSend = BufferSpan.From(0x55, 0x55, 0x55);
 
 				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+				var log = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
 
 				using (var transportA = new DefaultSerialTransport(settingsA, log, hook))
 				{
@@ -496,7 +497,7 @@ namespace InlayTester.Shared.Transports
 				hook.DataToReceive = BufferSpan.From(0x55, 0x55, 0x55);
 
 				var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-				var log = new ConsoleOutLogger("Test", LogLevel.All, false, false, false, "U");
+				var log = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
 
 				using (var transportA = new DefaultSerialTransport(settingsA, log, null))
 				{

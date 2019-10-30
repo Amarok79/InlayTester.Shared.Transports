@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Shared.Transports
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -118,7 +118,7 @@ namespace InlayTester.Shared.Transports
 			{
 				// act
 				var settings = new SerialTransportSettings();
-				var logger = new ConsoleOutLogger("Foo", LogLevel.All, false, false, false, "G");
+				var logger = new DebugOutLogger("Foo", LogLevel.All, false, false, false, "G");
 				var transport = Transport.Create(settings, logger);
 
 				// assert
@@ -161,7 +161,7 @@ namespace InlayTester.Shared.Transports
 				// act
 				var hooks = new Mock<ITransportHooks>();
 				var settings = new SerialTransportSettings();
-				var logger = new ConsoleOutLogger("Foo", LogLevel.All, false, false, false, "G");
+				var logger = new DebugOutLogger("Foo", LogLevel.All, false, false, false, "G");
 				var transport = Transport.Create(settings, logger, hooks.Object);
 
 				// assert

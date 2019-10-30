@@ -1,17 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InlayTester.Shared.Transports", "src\InlayTester.Shared.Transports\InlayTester.Shared.Transports.csproj", "{350569D0-BA88-4C76-A946-E67AA003314C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InlayTester.Shared.Transports", "src\InlayTester.Shared.Transports\InlayTester.Shared.Transports.csproj", "{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InlayTester.Shared.Transports", "src\Tests.InlayTester.Shared.Transports\Tests.InlayTester.Shared.Transports.csproj", "{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.InlayTester.Shared.Transports", "src\Tests.InlayTester.Shared.Transports\Tests.InlayTester.Shared.Transports.csproj", "{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A11C978D-415B-4C18-8FB7-03FA8BC8FECD}"
 	ProjectSection(SolutionItems) = preProject
 		src\amarok.snk = src\amarok.snk
+		azure-pipelines.yml = azure-pipelines.yml
 		src\Global.ruleset = src\Global.ruleset
 		src\InlayTester.Shared.Transports.licenseheader = src\InlayTester.Shared.Transports.licenseheader
+		src\Minimal.ruleset = src\Minimal.ruleset
 	EndProjectSection
 EndProject
 Global
@@ -20,14 +22,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{350569D0-BA88-4C76-A946-E67AA003314C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{350569D0-BA88-4C76-A946-E67AA003314C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{350569D0-BA88-4C76-A946-E67AA003314C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{350569D0-BA88-4C76-A946-E67AA003314C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{127BCBD9-E23B-422B-9BC9-0BE4AE7BF2CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

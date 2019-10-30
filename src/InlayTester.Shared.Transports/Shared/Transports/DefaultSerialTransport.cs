@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Shared.Transports
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,6 +28,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using Amarok.Events;
+using Amarok.Shared;
 using Common.Logging;
 using Lib = RJCP.IO.Ports;
 
@@ -140,7 +141,7 @@ namespace InlayTester.Shared.Transports
 				case Parity.Space:
 					return Lib.Parity.Space;
 				default:
-					throw ExceptionFactory.NotSupportedException("The given Parity '{0}' is not supported.", value);
+					throw new NotSupportedException($"The given Parity '{value}' is not supported.");
 			}
 		}
 
@@ -155,7 +156,7 @@ namespace InlayTester.Shared.Transports
 				case StopBits.Two:
 					return Lib.StopBits.Two;
 				default:
-					throw ExceptionFactory.NotSupportedException("The given StopBits '{0}' is not supported.", value);
+					throw new NotSupportedException($"The given StopBits '{value}' is not supported.");
 			}
 		}
 
@@ -172,7 +173,7 @@ namespace InlayTester.Shared.Transports
 				case Handshake.XOnXOff:
 					return Lib.Handshake.XOn;
 				default:
-					throw ExceptionFactory.NotSupportedException("The given Handshake '{0}' is not supported.", value);
+					throw new NotSupportedException($"The given Handshake '{value}' is not supported.");
 			}
 		}
 

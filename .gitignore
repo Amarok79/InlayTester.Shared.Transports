@@ -8,3 +8,4 @@
 obj
 *.user
 /_NCrunch_InlayTester.Shared.Transports
+/src/Tests.InlayTester.Shared.Transports/nCrunchTemp_*.csproj
