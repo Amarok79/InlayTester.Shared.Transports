@@ -6,11 +6,11 @@
 ## Introduction
 
 This library is available as NuGet package:
-[Amarok.InlayTester.Shared.Transports](https://www.nuget.org/packages/Amarok.InlayTester.Shared.Transports/)
+[InlayTester.Shared.Transports](https://www.nuget.org/packages/InlayTester.Shared.Transports/)
 
-The library is compiled as *.NET Standard 2.0* library. Tests are performed with *.NET Framework 4.7.1* only. Currently, I have no plans to support other runtimes like .NET Core or older .NET Framework versions.
+The library is compiled as *.NET Standard 2.0* library. Tests are generally performed with *.NET Framework 4.7.1*, *.NET Framework 4.8*, *.NET Core 2.1* and *.NET Core 3.0*.
 
-For development, you need *Visual Studio 2017* (v15.7 or later). For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
+For development, you need *Visual Studio 2019*. For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
 
 ## Types of Interest
