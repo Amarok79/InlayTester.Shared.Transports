@@ -38,6 +38,7 @@ steps:
     testSelector: 'testAssemblies'
     testAssemblyVer2: 'bin\tests\net471\Tests*.dll'
     searchFolder: '$(System.DefaultWorkingDirectory)'
+    testFiltercriteria: 'TestCategory!=com0com'
     codeCoverageEnabled: true
     testRunTitle: '.NET Framework 4.7.1'
     platform: '$(buildPlatform)'
@@ -48,6 +49,7 @@ steps:
     testSelector: 'testAssemblies'
     testAssemblyVer2: 'bin\tests\net48\Tests*.dll'
     searchFolder: '$(System.DefaultWorkingDirectory)'
+    testFiltercriteria: 'TestCategory!=com0com'
     codeCoverageEnabled: true
     testRunTitle: '.NET Framework 4.8'
     platform: '$(buildPlatform)'
@@ -57,14 +59,14 @@ steps:
   inputs:
     command: 'test'
     projects: '**/Tests.InlayTester.Shared.Transports.csproj'
-    arguments: '--no-restore --no-build --collect:"Code Coverage" --framework:"netcoreapp2.1"'
+    arguments: '--no-restore --no-build --collect:"Code Coverage" --framework:"netcoreapp2.1" --filter:"TestCategory!=com0com"'
     testRunTitle: '.NET Core 2.1'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: '**/Tests.InlayTester.Shared.Transports'
-    arguments: '--no-restore --no-build --collect:"Code Coverage" --framework:"netcoreapp3.0"'
+    arguments: '--no-restore --no-build --collect:"Code Coverage" --framework:"netcoreapp3.0" --filter:"TestCategory!=com0com"'
     testRunTitle: '.NET Core 3.0'
 
 - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
