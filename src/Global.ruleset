@@ -2,66 +2,69 @@
 <RuleSet Name="Global Rules" ToolsVersion="16.0">
   <IncludeAll Action="Warning" />
   <Rules AnalyzerId="ClrHeapAllocationAnalyzer" RuleNamespace="ClrHeapAllocationAnalyzer">
-    <Rule Id="HAA0101" Action="Info" />
-    <Rule Id="HAA0102" Action="Info" />
-    <Rule Id="HAA0201" Action="Info" />
-    <Rule Id="HAA0202" Action="Info" />
-    <Rule Id="HAA0301" Action="Info" />
+    <Rule Id="HAA0101" Action="None" />
+    <Rule Id="HAA0102" Action="None" />
+    <Rule Id="HAA0201" Action="None" />
+    <Rule Id="HAA0202" Action="None" />
+    <Rule Id="HAA0301" Action="None" />
     <Rule Id="HAA0302" Action="None" />
-    <Rule Id="HAA0303" Action="Info" />
-    <Rule Id="HAA0401" Action="Info" />
+    <Rule Id="HAA0303" Action="None" />
+    <Rule Id="HAA0401" Action="None" />
     <Rule Id="HAA0501" Action="None" />
     <Rule Id="HAA0502" Action="None" />
     <Rule Id="HAA0503" Action="None" />
     <Rule Id="HAA0504" Action="None" />
-    <Rule Id="HAA0601" Action="Info" />
-    <Rule Id="HAA0602" Action="Info" />
-    <Rule Id="HAA0603" Action="Info" />
+    <Rule Id="HAA0505" Action="None" />
+    <Rule Id="HAA0506" Action="None" />
+    <Rule Id="HAA0601" Action="None" />
+    <Rule Id="HAA0602" Action="None" />
+    <Rule Id="HAA0603" Action="None" />
+    <Rule Id="HeapAnalyzerReadonlyMethodGroupAllocationRule" Action="None" />
   </Rules>
   <Rules AnalyzerId="DevExpress.CodeAnalysis.CSharp.Diagnostics" RuleNamespace="DevExpress.CodeAnalysis.CSharp.Diagnostics">
-    <Rule Id="CRR0013" Action="None" />
-    <Rule Id="CRR0014" Action="None" />
+    <Rule Id="CRR0013" Action="Warning" />
+    <Rule Id="CRR0014" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="DevExpress.CodeAnalysis.CSharp.Features" RuleNamespace="DevExpress.CodeAnalysis.CSharp.Features">
-    <Rule Id="CR0001" Action="None" />
-    <Rule Id="CR0009" Action="None" />
-    <Rule Id="CR0010" Action="None" />
+    <Rule Id="CR0001" Action="Warning" />
+    <Rule Id="CR0009" Action="Warning" />
+    <Rule Id="CR0010" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="DevExpress.CodeAnalysis.VisualBasic.Diagnostics" RuleNamespace="DevExpress.CodeAnalysis.VisualBasic.Diagnostics">
-    <Rule Id="CRR0001" Action="None" />
-    <Rule Id="CRR0004" Action="None" />
-    <Rule Id="CRR0005" Action="None" />
-    <Rule Id="CRR0006" Action="None" />
-    <Rule Id="CRR0007" Action="None" />
-    <Rule Id="CRR0008" Action="None" />
-    <Rule Id="CRR0009" Action="None" />
-    <Rule Id="CRR0010" Action="None" />
-    <Rule Id="CRR0012" Action="None" />
-    <Rule Id="CRR0013" Action="None" />
-    <Rule Id="CRR0014" Action="None" />
-    <Rule Id="CRR0015" Action="None" />
-    <Rule Id="CRR0016" Action="None" />
-    <Rule Id="CRR0017" Action="None" />
-    <Rule Id="CRR0018" Action="None" />
-    <Rule Id="CRR0019" Action="None" />
-    <Rule Id="CRR0020" Action="None" />
-    <Rule Id="CRR0021" Action="None" />
-    <Rule Id="CRR0022" Action="None" />
-    <Rule Id="CRR0023" Action="None" />
-    <Rule Id="CRR0024" Action="None" />
-    <Rule Id="CRR0025" Action="None" />
-    <Rule Id="CRR0026" Action="None" />
-    <Rule Id="CRR1000" Action="None" />
+    <Rule Id="CRR0001" Action="Warning" />
+    <Rule Id="CRR0004" Action="Warning" />
+    <Rule Id="CRR0005" Action="Warning" />
+    <Rule Id="CRR0006" Action="Warning" />
+    <Rule Id="CRR0007" Action="Warning" />
+    <Rule Id="CRR0008" Action="Warning" />
+    <Rule Id="CRR0009" Action="Warning" />
+    <Rule Id="CRR0010" Action="Warning" />
+    <Rule Id="CRR0012" Action="Warning" />
+    <Rule Id="CRR0013" Action="Warning" />
+    <Rule Id="CRR0014" Action="Warning" />
+    <Rule Id="CRR0015" Action="Warning" />
+    <Rule Id="CRR0016" Action="Warning" />
+    <Rule Id="CRR0017" Action="Warning" />
+    <Rule Id="CRR0018" Action="Warning" />
+    <Rule Id="CRR0019" Action="Warning" />
+    <Rule Id="CRR0020" Action="Warning" />
+    <Rule Id="CRR0021" Action="Warning" />
+    <Rule Id="CRR0022" Action="Warning" />
+    <Rule Id="CRR0023" Action="Warning" />
+    <Rule Id="CRR0024" Action="Warning" />
+    <Rule Id="CRR0025" Action="Warning" />
+    <Rule Id="CRR0026" Action="Warning" />
+    <Rule Id="CRR1000" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="DevExpress.CodeAnalysis.VisualBasic.Features" RuleNamespace="DevExpress.CodeAnalysis.VisualBasic.Features">
-    <Rule Id="CR0001" Action="None" />
-    <Rule Id="CR0002" Action="None" />
-    <Rule Id="CR0003" Action="None" />
-    <Rule Id="CR0004" Action="None" />
-    <Rule Id="CR0006" Action="None" />
-    <Rule Id="CR0008" Action="None" />
-    <Rule Id="CR0009" Action="None" />
-    <Rule Id="CR0010" Action="None" />
+    <Rule Id="CR0001" Action="Warning" />
+    <Rule Id="CR0002" Action="Warning" />
+    <Rule Id="CR0003" Action="Warning" />
+    <Rule Id="CR0004" Action="Warning" />
+    <Rule Id="CR0006" Action="Warning" />
+    <Rule Id="CR0008" Action="Warning" />
+    <Rule Id="CR0009" Action="Warning" />
+    <Rule Id="CR0010" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="ErrorProne.Net.StructAnalyzers" RuleNamespace="ErrorProne.Net.StructAnalyzers">
     <Rule Id="EPS01" Action="Info" />
@@ -752,15 +755,13 @@
     <Rule Id="THR016" Action="None" />
   </Rules>
   <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <Rule Id="S101" Action="None" />
     <Rule Id="S107" Action="Warning" />
     <Rule Id="S1109" Action="Warning" />
-    <Rule Id="S1128" Action="None" />
     <Rule Id="S113" Action="Warning" />
     <Rule Id="S1135" Action="Warning" />
     <Rule Id="S1145" Action="Warning" />
     <Rule Id="S1147" Action="Warning" />
-    <Rule Id="S1199" Action="None" />
-    <Rule Id="S1200" Action="Warning" />
     <Rule Id="S1226" Action="Warning" />
     <Rule Id="S1227" Action="Warning" />
     <Rule Id="S1244" Action="Warning" />
@@ -769,12 +770,8 @@
     <Rule Id="S1301" Action="Warning" />
     <Rule Id="S131" Action="Warning" />
     <Rule Id="S1313" Action="Warning" />
-    <Rule Id="S134" Action="Warning" />
-    <Rule Id="S138" Action="Warning" />
     <Rule Id="S1449" Action="Warning" />
     <Rule Id="S1479" Action="Warning" />
-    <Rule Id="S1541" Action="Warning" />
-    <Rule Id="S1659" Action="Warning" />
     <Rule Id="S1694" Action="Warning" />
     <Rule Id="S1696" Action="Warning" />
     <Rule Id="S1697" Action="Warning" />
@@ -805,6 +802,7 @@
     <Rule Id="S3215" Action="Warning" />
     <Rule Id="S3216" Action="Warning" />
     <Rule Id="S3234" Action="Warning" />
+    <Rule Id="S3235" Action="Warning" />
     <Rule Id="S3242" Action="Warning" />
     <Rule Id="S3253" Action="Warning" />
     <Rule Id="S3257" Action="Warning" />
@@ -814,7 +812,6 @@
     <Rule Id="S3441" Action="Warning" />
     <Rule Id="S3532" Action="Warning" />
     <Rule Id="S3717" Action="Warning" />
-    <Rule Id="S3776" Action="Warning" />
     <Rule Id="S3872" Action="Warning" />
     <Rule Id="S3874" Action="Warning" />
     <Rule Id="S3876" Action="Warning" />
@@ -837,7 +834,6 @@
     <Rule Id="S4002" Action="Warning" />
     <Rule Id="S4004" Action="Warning" />
     <Rule Id="S4005" Action="Warning" />
-    <Rule Id="S4017" Action="Warning" />
     <Rule Id="S4018" Action="Warning" />
     <Rule Id="S4023" Action="Warning" />
     <Rule Id="S4025" Action="Warning" />
