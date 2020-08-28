@@ -102,7 +102,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void Open_Close_Dispose()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -118,7 +118,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void Open_Close_Open_Dispose()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -135,7 +135,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void OpenThrowsException_When_AlreadyOpen()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -151,7 +151,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial]
 			public void OpenThrowsException_When_AlreadyDisposed()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -167,7 +167,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial]
 			public void OpenThrowsException_When_SettingsAreInvalid()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "ABC",
 				};
 
@@ -181,7 +181,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial]
 			public void CloseThrowsException_When_AlreadyDisposed()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -197,7 +197,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void Close_When_NotOpened()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -213,7 +213,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial]
 			public void Dispose_When_NotOpened()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -231,7 +231,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial]
 			public void SendThrowsException_When_NotOpened()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -247,7 +247,7 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial]
 			public void SendThrowsException_When_AlreadyDisposed()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
 
@@ -265,10 +265,10 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_SingleByte()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
-				var settingsB = new SerialTransportSettings() {
+				var settingsB = new SerialTransportSettings {
 					PortName = "COMB",
 				};
 
@@ -297,10 +297,10 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_MultipleBytes()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
-				var settingsB = new SerialTransportSettings() {
+				var settingsB = new SerialTransportSettings {
 					PortName = "COMB",
 				};
 
@@ -332,10 +332,10 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_ManyBytes()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
-				var settingsB = new SerialTransportSettings() {
+				var settingsB = new SerialTransportSettings {
 					PortName = "COMB",
 				};
 
@@ -369,10 +369,10 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_MultipleTransfers()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
-				var settingsB = new SerialTransportSettings() {
+				var settingsB = new SerialTransportSettings {
 					PortName = "COMB",
 				};
 
@@ -444,10 +444,10 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_BeforeSendHook()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
-				var settingsB = new SerialTransportSettings() {
+				var settingsB = new SerialTransportSettings {
 					PortName = "COMB",
 				};
 
@@ -486,10 +486,10 @@ namespace InlayTester.Shared.Transports
 			[Test, Serial, NUnit.Framework.Category("com0com")]
 			public void SendReceive_AfterReceivedHook()
 			{
-				var settingsA = new SerialTransportSettings() {
+				var settingsA = new SerialTransportSettings {
 					PortName = "COMA",
 				};
-				var settingsB = new SerialTransportSettings() {
+				var settingsB = new SerialTransportSettings {
 					PortName = "COMB",
 				};
 

@@ -128,53 +128,38 @@ namespace InlayTester.Shared.Transports
 
 		internal static Lib.Parity Convert(Parity value)
 		{
-			switch (value)
+			return value switch
 			{
-				case Parity.Even:
-					return Lib.Parity.Even;
-				case Parity.Mark:
-					return Lib.Parity.Mark;
-				case Parity.None:
-					return Lib.Parity.None;
-				case Parity.Odd:
-					return Lib.Parity.Odd;
-				case Parity.Space:
-					return Lib.Parity.Space;
-				default:
-					throw new NotSupportedException($"The given Parity '{value}' is not supported.");
-			}
+				Parity.Even => Lib.Parity.Even,
+				Parity.Mark => Lib.Parity.Mark,
+				Parity.None => Lib.Parity.None,
+				Parity.Odd => Lib.Parity.Odd,
+				Parity.Space => Lib.Parity.Space,
+				_ => throw new NotSupportedException($"The given Parity '{value}' is not supported."),
+			};
 		}
 
 		internal static Lib.StopBits Convert(StopBits value)
 		{
-			switch (value)
+			return value switch
 			{
-				case StopBits.One:
-					return Lib.StopBits.One;
-				case StopBits.OnePointFive:
-					return Lib.StopBits.One5;
-				case StopBits.Two:
-					return Lib.StopBits.Two;
-				default:
-					throw new NotSupportedException($"The given StopBits '{value}' is not supported.");
-			}
+				StopBits.One => Lib.StopBits.One,
+				StopBits.OnePointFive => Lib.StopBits.One5,
+				StopBits.Two => Lib.StopBits.Two,
+				_ => throw new NotSupportedException($"The given StopBits '{value}' is not supported."),
+			};
 		}
 
 		internal static Lib.Handshake Convert(Handshake value)
 		{
-			switch (value)
+			return value switch
 			{
-				case Handshake.None:
-					return Lib.Handshake.None;
-				case Handshake.RequestToSend:
-					return Lib.Handshake.Rts;
-				case Handshake.RequestToSendXOnXOff:
-					return Lib.Handshake.RtsXOn;
-				case Handshake.XOnXOff:
-					return Lib.Handshake.XOn;
-				default:
-					throw new NotSupportedException($"The given Handshake '{value}' is not supported.");
-			}
+				Handshake.None => Lib.Handshake.None,
+				Handshake.RequestToSend => Lib.Handshake.Rts,
+				Handshake.RequestToSendXOnXOff => Lib.Handshake.RtsXOn,
+				Handshake.XOnXOff => Lib.Handshake.XOn,
+				_ => throw new NotSupportedException($"The given Handshake '{value}' is not supported."),
+			};
 		}
 
 
