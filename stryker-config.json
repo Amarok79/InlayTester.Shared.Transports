@@ -1,0 +1,22 @@
+{
+  "stryker-config": {
+    "solution-path": "InlayTester.Shared.Transports.sln",
+    "project-file": "InlayTester.Shared.Transports.csproj",
+    "test-projects": [
+      "src/Tests.InlayTester.Shared.Transports/Tests.InlayTester.Shared.Transports.csproj"
+    ],
+    "mutate-level": "Standard",
+    "coverage-analysis": "perTest",
+    "log-level": "info",
+    "log-file": true,
+    "ignore-methods": [],
+    "reporters": [
+      "html",
+      "progress",
+      "dashboard"
+    ],
+    "dashboard-api-key": "5e9a07c1-b7be-4567-9c2c-a6d819086966",
+    "dashboard-project": "github.com/Amarok79/InlayTester.Shared.Transports",
+    "dashboard-version": "master"
+  }
+}
