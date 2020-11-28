@@ -22,8 +22,6 @@
  * SOFTWARE.
  */
 
-#pragma warning disable S2221 // "Exception" should not be caught when not required by called methods
-
 using System;
 using System.Globalization;
 using System.IO;
@@ -35,341 +33,361 @@ using Lib = RJCP.IO.Ports;
 
 namespace InlayTester.Shared.Transports
 {
-	internal sealed class DefaultSerialTransport :
-		ITransport
-	{
-		// data
-		private readonly Lib.SerialPortStream mStream = new Lib.SerialPortStream();
-		private readonly SerialTransportSettings mSettings;
-		private readonly ILog mLog;
-		private readonly ITransportHooks? mHooks;
-		private readonly EventSource<BufferSpan> mReceivedEvent = new EventSource<BufferSpan>();
+    internal sealed class DefaultSerialTransport : ITransport
+    {
+        // data
+        private readonly Lib.SerialPortStream mStream = new Lib.SerialPortStream();
+        private readonly SerialTransportSettings mSettings;
+        private readonly ILog mLog;
+        private readonly ITransportHooks? mHooks;
+        private readonly EventSource<BufferSpan> mReceivedEvent = new EventSource<BufferSpan>();
 
 
-		public SerialTransportSettings Settings => mSettings;
+        public SerialTransportSettings Settings => mSettings;
 
-		public ILog Logger => mLog;
+        public ILog Logger => mLog;
 
-		public ITransportHooks? Hooks => mHooks;
-
-
-		public DefaultSerialTransport(SerialTransportSettings settings, ILog logger, ITransportHooks? hooks)
-		{
-			mSettings = settings;
-			mLog = logger;
-			mHooks = hooks;
-
-			mStream.DataReceived += _HandleDataReceived;
-			mStream.ErrorReceived += _HandleErrorReceived;
-		}
+        public ITransportHooks? Hooks => mHooks;
 
 
-		/// <summary>
-		/// An event that is raised for data that has been received.
-		/// </summary>
-		public Event<BufferSpan> Received => mReceivedEvent.Event;
+        public DefaultSerialTransport(SerialTransportSettings settings, ILog logger, ITransportHooks? hooks)
+        {
+            mSettings = settings;
+            mLog      = logger;
+            mHooks    = hooks;
+
+            mStream.DataReceived  += _HandleDataReceived;
+            mStream.ErrorReceived += _HandleErrorReceived;
+        }
 
 
-		/// <summary>
-		/// Opens the transport. A transport can be opened and closed multiple times.
-		/// </summary>
-		/// 
-		/// <exception cref="ObjectDisposedException">
-		/// A method or property was called on an already disposed object.</exception>
-		/// <exception cref="InvalidOperationException">
-		/// The transport has already been opened before.</exception>
-		/// <exception cref="IOException">
-		/// The transport settings seem to be invalid.</exception>
-		public void Open()
-		{
-			_ThrowIfDisposed();
-			_ThrowIfAlreadyOpen();
-
-			try
-			{
-				mStream.PortName = mSettings.PortName;
-				mStream.BaudRate = mSettings.Baud;
-				mStream.DataBits = mSettings.DataBits;
-				mStream.Parity = Convert(mSettings.Parity);
-				mStream.StopBits = Convert(mSettings.StopBits);
-				mStream.Handshake = Convert(mSettings.Handshake);
-
-				mStream.DiscardNull = false;
-				mStream.ParityReplace = 0xff;
-
-				mStream.Open();
-
-				#region (logging)
-				{
-					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  OPENED    {1}",
-						mSettings.PortName,
-						mSettings
-					);
-				}
-				#endregion
-			}
-			catch (Exception exception)
-			{
-				#region (logging)
-				{
-					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"[{0}]  FAILED to open. Settings: '{1}'.",
-						exception,
-						mSettings.PortName,
-						mSettings
-					);
-				}
-				#endregion
-
-				throw;
-			}
-		}
-
-		internal static Lib.Parity Convert(Parity value)
-		{
-			return value switch
-			{
-				Parity.Even => Lib.Parity.Even,
-				Parity.Mark => Lib.Parity.Mark,
-				Parity.None => Lib.Parity.None,
-				Parity.Odd => Lib.Parity.Odd,
-				Parity.Space => Lib.Parity.Space,
-				_ => throw new NotSupportedException($"The given Parity '{value}' is not supported."),
-			};
-		}
-
-		internal static Lib.StopBits Convert(StopBits value)
-		{
-			return value switch
-			{
-				StopBits.One => Lib.StopBits.One,
-				StopBits.OnePointFive => Lib.StopBits.One5,
-				StopBits.Two => Lib.StopBits.Two,
-				_ => throw new NotSupportedException($"The given StopBits '{value}' is not supported."),
-			};
-		}
-
-		internal static Lib.Handshake Convert(Handshake value)
-		{
-			return value switch
-			{
-				Handshake.None => Lib.Handshake.None,
-				Handshake.RequestToSend => Lib.Handshake.Rts,
-				Handshake.RequestToSendXOnXOff => Lib.Handshake.RtsXOn,
-				Handshake.XOnXOff => Lib.Handshake.XOn,
-				_ => throw new NotSupportedException($"The given Handshake '{value}' is not supported."),
-			};
-		}
+        /// <summary>
+        /// An event that is raised for data that has been received.
+        /// </summary>
+        public Event<BufferSpan> Received => mReceivedEvent.Event;
 
 
-		/// <summary>
-		/// Closes the transport. A transport can be opened and closed multiple times.
-		/// </summary>
-		/// 
-		/// <exception cref="ObjectDisposedException">
-		/// A method or property was called on an already disposed object.</exception>
-		public void Close()
-		{
-			_ThrowIfDisposed();
+        /// <summary>
+        /// Opens the transport. A transport can be opened and closed multiple times.
+        /// </summary>
+        /// 
+        /// <exception cref="ObjectDisposedException">
+        /// A method or property was called on an already disposed object.</exception>
+        /// <exception cref="InvalidOperationException">
+        /// The transport has already been opened before.</exception>
+        /// <exception cref="IOException">
+        /// The transport settings seem to be invalid.</exception>
+        public void Open()
+        {
+            _ThrowIfDisposed();
+            _ThrowIfAlreadyOpen();
 
-			try
-			{
-				mStream.Close();
+            try
+            {
+                mStream.PortName  = mSettings.PortName;
+                mStream.BaudRate  = mSettings.Baud;
+                mStream.DataBits  = mSettings.DataBits;
+                mStream.Parity    = Convert(mSettings.Parity);
+                mStream.StopBits  = Convert(mSettings.StopBits);
+                mStream.Handshake = Convert(mSettings.Handshake);
 
-				#region (logging)
-				{
-					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  CLOSED",
-						mSettings.PortName
-					);
-				}
-				#endregion
-			}
-			catch (Exception exception)
-			{
-				#region (logging)
-				{
-					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"[{0}]  FAILED to close.",
-						exception,
-						mSettings.PortName
-					);
-				}
-				#endregion
+                mStream.DiscardNull   = false;
+                mStream.ParityReplace = 0xff;
 
-				throw;
-			}
-		}
+                mStream.Open();
 
-		/// <summary>
-		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-		/// </summary>
-		public void Dispose()
-		{
-			mStream.Dispose();
-			mReceivedEvent.Dispose();
+                #region (logging)
 
-			#region (logging)
-			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  DISPOSED",
-					mSettings.PortName
-				);
-			}
-			#endregion
-		}
+                {
+                    mLog.InfoFormat(
+                        CultureInfo.InvariantCulture,
+                        "[{0}]  OPENED    {1}",
+                        mSettings.PortName,
+                        mSettings
+                    );
+                }
 
+                #endregion
+            }
+            catch (Exception exception)
+            {
+                #region (logging)
 
-		/// <summary>
-		/// Sends the given data over the transport.
-		/// </summary>
-		/// 
-		/// <param name="data">
-		/// The data to send.</param>
-		/// 
-		/// <exception cref="ObjectDisposedException">
-		/// A method or property was called on an already disposed object.</exception>
-		/// <exception cref="InvalidOperationException">
-		/// The transport has not been opened yet.</exception>
-		public void Send(BufferSpan data)
-		{
-			_ThrowIfDisposed();
-			_ThrowIfNotOpen();
+                {
+                    mLog.ErrorFormat(
+                        CultureInfo.InvariantCulture,
+                        "[{0}]  FAILED to open. Settings: '{1}'.",
+                        exception,
+                        mSettings.PortName,
+                        mSettings
+                    );
+                }
 
-			try
-			{
-				// invoke hook
-				mHooks?.BeforeSend(ref data);
+                #endregion
 
-				// send data
-				mStream.Write(data.Buffer, data.Offset, data.Count);
+                throw;
+            }
+        }
 
-				#region (logging)
-				{
-					if (mLog.IsTraceEnabled)
-					{
-						mLog.TraceFormat(CultureInfo.InvariantCulture,
-							"[{0}]  SENT      {1}",
-							mSettings.PortName,
-							data
-						);
-					}
-				}
-				#endregion
-			}
-			catch (Exception exception)
-			{
-				#region (logging)
-				{
-					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"[{0}]  FAILED to send. Data: '{1}'.",
-						exception,
-						mSettings.PortName,
-						data
-					);
-				}
-				#endregion
+        internal static Lib.Parity Convert(Parity value)
+        {
+            return value switch {
+                Parity.Even  => Lib.Parity.Even,
+                Parity.Mark  => Lib.Parity.Mark,
+                Parity.None  => Lib.Parity.None,
+                Parity.Odd   => Lib.Parity.Odd,
+                Parity.Space => Lib.Parity.Space,
+                _            => throw new NotSupportedException($"The given Parity '{value}' is not supported."),
+            };
+        }
 
-				throw;
-			}
-		}
+        internal static Lib.StopBits Convert(StopBits value)
+        {
+            return value switch {
+                StopBits.One => Lib.StopBits.One,
+                StopBits.OnePointFive => Lib.StopBits.One5,
+                StopBits.Two => Lib.StopBits.Two,
+                _ => throw new NotSupportedException($"The given StopBits '{value}' is not supported."),
+            };
+        }
+
+        internal static Lib.Handshake Convert(Handshake value)
+        {
+            return value switch {
+                Handshake.None => Lib.Handshake.None,
+                Handshake.RequestToSend => Lib.Handshake.Rts,
+                Handshake.RequestToSendXOnXOff => Lib.Handshake.RtsXOn,
+                Handshake.XOnXOff => Lib.Handshake.XOn,
+                _ => throw new NotSupportedException($"The given Handshake '{value}' is not supported."),
+            };
+        }
 
 
-		private void _HandleDataReceived(Object sender, Lib.SerialDataReceivedEventArgs e)
-		{
-			try
-			{
-				if (e.EventType == Lib.SerialData.NoData)
-					return;
+        /// <summary>
+        /// Closes the transport. A transport can be opened and closed multiple times.
+        /// </summary>
+        /// 
+        /// <exception cref="ObjectDisposedException">
+        /// A method or property was called on an already disposed object.</exception>
+        public void Close()
+        {
+            _ThrowIfDisposed();
 
-				var data = _ReadDataReceived();
-				mReceivedEvent.Invoke(data);
-			}
-			catch (Exception)
-			{
-				// swallow
-			}
-		}
+            try
+            {
+                mStream.Close();
 
-		private BufferSpan _ReadDataReceived()
-		{
-			try
-			{
-				// receive data
-				var bytesToRead = mStream.BytesToRead;
-				var buffer = new Byte[bytesToRead];
-				var bytesRead = mStream.Read(buffer, 0, bytesToRead);
-				var data = BufferSpan.From(buffer, bytesRead);
+                #region (logging)
 
-				// invoke hook
-				mHooks?.AfterReceived(ref data);
+                {
+                    mLog.InfoFormat(CultureInfo.InvariantCulture, "[{0}]  CLOSED", mSettings.PortName);
+                }
 
-				#region (logging)
-				{
-					if (mLog.IsTraceEnabled)
-					{
-						mLog.TraceFormat(CultureInfo.InvariantCulture,
-							"[{0}]  RECEIVED  {1}",
-							mSettings.PortName,
-							data
-						);
-					}
-				}
-				#endregion
+                #endregion
+            }
+            catch (Exception exception)
+            {
+                #region (logging)
 
-				return data;
-			}
-			catch (Exception exception)
-			{
-				#region (logging)
-				{
-					mLog.ErrorFormat(CultureInfo.InvariantCulture,
-						"[{0}]  FAILED to receive.",
-						exception,
-						mSettings.PortName
-					);
-				}
-				#endregion
+                {
+                    mLog.ErrorFormat(
+                        CultureInfo.InvariantCulture,
+                        "[{0}]  FAILED to close.",
+                        exception,
+                        mSettings.PortName
+                    );
+                }
 
-				throw;
-			}
-		}
+                #endregion
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            mStream.Dispose();
+            mReceivedEvent.Dispose();
+
+            #region (logging)
+
+            {
+                mLog.InfoFormat(CultureInfo.InvariantCulture, "[{0}]  DISPOSED", mSettings.PortName);
+            }
+
+            #endregion
+        }
 
 
-		private void _HandleErrorReceived(Object sender, Lib.SerialErrorReceivedEventArgs e)
-		{
-			if (e.EventType == Lib.SerialError.NoError)
-				return;
+        /// <summary>
+        /// Sends the given data over the transport.
+        /// </summary>
+        /// 
+        /// <param name="data">
+        /// The data to send.</param>
+        /// 
+        /// <exception cref="ObjectDisposedException">
+        /// A method or property was called on an already disposed object.</exception>
+        /// <exception cref="InvalidOperationException">
+        /// The transport has not been opened yet.</exception>
+        public void Send(BufferSpan data)
+        {
+            _ThrowIfDisposed();
+            _ThrowIfNotOpen();
 
-			#region (logging)
-			{
-				mLog.WarnFormat(CultureInfo.InvariantCulture,
-					"[{0}]  SERIAL ERROR  '{1}'",
-					mSettings.PortName,
-					e.EventType
-				);
-			}
-			#endregion
-		}
+            try
+            {
+                // invoke hook
+                mHooks?.BeforeSend(ref data);
+
+                // send data
+                mStream.Write(data.Buffer, data.Offset, data.Count);
+
+                #region (logging)
+
+                {
+                    if (mLog.IsTraceEnabled)
+                    {
+                        mLog.TraceFormat(
+                            CultureInfo.InvariantCulture,
+                            "[{0}]  SENT      {1}",
+                            mSettings.PortName,
+                            data
+                        );
+                    }
+                }
+
+                #endregion
+            }
+            catch (Exception exception)
+            {
+                #region (logging)
+
+                {
+                    mLog.ErrorFormat(
+                        CultureInfo.InvariantCulture,
+                        "[{0}]  FAILED to send. Data: '{1}'.",
+                        exception,
+                        mSettings.PortName,
+                        data
+                    );
+                }
+
+                #endregion
+
+                throw;
+            }
+        }
 
 
-		private void _ThrowIfDisposed()
-		{
-			if (mStream.IsDisposed)
-				throw new ObjectDisposedException(nameof(DefaultSerialTransport));
-		}
+        private void _HandleDataReceived(Object? sender, Lib.SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                if (e.EventType == Lib.SerialData.NoData)
+                    return;
 
-		private void _ThrowIfAlreadyOpen()
-		{
-			if (mStream.IsOpen)
-				throw new InvalidOperationException("The transport has already been opened before.");
-		}
+                var data = _ReadDataReceived();
+                mReceivedEvent.Invoke(data);
+            }
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
+            {
+                // swallow
+            }
+        }
 
-		private void _ThrowIfNotOpen()
-		{
-			if (!mStream.IsOpen)
-				throw new InvalidOperationException("The transport has not been opened yet.");
-		}
-	}
+        private BufferSpan _ReadDataReceived()
+        {
+            try
+            {
+                // receive data
+                var bytesToRead = mStream.BytesToRead;
+                var buffer      = new Byte[bytesToRead];
+                var bytesRead   = mStream.Read(buffer, 0, bytesToRead);
+                var data        = BufferSpan.From(buffer, bytesRead);
+
+                // invoke hook
+                mHooks?.AfterReceived(ref data);
+
+                #region (logging)
+
+                {
+                    if (mLog.IsTraceEnabled)
+                    {
+                        mLog.TraceFormat(
+                            CultureInfo.InvariantCulture,
+                            "[{0}]  RECEIVED  {1}",
+                            mSettings.PortName,
+                            data
+                        );
+                    }
+                }
+
+                #endregion
+
+                return data;
+            }
+            catch (Exception exception)
+            {
+                #region (logging)
+
+                {
+                    mLog.ErrorFormat(
+                        CultureInfo.InvariantCulture,
+                        "[{0}]  FAILED to receive.",
+                        exception,
+                        mSettings.PortName
+                    );
+                }
+
+                #endregion
+
+                throw;
+            }
+        }
+
+
+        private void _HandleErrorReceived(Object? sender, Lib.SerialErrorReceivedEventArgs e)
+        {
+            if (e.EventType == Lib.SerialError.NoError)
+                return;
+
+            #region (logging)
+
+            {
+                mLog.WarnFormat(
+                    CultureInfo.InvariantCulture,
+                    "[{0}]  SERIAL ERROR  '{1}'",
+                    mSettings.PortName,
+                    e.EventType
+                );
+            }
+
+            #endregion
+        }
+
+
+        private void _ThrowIfDisposed()
+        {
+            if (mStream.IsDisposed)
+                throw new ObjectDisposedException(nameof(DefaultSerialTransport));
+        }
+
+        private void _ThrowIfAlreadyOpen()
+        {
+            if (mStream.IsOpen)
+                throw new InvalidOperationException("The transport has already been opened before.");
+        }
+
+        private void _ThrowIfNotOpen()
+        {
+            if (!mStream.IsOpen)
+                throw new InvalidOperationException("The transport has not been opened yet.");
+        }
+    }
 }
