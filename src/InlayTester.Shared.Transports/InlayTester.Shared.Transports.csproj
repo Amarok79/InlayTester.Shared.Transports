@@ -58,7 +58,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Amarok.Contracts" Version="3.1.1" />
+		<PackageReference Include="Amarok.Contracts" Version="3.1.2" />
 		<PackageReference Include="Amarok.Events" Version="1.4.0" />
 		<PackageReference Include="Amarok.Shared" Version="2.1.0" />
 		<PackageReference Include="Common.Logging" Version="3.4.1" />
