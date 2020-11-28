@@ -9,13 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.InlayTester.Shared.Tr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A11C978D-415B-4C18-8FB7-03FA8BC8FECD}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		src\amarok.snk = src\amarok.snk
-		azure-pipelines.yml = azure-pipelines.yml
-		src\Global.ruleset = src\Global.ruleset
 		src\InlayTester.Shared.Transports.licenseheader = src\InlayTester.Shared.Transports.licenseheader
 		LICENSE = LICENSE
-		src\Minimal.ruleset = src\Minimal.ruleset
 		README.md = README.md
+		stryker-config.json = stryker-config.json
 	EndProjectSection
 EndProject
 Global
