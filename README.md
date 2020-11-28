@@ -1,5 +1,5 @@
 ![CI](https://github.com/Amarok79/InlayTester.Shared.Transports/workflows/CI/badge.svg)
-[![NuGet](https://img.shields.io/nuget/v/Amarok.InlayTester.Shared.Transports.svg?logo=)](https://www.nuget.org/packages/InlayTester.Shared.Transports/)
+[![NuGet](https://img.shields.io/nuget/v/InlayTester.Shared.Transports.svg?logo=)](https://www.nuget.org/packages/InlayTester.Shared.Transports/)
 
 # Introduction
 
