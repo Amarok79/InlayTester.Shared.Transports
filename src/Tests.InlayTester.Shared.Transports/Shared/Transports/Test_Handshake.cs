@@ -36,12 +36,12 @@ namespace InlayTester.Shared.Transports
         public void TestValues()
         {
             Check.That(Enum.GetValues(typeof(Handshake)))
-                 .IsOnlyMadeOf(
-                      Handshake.None,
-                      Handshake.RequestToSend,
-                      Handshake.RequestToSendXOnXOff,
-                      Handshake.XOnXOff
-                  );
+               .IsOnlyMadeOf(
+                    Handshake.None,
+                    Handshake.RequestToSend,
+                    Handshake.RequestToSendXOnXOff,
+                    Handshake.XOnXOff
+                );
         }
     }
 }

@@ -36,7 +36,7 @@ namespace InlayTester.Shared.Transports
         public void TestValues()
         {
             Check.That(Enum.GetValues(typeof(StopBits)))
-                 .IsOnlyMadeOf(StopBits.One, StopBits.OnePointFive, StopBits.Two);
+               .IsOnlyMadeOf(StopBits.One, StopBits.OnePointFive, StopBits.Two);
         }
     }
 }

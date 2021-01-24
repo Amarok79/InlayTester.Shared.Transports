@@ -96,7 +96,7 @@ namespace InlayTester.Shared.Transports
                 var settings = new SerialTransportSettings();
 
                 Check.ThatCode(() => Transport.Create(settings, (ITransportHooks) null))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
         }
 
@@ -164,7 +164,7 @@ namespace InlayTester.Shared.Transports
                 var hooks = new Mock<ITransportHooks>();
 
                 Check.ThatCode(() => Transport.Create(null, new NoOpLogger(), hooks.Object))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
 
             [Test]
@@ -182,7 +182,7 @@ namespace InlayTester.Shared.Transports
                 var settings = new SerialTransportSettings();
 
                 Check.ThatCode(() => Transport.Create(settings, new NoOpLogger(), null))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
         }
     }

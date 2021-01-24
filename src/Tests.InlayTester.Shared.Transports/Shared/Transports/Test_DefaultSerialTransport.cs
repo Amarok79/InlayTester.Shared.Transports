@@ -76,7 +76,7 @@ namespace InlayTester.Shared.Transports
                 Check.That(DefaultSerialTransport.Convert(Handshake.RequestToSend)).IsEqualTo(Lib.Handshake.Rts);
 
                 Check.That(DefaultSerialTransport.Convert(Handshake.RequestToSendXOnXOff))
-                     .IsEqualTo(Lib.Handshake.RtsXOn);
+                   .IsEqualTo(Lib.Handshake.RtsXOn);
 
                 Check.That(DefaultSerialTransport.Convert(Handshake.XOnXOff)).IsEqualTo(Lib.Handshake.XOn);
                 Check.ThatCode(() => DefaultSerialTransport.Convert((Handshake) 123)).Throws<NotSupportedException>();
@@ -271,7 +271,7 @@ namespace InlayTester.Shared.Transports
                         SpinWait.SpinUntil(() => recorder.Count == 8, 5000);
 
                         Check.That(recorder.Events[0].ToArray())
-                             .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
                         transportA.Close();
                         transportB.Close();
@@ -337,32 +337,32 @@ namespace InlayTester.Shared.Transports
                         SpinWait.SpinUntil(() => received.Count == 3 * 8, 5000);
 
                         Check.That(received.ToArray())
-                             .ContainsExactly(
-                                  0x11,
-                                  0x22,
-                                  0x33,
-                                  0x44,
-                                  0x55,
-                                  0x66,
-                                  0x77,
-                                  0x88,
-                                  0x11,
-                                  0x22,
-                                  0x33,
-                                  0x44,
-                                  0x55,
-                                  0x66,
-                                  0x77,
-                                  0x88,
-                                  0x11,
-                                  0x22,
-                                  0x33,
-                                  0x44,
-                                  0x55,
-                                  0x66,
-                                  0x77,
-                                  0x88
-                              );
+                           .ContainsExactly(
+                                0x11,
+                                0x22,
+                                0x33,
+                                0x44,
+                                0x55,
+                                0x66,
+                                0x77,
+                                0x88,
+                                0x11,
+                                0x22,
+                                0x33,
+                                0x44,
+                                0x55,
+                                0x66,
+                                0x77,
+                                0x88,
+                                0x11,
+                                0x22,
+                                0x33,
+                                0x44,
+                                0x55,
+                                0x66,
+                                0x77,
+                                0x88
+                            );
                     }
                 }
             }
@@ -434,7 +434,7 @@ namespace InlayTester.Shared.Transports
                         transportB.Close();
 
                         Check.That(hook.SentData.ToArray())
-                             .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
                     }
                 }
             }
@@ -470,7 +470,7 @@ namespace InlayTester.Shared.Transports
                         transportB.Close();
 
                         Check.That(hook.DataReceived.ToArray())
-                             .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
                     }
                 }
             }
