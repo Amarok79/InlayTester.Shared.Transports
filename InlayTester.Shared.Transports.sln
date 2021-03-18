@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\amarok.snk = src\amarok.snk
 		src\InlayTester.Shared.Transports.licenseheader = src\InlayTester.Shared.Transports.licenseheader
 		LICENSE = LICENSE
+		.github\workflows\main.yml = .github\workflows\main.yml
 		README.md = README.md
 		stryker-config.json = stryker-config.json
 	EndProjectSection
