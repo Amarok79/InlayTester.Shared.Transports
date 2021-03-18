@@ -2,3 +2,6 @@
 
 # CA1716: Identifiers should not match keywords
 dotnet_diagnostic.CA1716.severity = none
+
+# S1199: Nested code blocks should not be used
+dotnet_diagnostic.S1199.severity = none

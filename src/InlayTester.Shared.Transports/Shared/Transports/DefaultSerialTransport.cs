@@ -36,11 +36,11 @@ namespace InlayTester.Shared.Transports
     internal sealed class DefaultSerialTransport : ITransport
     {
         // data
-        private readonly Lib.SerialPortStream mStream = new Lib.SerialPortStream();
+        private readonly Lib.SerialPortStream mStream = new();
         private readonly SerialTransportSettings mSettings;
         private readonly ILog mLog;
         private readonly ITransportHooks? mHooks;
-        private readonly EventSource<BufferSpan> mReceivedEvent = new EventSource<BufferSpan>();
+        private readonly EventSource<BufferSpan> mReceivedEvent = new();
 
 
         public SerialTransportSettings Settings => mSettings;
@@ -293,9 +293,7 @@ namespace InlayTester.Shared.Transports
                 var data = _ReadDataReceived();
                 mReceivedEvent.Invoke(data);
             }
-#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
-#pragma warning restore CA1031 // Do not catch general exception types
             {
                 // swallow
             }

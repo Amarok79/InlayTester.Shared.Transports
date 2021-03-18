@@ -22,8 +22,6 @@
  * SOFTWARE.
  */
 
-#pragma warning disable CA1045 // Do not pass types by reference
-
 using Amarok.Shared;
 
 
