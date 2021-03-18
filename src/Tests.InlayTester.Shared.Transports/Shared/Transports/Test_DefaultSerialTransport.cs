@@ -29,6 +29,7 @@ using Amarok.Events;
 using Amarok.Shared;
 using Common.Logging;
 using Common.Logging.Simple;
+using NCrunch.Framework;
 using NFluent;
 using NUnit.Framework;
 using Lib = RJCP.IO.Ports;
@@ -86,7 +87,7 @@ namespace InlayTester.Shared.Transports
         [TestFixture]
         public class OpenClose
         {
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void Open_Close_Dispose()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -100,7 +101,7 @@ namespace InlayTester.Shared.Transports
                 Assert.Pass();
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void Open_Close_Open_Dispose()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -115,7 +116,7 @@ namespace InlayTester.Shared.Transports
                 Assert.Pass();
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void OpenThrowsException_When_AlreadyOpen()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -165,7 +166,7 @@ namespace InlayTester.Shared.Transports
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void Close_When_NotOpened()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -221,7 +222,7 @@ namespace InlayTester.Shared.Transports
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void SendReceive_SingleByte()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -256,7 +257,7 @@ namespace InlayTester.Shared.Transports
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void SendReceive_MultipleBytes()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -313,7 +314,7 @@ namespace InlayTester.Shared.Transports
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void SendReceive_ManyBytes()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -352,7 +353,7 @@ namespace InlayTester.Shared.Transports
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void SendReceive_MultipleTransfers()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -461,7 +462,7 @@ namespace InlayTester.Shared.Transports
             }
 
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void SendReceive_BeforeSendHook()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -523,7 +524,7 @@ namespace InlayTester.Shared.Transports
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void SendReceive_AfterReceivedHook()
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
