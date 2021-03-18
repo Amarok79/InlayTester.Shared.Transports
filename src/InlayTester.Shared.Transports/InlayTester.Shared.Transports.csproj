@@ -4,7 +4,7 @@
 		<ProjectGuid>{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}</ProjectGuid>
 		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
 		<RootNamespace>InlayTester</RootNamespace>
-		<Version>4.1.0</Version>
+		<Version>4.1.1</Version>
 		<Authors>Olaf Kober</Authors>
 		<Company>&lt;none&gt;</Company>
 		<Description>A library to abstract (serial) communication to increase testability. Part of Inlay Tester software application.</Description>
