@@ -228,7 +228,15 @@ namespace InlayTester.Shared.Transports
                 var settingsB = new SerialTransportSettings { PortName = "COMB" };
 
                 var data = BufferSpan.From(0x12);
-                var log  = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
+
+                var log = new DebugOutLogger(
+                    "Test",
+                    LogLevel.All,
+                    false,
+                    false,
+                    false,
+                    "U"
+                );
 
                 using (var transportA = new DefaultSerialTransport(settingsA, log, null))
                 {
@@ -254,8 +262,25 @@ namespace InlayTester.Shared.Transports
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
                 var settingsB = new SerialTransportSettings { PortName = "COMB" };
 
-                var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-                var log  = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
+                var data = BufferSpan.From(
+                    0x11,
+                    0x22,
+                    0x33,
+                    0x44,
+                    0x55,
+                    0x66,
+                    0x77,
+                    0x88
+                );
+
+                var log = new DebugOutLogger(
+                    "Test",
+                    LogLevel.All,
+                    false,
+                    false,
+                    false,
+                    "U"
+                );
 
                 using (var transportA = new DefaultSerialTransport(settingsA, log, null))
                 {
@@ -271,7 +296,16 @@ namespace InlayTester.Shared.Transports
                         SpinWait.SpinUntil(() => recorder.Count == 8, 5000);
 
                         Check.That(recorder.Events[0].ToArray())
-                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                       .ContainsExactly(
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88
+                        );
 
                         transportA.Close();
                         transportB.Close();
@@ -290,7 +324,14 @@ namespace InlayTester.Shared.Transports
                 random.NextBytes(buffer);
                 var data = BufferSpan.From(buffer);
 
-                var log = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
+                var log = new DebugOutLogger(
+                    "Test",
+                    LogLevel.All,
+                    false,
+                    false,
+                    false,
+                    "U"
+                );
 
                 using (var transportA = new DefaultSerialTransport(settingsA, log, null))
                 {
@@ -317,8 +358,25 @@ namespace InlayTester.Shared.Transports
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
                 var settingsB = new SerialTransportSettings { PortName = "COMB" };
 
-                var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-                var log  = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
+                var data = BufferSpan.From(
+                    0x11,
+                    0x22,
+                    0x33,
+                    0x44,
+                    0x55,
+                    0x66,
+                    0x77,
+                    0x88
+                );
+
+                var log = new DebugOutLogger(
+                    "Test",
+                    LogLevel.All,
+                    false,
+                    false,
+                    false,
+                    "U"
+                );
 
                 using (var transportA = new DefaultSerialTransport(settingsA, log, null))
                 {
@@ -337,32 +395,32 @@ namespace InlayTester.Shared.Transports
                         SpinWait.SpinUntil(() => received.Count == 3 * 8, 5000);
 
                         Check.That(received.ToArray())
-                           .ContainsExactly(
-                                0x11,
-                                0x22,
-                                0x33,
-                                0x44,
-                                0x55,
-                                0x66,
-                                0x77,
-                                0x88,
-                                0x11,
-                                0x22,
-                                0x33,
-                                0x44,
-                                0x55,
-                                0x66,
-                                0x77,
-                                0x88,
-                                0x11,
-                                0x22,
-                                0x33,
-                                0x44,
-                                0x55,
-                                0x66,
-                                0x77,
-                                0x88
-                            );
+                       .ContainsExactly(
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88,
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88,
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88
+                        );
                     }
                 }
             }
@@ -411,8 +469,25 @@ namespace InlayTester.Shared.Transports
 
                 var hook = new FakeSendHook { DataToSend = BufferSpan.From(0x55, 0x55, 0x55) };
 
-                var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-                var log  = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
+                var data = BufferSpan.From(
+                    0x11,
+                    0x22,
+                    0x33,
+                    0x44,
+                    0x55,
+                    0x66,
+                    0x77,
+                    0x88
+                );
+
+                var log = new DebugOutLogger(
+                    "Test",
+                    LogLevel.All,
+                    false,
+                    false,
+                    false,
+                    "U"
+                );
 
                 using (var transportA = new DefaultSerialTransport(settingsA, log, hook))
                 {
@@ -434,7 +509,16 @@ namespace InlayTester.Shared.Transports
                         transportB.Close();
 
                         Check.That(hook.SentData.ToArray())
-                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                       .ContainsExactly(
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88
+                        );
                     }
                 }
             }
@@ -447,8 +531,25 @@ namespace InlayTester.Shared.Transports
 
                 var hook = new FakeReceiveHook { DataToReceive = BufferSpan.From(0x55, 0x55, 0x55) };
 
-                var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
-                var log  = new DebugOutLogger("Test", LogLevel.All, false, false, false, "U");
+                var data = BufferSpan.From(
+                    0x11,
+                    0x22,
+                    0x33,
+                    0x44,
+                    0x55,
+                    0x66,
+                    0x77,
+                    0x88
+                );
+
+                var log = new DebugOutLogger(
+                    "Test",
+                    LogLevel.All,
+                    false,
+                    false,
+                    false,
+                    "U"
+                );
 
                 using (var transportA = new DefaultSerialTransport(settingsA, log, null))
                 {
@@ -470,7 +571,16 @@ namespace InlayTester.Shared.Transports
                         transportB.Close();
 
                         Check.That(hook.DataReceived.ToArray())
-                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                       .ContainsExactly(
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88
+                        );
                     }
                 }
             }

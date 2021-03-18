@@ -107,8 +107,17 @@ namespace InlayTester.Shared.Transports
             public void Create_With_Logger()
             {
                 // act
-                var       settings  = new SerialTransportSettings();
-                var       logger    = new DebugOutLogger("Foo", LogLevel.All, false, false, false, "G");
+                var settings = new SerialTransportSettings();
+
+                var logger = new DebugOutLogger(
+                    "Foo",
+                    LogLevel.All,
+                    false,
+                    false,
+                    false,
+                    "G"
+                );
+
                 using var transport = Transport.Create(settings, logger);
 
                 // assert
@@ -143,9 +152,18 @@ namespace InlayTester.Shared.Transports
             public void Create_With_Logger()
             {
                 // act
-                var       hooks     = new Mock<ITransportHooks>();
-                var       settings  = new SerialTransportSettings();
-                var       logger    = new DebugOutLogger("Foo", LogLevel.All, false, false, false, "G");
+                var hooks    = new Mock<ITransportHooks>();
+                var settings = new SerialTransportSettings();
+
+                var logger = new DebugOutLogger(
+                    "Foo",
+                    LogLevel.All,
+                    false,
+                    false,
+                    false,
+                    "G"
+                );
+
                 using var transport = Transport.Create(settings, logger, hooks.Object);
 
                 // assert
