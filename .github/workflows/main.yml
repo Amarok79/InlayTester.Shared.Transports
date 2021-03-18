@@ -27,7 +27,7 @@ jobs:
           sonarProjectName: InlayTester.Shared.Transports
           sonarOrganization: amarok79-github
           dotnetBuildArguments: --configuration Debug --framework net5.0
-          dotnetTestArguments: --configuration Debug --framework net5.0 --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnetTestArguments: --configuration Debug --framework net5.0 --filter TestCategory!=com0com --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -95,7 +95,7 @@ jobs:
         run: dotnet build --configuration Debug
 
       - name: Run tests
-        run: dotnet test --no-build --collect "Code Coverage"
+        run: dotnet test --no-build --collect "Code Coverage" --filter TestCategory!=com0com
 
   buildrelease:
     runs-on: windows-latest
