@@ -24,8 +24,8 @@
 
 using System;
 using Amarok.Contracts;
-using Common.Logging;
-using Common.Logging.Simple;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 
 namespace InlayTester.Shared.Transports
@@ -48,9 +48,9 @@ namespace InlayTester.Shared.Transports
         {
             Verify.NotNull(settings, nameof(settings));
 
-            var clone = new SerialTransportSettings(settings);
+            settings = new SerialTransportSettings(settings);
 
-            return new DefaultSerialTransport(clone, new NoOpLogger(), null);
+            return new DefaultSerialTransport(settings, NullLogger.Instance, null);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace InlayTester.Shared.Transports
             Verify.NotNull(settings, nameof(settings));
             Verify.NotNull(hooks, nameof(hooks));
 
-            var clone = new SerialTransportSettings(settings);
+            settings = new SerialTransportSettings(settings);
 
-            return new DefaultSerialTransport(clone, new NoOpLogger(), hooks);
+            return new DefaultSerialTransport(settings, NullLogger.Instance, hooks);
         }
 
         /// <summary>
@@ -85,14 +85,14 @@ namespace InlayTester.Shared.Transports
         /// 
         /// <exception cref="ArgumentNullException">
         /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-        public static ITransport Create(SerialTransportSettings settings, ILog logger)
+        public static ITransport Create(SerialTransportSettings settings, ILogger logger)
         {
             Verify.NotNull(settings, nameof(settings));
             Verify.NotNull(logger, nameof(logger));
 
-            var clone = new SerialTransportSettings(settings);
+            settings = new SerialTransportSettings(settings);
 
-            return new DefaultSerialTransport(clone, logger, null);
+            return new DefaultSerialTransport(settings, logger, null);
         }
 
         /// <summary>
@@ -108,15 +108,15 @@ namespace InlayTester.Shared.Transports
         /// 
         /// <exception cref="ArgumentNullException">
         /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-        public static ITransport Create(SerialTransportSettings settings, ILog logger, ITransportHooks hooks)
+        public static ITransport Create(SerialTransportSettings settings, ILogger logger, ITransportHooks hooks)
         {
             Verify.NotNull(settings, nameof(settings));
             Verify.NotNull(logger, nameof(logger));
             Verify.NotNull(hooks, nameof(hooks));
 
-            var clone = new SerialTransportSettings(settings);
+            settings = new SerialTransportSettings(settings);
 
-            return new DefaultSerialTransport(clone, logger, hooks);
+            return new DefaultSerialTransport(settings, logger, hooks);
         }
     }
 }
