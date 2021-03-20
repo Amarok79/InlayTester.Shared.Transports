@@ -23,11 +23,10 @@
  */
 
 using System;
-using System.Globalization;
 using System.IO;
 using Amarok.Events;
 using Amarok.Shared;
-using Common.Logging;
+using Microsoft.Extensions.Logging;
 using Lib = RJCP.IO.Ports;
 
 
@@ -38,22 +37,22 @@ namespace InlayTester.Shared.Transports
         // data
         private readonly Lib.SerialPortStream mStream = new();
         private readonly SerialTransportSettings mSettings;
-        private readonly ILog mLog;
-        private readonly ITransportHooks? mHooks;
         private readonly EventSource<BufferSpan> mReceivedEvent = new();
+        private readonly ILogger mLogger;
+        private readonly ITransportHooks? mHooks;
 
 
         public SerialTransportSettings Settings => mSettings;
 
-        public ILog Logger => mLog;
+        public ILogger Logger => mLogger;
 
         public ITransportHooks? Hooks => mHooks;
 
 
-        public DefaultSerialTransport(SerialTransportSettings settings, ILog logger, ITransportHooks? hooks)
+        public DefaultSerialTransport(SerialTransportSettings settings, ILogger logger, ITransportHooks? hooks)
         {
             mSettings = settings;
-            mLog      = logger;
+            mLogger   = logger;
             mHooks    = hooks;
 
             mStream.DataReceived  += _HandleDataReceived;
@@ -96,34 +95,11 @@ namespace InlayTester.Shared.Transports
 
                 mStream.Open();
 
-                #region (logging)
-
-                {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
-                        "[{0}]  OPENED    {1}",
-                        mSettings.PortName,
-                        mSettings
-                    );
-                }
-
-                #endregion
+                mLogger.LogOpen(mSettings.PortName, mSettings);
             }
             catch (Exception exception)
             {
-                #region (logging)
-
-                {
-                    mLog.ErrorFormat(
-                        CultureInfo.InvariantCulture,
-                        "[{0}]  FAILED to open. Settings: '{1}'.",
-                        exception,
-                        mSettings.PortName,
-                        mSettings
-                    );
-                }
-
-                #endregion
+                mLogger.LogFailedToOpen(mSettings.PortName, mSettings, exception);
 
                 throw;
             }
@@ -177,28 +153,11 @@ namespace InlayTester.Shared.Transports
             {
                 mStream.Close();
 
-                #region (logging)
-
-                {
-                    mLog.InfoFormat(CultureInfo.InvariantCulture, "[{0}]  CLOSED", mSettings.PortName);
-                }
-
-                #endregion
+                mLogger.LogClose(mSettings.PortName);
             }
             catch (Exception exception)
             {
-                #region (logging)
-
-                {
-                    mLog.ErrorFormat(
-                        CultureInfo.InvariantCulture,
-                        "[{0}]  FAILED to close.",
-                        exception,
-                        mSettings.PortName
-                    );
-                }
-
-                #endregion
+                mLogger.LogFailedToClose(mSettings.PortName, exception);
 
                 throw;
             }
@@ -212,13 +171,7 @@ namespace InlayTester.Shared.Transports
             mStream.Dispose();
             mReceivedEvent.Dispose();
 
-            #region (logging)
-
-            {
-                mLog.InfoFormat(CultureInfo.InvariantCulture, "[{0}]  DISPOSED", mSettings.PortName);
-            }
-
-            #endregion
+            mLogger.LogDispose(mSettings.PortName);
         }
 
 
@@ -246,37 +199,11 @@ namespace InlayTester.Shared.Transports
                 // send data
                 mStream.Write(data.Buffer, data.Offset, data.Count);
 
-                #region (logging)
-
-                {
-                    if (mLog.IsTraceEnabled)
-                    {
-                        mLog.TraceFormat(
-                            CultureInfo.InvariantCulture,
-                            "[{0}]  SENT      {1}",
-                            mSettings.PortName,
-                            data
-                        );
-                    }
-                }
-
-                #endregion
+                mLogger.LogSend(mSettings.PortName, data);
             }
             catch (Exception exception)
             {
-                #region (logging)
-
-                {
-                    mLog.ErrorFormat(
-                        CultureInfo.InvariantCulture,
-                        "[{0}]  FAILED to send. Data: '{1}'.",
-                        exception,
-                        mSettings.PortName,
-                        data
-                    );
-                }
-
-                #endregion
+                mLogger.LogFailedToSend(mSettings.PortName, data, exception);
 
                 throw;
             }
@@ -312,38 +239,13 @@ namespace InlayTester.Shared.Transports
                 // invoke hook
                 mHooks?.AfterReceived(ref data);
 
-                #region (logging)
-
-                {
-                    if (mLog.IsTraceEnabled)
-                    {
-                        mLog.TraceFormat(
-                            CultureInfo.InvariantCulture,
-                            "[{0}]  RECEIVED  {1}",
-                            mSettings.PortName,
-                            data
-                        );
-                    }
-                }
-
-                #endregion
+                mLogger.LogReceive(mSettings.PortName, data);
 
                 return data;
             }
             catch (Exception exception)
             {
-                #region (logging)
-
-                {
-                    mLog.ErrorFormat(
-                        CultureInfo.InvariantCulture,
-                        "[{0}]  FAILED to receive.",
-                        exception,
-                        mSettings.PortName
-                    );
-                }
-
-                #endregion
+                mLogger.LogFailedToReceive(mSettings.PortName, exception);
 
                 throw;
             }
@@ -355,18 +257,7 @@ namespace InlayTester.Shared.Transports
             if (e.EventType == Lib.SerialError.NoError)
                 return;
 
-            #region (logging)
-
-            {
-                mLog.WarnFormat(
-                    CultureInfo.InvariantCulture,
-                    "[{0}]  SERIAL ERROR  '{1}'",
-                    mSettings.PortName,
-                    e.EventType
-                );
-            }
-
-            #endregion
+            mLogger.LogSerialError(mSettings.PortName, e.EventType);
         }
 
 

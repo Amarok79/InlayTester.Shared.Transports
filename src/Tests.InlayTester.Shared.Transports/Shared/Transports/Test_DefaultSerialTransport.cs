@@ -27,8 +27,8 @@ using System.IO;
 using System.Threading;
 using Amarok.Events;
 using Amarok.Shared;
-using Common.Logging;
-using Common.Logging.Simple;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using NCrunch.Framework;
 using NFluent;
 using NUnit.Framework;
@@ -92,7 +92,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     transportA.Open();
                     transportA.Close();
@@ -106,7 +106,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     transportA.Open();
                     transportA.Close();
@@ -121,7 +121,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     transportA.Open();
 
@@ -134,7 +134,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     transportA.Dispose();
 
@@ -147,7 +147,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settingsA = new SerialTransportSettings { PortName = "ABC" };
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     Check.ThatCode(() => transportA.Open()).Throws<IOException>();
                 }
@@ -158,7 +158,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     transportA.Dispose();
 
@@ -171,7 +171,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     Check.ThatCode(() => transportA.Close()).DoesNotThrow();
 
@@ -184,7 +184,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     Check.ThatCode(() => transportA.Dispose()).DoesNotThrow();
                 }
@@ -201,7 +201,7 @@ namespace InlayTester.Shared.Transports
 
                 var data = BufferSpan.From(0x12);
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     Check.ThatCode(() => transportA.Send(data)).Throws<InvalidOperationException>();
                 }
@@ -214,7 +214,7 @@ namespace InlayTester.Shared.Transports
 
                 var data = BufferSpan.From(0x12);
 
-                using (var transportA = new DefaultSerialTransport(settingsA, new NoOpLogger(), null))
+                using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
                 {
                     transportA.Dispose();
 
@@ -230,18 +230,17 @@ namespace InlayTester.Shared.Transports
 
                 var data = BufferSpan.From(0x12);
 
-                var log = new DebugOutLogger(
-                    "Test",
-                    LogLevel.All,
-                    false,
-                    false,
-                    false,
-                    "U"
-                );
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
-                using (var transportA = new DefaultSerialTransport(settingsA, log, null))
+                using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
                 {
-                    using (var transportB = new DefaultSerialTransport(settingsB, log, null))
+                    using (var transportB = new DefaultSerialTransport(settingsB, logger, null))
                     {
                         EventRecorder<BufferSpan> recorder = EventRecorder.From(transportB.Received);
 
@@ -274,18 +273,17 @@ namespace InlayTester.Shared.Transports
                     0x88
                 );
 
-                var log = new DebugOutLogger(
-                    "Test",
-                    LogLevel.All,
-                    false,
-                    false,
-                    false,
-                    "U"
-                );
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
-                using (var transportA = new DefaultSerialTransport(settingsA, log, null))
+                using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
                 {
-                    using (var transportB = new DefaultSerialTransport(settingsB, log, null))
+                    using (var transportB = new DefaultSerialTransport(settingsB, logger, null))
                     {
                         EventRecorder<BufferSpan> recorder = EventRecorder.From(transportB.Received);
 
@@ -325,18 +323,17 @@ namespace InlayTester.Shared.Transports
                 random.NextBytes(buffer);
                 var data = BufferSpan.From(buffer);
 
-                var log = new DebugOutLogger(
-                    "Test",
-                    LogLevel.All,
-                    false,
-                    false,
-                    false,
-                    "U"
-                );
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
-                using (var transportA = new DefaultSerialTransport(settingsA, log, null))
+                using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
                 {
-                    using (var transportB = new DefaultSerialTransport(settingsB, log, null))
+                    using (var transportB = new DefaultSerialTransport(settingsB, logger, null))
                     {
                         var received = BufferSpan.Empty;
                         transportB.Received.Subscribe(x => received = received.Append(x));
@@ -370,18 +367,17 @@ namespace InlayTester.Shared.Transports
                     0x88
                 );
 
-                var log = new DebugOutLogger(
-                    "Test",
-                    LogLevel.All,
-                    false,
-                    false,
-                    false,
-                    "U"
-                );
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
-                using (var transportA = new DefaultSerialTransport(settingsA, log, null))
+                using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
                 {
-                    using (var transportB = new DefaultSerialTransport(settingsB, log, null))
+                    using (var transportB = new DefaultSerialTransport(settingsB, logger, null))
                     {
                         var received = BufferSpan.Empty;
                         transportB.Received.Subscribe(x => received = received.Append(x));
@@ -481,18 +477,17 @@ namespace InlayTester.Shared.Transports
                     0x88
                 );
 
-                var log = new DebugOutLogger(
-                    "Test",
-                    LogLevel.All,
-                    false,
-                    false,
-                    false,
-                    "U"
-                );
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
-                using (var transportA = new DefaultSerialTransport(settingsA, log, hook))
+                using (var transportA = new DefaultSerialTransport(settingsA, logger, hook))
                 {
-                    using (var transportB = new DefaultSerialTransport(settingsB, log, null))
+                    using (var transportB = new DefaultSerialTransport(settingsB, logger, null))
                     {
                         var received = BufferSpan.Empty;
                         transportB.Received.Subscribe(x => received = received.Append(x));
@@ -543,18 +538,17 @@ namespace InlayTester.Shared.Transports
                     0x88
                 );
 
-                var log = new DebugOutLogger(
-                    "Test",
-                    LogLevel.All,
-                    false,
-                    false,
-                    false,
-                    "U"
-                );
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
-                using (var transportA = new DefaultSerialTransport(settingsA, log, null))
+                using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
                 {
-                    using (var transportB = new DefaultSerialTransport(settingsB, log, hook))
+                    using (var transportB = new DefaultSerialTransport(settingsB, logger, hook))
                     {
                         var received = BufferSpan.Empty;
                         transportB.Received.Subscribe(x => received = received.Append(x));

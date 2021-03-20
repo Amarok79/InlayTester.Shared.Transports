@@ -23,8 +23,8 @@
  */
 
 using System;
-using Common.Logging;
-using Common.Logging.Simple;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NFluent;
 using NUnit.Framework;
@@ -50,7 +50,7 @@ namespace InlayTester.Shared.Transports
                 var transportImpl = (DefaultSerialTransport) transport;
 
                 Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings);
-                Check.That(transportImpl.Logger).IsInstanceOf<NoOpLogger>();
+                Check.That(transportImpl.Logger).IsSameReferenceAs(NullLogger.Instance);
                 Check.That(transportImpl.Hooks).IsNull();
             }
 
@@ -78,7 +78,7 @@ namespace InlayTester.Shared.Transports
                 var transportImpl = (DefaultSerialTransport) transport;
 
                 Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings);
-                Check.That(transportImpl.Logger).IsInstanceOf<NoOpLogger>();
+                Check.That(transportImpl.Logger).IsSameReferenceAs(NullLogger.Instance);
                 Check.That(transportImpl.Hooks).IsSameReferenceAs(hooks.Object);
             }
 
@@ -109,14 +109,7 @@ namespace InlayTester.Shared.Transports
                 // act
                 var settings = new SerialTransportSettings();
 
-                var logger = new DebugOutLogger(
-                    "Foo",
-                    LogLevel.All,
-                    false,
-                    false,
-                    false,
-                    "G"
-                );
+                var logger = LoggerFactory.Create(builder => builder.AddSimpleConsole()).CreateLogger("Test");
 
                 using var transport = Transport.Create(settings, logger);
 
@@ -133,7 +126,7 @@ namespace InlayTester.Shared.Transports
             [Test]
             public void Exception_For_NullSettings()
             {
-                Check.ThatCode(() => Transport.Create(null, new NoOpLogger())).Throws<ArgumentNullException>();
+                Check.ThatCode(() => Transport.Create(null, NullLogger.Instance)).Throws<ArgumentNullException>();
             }
 
             [Test]
@@ -141,7 +134,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settings = new SerialTransportSettings();
 
-                Check.ThatCode(() => Transport.Create(settings, (ILog) null)).Throws<ArgumentNullException>();
+                Check.ThatCode(() => Transport.Create(settings, (ILogger) null)).Throws<ArgumentNullException>();
             }
         }
 
@@ -155,14 +148,7 @@ namespace InlayTester.Shared.Transports
                 var hooks    = new Mock<ITransportHooks>();
                 var settings = new SerialTransportSettings();
 
-                var logger = new DebugOutLogger(
-                    "Foo",
-                    LogLevel.All,
-                    false,
-                    false,
-                    false,
-                    "G"
-                );
+                var logger = LoggerFactory.Create(builder => builder.AddSimpleConsole()).CreateLogger("Test");
 
                 using var transport = Transport.Create(settings, logger, hooks.Object);
 
@@ -181,7 +167,7 @@ namespace InlayTester.Shared.Transports
             {
                 var hooks = new Mock<ITransportHooks>();
 
-                Check.ThatCode(() => Transport.Create(null, new NoOpLogger(), hooks.Object))
+                Check.ThatCode(() => Transport.Create(null, NullLogger.Instance, hooks.Object))
                    .Throws<ArgumentNullException>();
             }
 
@@ -199,7 +185,7 @@ namespace InlayTester.Shared.Transports
             {
                 var settings = new SerialTransportSettings();
 
-                Check.ThatCode(() => Transport.Create(settings, new NoOpLogger(), null))
+                Check.ThatCode(() => Transport.Create(settings, NullLogger.Instance, null))
                    .Throws<ArgumentNullException>();
             }
         }
