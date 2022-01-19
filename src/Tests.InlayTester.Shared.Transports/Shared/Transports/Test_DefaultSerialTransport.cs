@@ -1,26 +1,25 @@
-﻿/* MIT License
- * 
- * Copyright (c) 2020, Olaf Kober
- * https://github.com/Amarok79/InlayTester.Shared.Transports
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+﻿// MIT License
+// 
+// Copyright (c) 2021, Olaf Kober
+// https://github.com/Amarok79/InlayTester.Shared.Transports
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 using System;
 using System.IO;
@@ -50,7 +49,7 @@ namespace InlayTester.Shared.Transports
                 Check.That(DefaultSerialTransport.Convert(Parity.Odd)).IsEqualTo(Lib.Parity.Odd);
                 Check.That(DefaultSerialTransport.Convert(Parity.Mark)).IsEqualTo(Lib.Parity.Mark);
                 Check.That(DefaultSerialTransport.Convert(Parity.Space)).IsEqualTo(Lib.Parity.Space);
-                Check.ThatCode(() => DefaultSerialTransport.Convert((Parity) 123)).Throws<NotSupportedException>();
+                Check.ThatCode(() => DefaultSerialTransport.Convert((Parity)123)).Throws<NotSupportedException>();
             }
         }
 
@@ -63,7 +62,7 @@ namespace InlayTester.Shared.Transports
                 Check.That(DefaultSerialTransport.Convert(StopBits.One)).IsEqualTo(Lib.StopBits.One);
                 Check.That(DefaultSerialTransport.Convert(StopBits.OnePointFive)).IsEqualTo(Lib.StopBits.One5);
                 Check.That(DefaultSerialTransport.Convert(StopBits.Two)).IsEqualTo(Lib.StopBits.Two);
-                Check.ThatCode(() => DefaultSerialTransport.Convert((StopBits) 123)).Throws<NotSupportedException>();
+                Check.ThatCode(() => DefaultSerialTransport.Convert((StopBits)123)).Throws<NotSupportedException>();
             }
         }
 
@@ -80,7 +79,7 @@ namespace InlayTester.Shared.Transports
                    .IsEqualTo(Lib.Handshake.RtsXOn);
 
                 Check.That(DefaultSerialTransport.Convert(Handshake.XOnXOff)).IsEqualTo(Lib.Handshake.XOn);
-                Check.ThatCode(() => DefaultSerialTransport.Convert((Handshake) 123)).Throws<NotSupportedException>();
+                Check.ThatCode(() => DefaultSerialTransport.Convert((Handshake)123)).Throws<NotSupportedException>();
             }
         }
 
@@ -242,7 +241,7 @@ namespace InlayTester.Shared.Transports
                 {
                     using (var transportB = new DefaultSerialTransport(settingsB, logger, null))
                     {
-                        EventRecorder<BufferSpan> recorder = EventRecorder.From(transportB.Received);
+                        var recorder = EventRecorder.From(transportB.Received);
 
                         transportB.Open();
                         transportA.Open();
@@ -262,16 +261,7 @@ namespace InlayTester.Shared.Transports
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
                 var settingsB = new SerialTransportSettings { PortName = "COMB" };
 
-                var data = BufferSpan.From(
-                    0x11,
-                    0x22,
-                    0x33,
-                    0x44,
-                    0x55,
-                    0x66,
-                    0x77,
-                    0x88
-                );
+                var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
                 var logger = LoggerFactory.Create(
                         builder => {
@@ -285,7 +275,7 @@ namespace InlayTester.Shared.Transports
                 {
                     using (var transportB = new DefaultSerialTransport(settingsB, logger, null))
                     {
-                        EventRecorder<BufferSpan> recorder = EventRecorder.From(transportB.Received);
+                        var recorder = EventRecorder.From(transportB.Received);
 
                         transportB.Open();
                         transportA.Open();
@@ -295,16 +285,7 @@ namespace InlayTester.Shared.Transports
                         SpinWait.SpinUntil(() => recorder.Count == 8, 5000);
 
                         Check.That(recorder.Events[0].ToArray())
-                       .ContainsExactly(
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88
-                        );
+                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
                         transportA.Close();
                         transportB.Close();
@@ -356,16 +337,7 @@ namespace InlayTester.Shared.Transports
                 var settingsA = new SerialTransportSettings { PortName = "COMA" };
                 var settingsB = new SerialTransportSettings { PortName = "COMB" };
 
-                var data = BufferSpan.From(
-                    0x11,
-                    0x22,
-                    0x33,
-                    0x44,
-                    0x55,
-                    0x66,
-                    0x77,
-                    0x88
-                );
+                var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
                 var logger = LoggerFactory.Create(
                         builder => {
@@ -466,16 +438,7 @@ namespace InlayTester.Shared.Transports
 
                 var hook = new FakeSendHook { DataToSend = BufferSpan.From(0x55, 0x55, 0x55) };
 
-                var data = BufferSpan.From(
-                    0x11,
-                    0x22,
-                    0x33,
-                    0x44,
-                    0x55,
-                    0x66,
-                    0x77,
-                    0x88
-                );
+                var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
                 var logger = LoggerFactory.Create(
                         builder => {
@@ -505,16 +468,7 @@ namespace InlayTester.Shared.Transports
                         transportB.Close();
 
                         Check.That(hook.SentData.ToArray())
-                       .ContainsExactly(
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88
-                        );
+                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
                     }
                 }
             }
@@ -527,16 +481,7 @@ namespace InlayTester.Shared.Transports
 
                 var hook = new FakeReceiveHook { DataToReceive = BufferSpan.From(0x55, 0x55, 0x55) };
 
-                var data = BufferSpan.From(
-                    0x11,
-                    0x22,
-                    0x33,
-                    0x44,
-                    0x55,
-                    0x66,
-                    0x77,
-                    0x88
-                );
+                var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
                 var logger = LoggerFactory.Create(
                         builder => {
@@ -566,16 +511,7 @@ namespace InlayTester.Shared.Transports
                         transportB.Close();
 
                         Check.That(hook.DataReceived.ToArray())
-                       .ContainsExactly(
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88
-                        );
+                           .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
                     }
                 }
             }
