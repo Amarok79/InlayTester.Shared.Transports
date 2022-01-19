@@ -32,7 +32,6 @@
 
 	<ItemGroup>
 		<None Include="..\amarok.snk" Link="amarok.snk" />
-		<None Include="..\InlayTester.Shared.Transports.licenseheader" Link="InlayTester.Shared.Transports.licenseheader" />
 	</ItemGroup>
 
 	<ItemGroup>
