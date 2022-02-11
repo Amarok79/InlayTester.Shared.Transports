@@ -35,7 +35,7 @@ jobs:
         run: dotnet build --configuration Debug
 
       - name: Run tests
-        run: dotnet test --no-build --collect "Code Coverage"
+        run: dotnet test --no-build --collect "Code Coverage" --filter TestCategory!=com0com
 
   buildrelease:
     runs-on: windows-latest
