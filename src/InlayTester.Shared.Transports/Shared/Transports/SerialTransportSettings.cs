@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Globalization;
@@ -49,11 +49,11 @@ public sealed class SerialTransportSettings
     /// </summary>
     public SerialTransportSettings()
     {
-        PortName  = "COM1";
-        Baud      = 9600;
-        DataBits  = 8;
-        Parity    = Parity.None;
-        StopBits  = StopBits.One;
+        PortName = "COM1";
+        Baud = 9600;
+        DataBits = 8;
+        Parity = Parity.None;
+        StopBits = StopBits.One;
         Handshake = Handshake.None;
     }
 
@@ -72,11 +72,11 @@ public sealed class SerialTransportSettings
     {
         Verify.NotNull(settings, nameof(settings));
 
-        PortName  = settings.PortName;
-        Baud      = settings.Baud;
-        DataBits  = settings.DataBits;
-        Parity    = settings.Parity;
-        StopBits  = settings.StopBits;
+        PortName = settings.PortName;
+        Baud = settings.Baud;
+        DataBits = settings.DataBits;
+        Parity = settings.Parity;
+        StopBits = settings.StopBits;
         Handshake = settings.Handshake;
     }
 

@@ -28,17 +28,13 @@ internal sealed class DefaultSerialTransport : ITransport
     public ITransportHooks? Hooks => mHooks;
 
 
-    public DefaultSerialTransport(
-        SerialTransportSettings settings,
-        ILogger logger,
-        ITransportHooks? hooks
-    )
+    public DefaultSerialTransport(SerialTransportSettings settings, ILogger logger, ITransportHooks? hooks)
     {
         mSettings = settings;
-        mLogger   = logger;
-        mHooks    = hooks;
+        mLogger = logger;
+        mHooks = hooks;
 
-        mStream.DataReceived  += _HandleDataReceived;
+        mStream.DataReceived += _HandleDataReceived;
         mStream.ErrorReceived += _HandleErrorReceived;
     }
 
@@ -69,14 +65,14 @@ internal sealed class DefaultSerialTransport : ITransport
 
         try
         {
-            mStream.PortName  = mSettings.PortName;
-            mStream.BaudRate  = mSettings.Baud;
-            mStream.DataBits  = mSettings.DataBits;
-            mStream.Parity    = Convert(mSettings.Parity);
-            mStream.StopBits  = Convert(mSettings.StopBits);
+            mStream.PortName = mSettings.PortName;
+            mStream.BaudRate = mSettings.Baud;
+            mStream.DataBits = mSettings.DataBits;
+            mStream.Parity = Convert(mSettings.Parity);
+            mStream.StopBits = Convert(mSettings.StopBits);
             mStream.Handshake = Convert(mSettings.Handshake);
 
-            mStream.DiscardNull   = false;
+            mStream.DiscardNull = false;
             mStream.ParityReplace = 0xff;
 
             mStream.Open();
@@ -94,35 +90,33 @@ internal sealed class DefaultSerialTransport : ITransport
     internal static Lib.Parity Convert(Parity value)
     {
         return value switch {
-            Parity.Even => Lib.Parity.Even,
-            Parity.Mark => Lib.Parity.Mark,
-            Parity.None => Lib.Parity.None,
-            Parity.Odd => Lib.Parity.Odd,
+            Parity.Even  => Lib.Parity.Even,
+            Parity.Mark  => Lib.Parity.Mark,
+            Parity.None  => Lib.Parity.None,
+            Parity.Odd   => Lib.Parity.Odd,
             Parity.Space => Lib.Parity.Space,
-            _ => throw new NotSupportedException($"The given Parity '{value}' is not supported."),
+            _            => throw new NotSupportedException($"The given Parity '{value}' is not supported."),
         };
     }
 
     internal static Lib.StopBits Convert(StopBits value)
     {
         return value switch {
-            StopBits.One => Lib.StopBits.One,
+            StopBits.One          => Lib.StopBits.One,
             StopBits.OnePointFive => Lib.StopBits.One5,
-            StopBits.Two => Lib.StopBits.Two,
-            _ => throw new NotSupportedException($"The given StopBits '{value}' is not supported."),
+            StopBits.Two          => Lib.StopBits.Two,
+            _                     => throw new NotSupportedException($"The given StopBits '{value}' is not supported."),
         };
     }
 
     internal static Lib.Handshake Convert(Handshake value)
     {
         return value switch {
-            Handshake.None                 => Lib.Handshake.None,
-            Handshake.RequestToSend        => Lib.Handshake.Rts,
+            Handshake.None => Lib.Handshake.None,
+            Handshake.RequestToSend => Lib.Handshake.Rts,
             Handshake.RequestToSendXOnXOff => Lib.Handshake.RtsXOn,
-            Handshake.XOnXOff              => Lib.Handshake.XOn,
-            _ => throw new NotSupportedException(
-                $"The given Handshake '{value}' is not supported."
-            ),
+            Handshake.XOnXOff => Lib.Handshake.XOn,
+            _ => throw new NotSupportedException($"The given Handshake '{value}' is not supported."),
         };
     }
 
@@ -227,9 +221,9 @@ internal sealed class DefaultSerialTransport : ITransport
         {
             // receive data
             var bytesToRead = mStream.BytesToRead;
-            var buffer      = new Byte[bytesToRead];
-            var bytesRead   = mStream.Read(buffer, 0, bytesToRead);
-            var data        = BufferSpan.From(buffer, bytesRead);
+            var buffer = new Byte[bytesToRead];
+            var bytesRead = mStream.Read(buffer, 0, bytesToRead);
+            var data = BufferSpan.From(buffer, bytesRead);
 
             // invoke hook
             mHooks?.AfterReceived(ref data);

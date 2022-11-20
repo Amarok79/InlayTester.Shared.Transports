@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.IO;
@@ -24,23 +24,17 @@ public class Test_DefaultSerialTransport
         [Test]
         public void Test()
         {
-            Check.That(DefaultSerialTransport.Convert(Parity.None))
-               .IsEqualTo(Lib.Parity.None);
+            Check.That(DefaultSerialTransport.Convert(Parity.None)).IsEqualTo(Lib.Parity.None);
 
-            Check.That(DefaultSerialTransport.Convert(Parity.Even))
-               .IsEqualTo(Lib.Parity.Even);
+            Check.That(DefaultSerialTransport.Convert(Parity.Even)).IsEqualTo(Lib.Parity.Even);
 
-            Check.That(DefaultSerialTransport.Convert(Parity.Odd))
-               .IsEqualTo(Lib.Parity.Odd);
+            Check.That(DefaultSerialTransport.Convert(Parity.Odd)).IsEqualTo(Lib.Parity.Odd);
 
-            Check.That(DefaultSerialTransport.Convert(Parity.Mark))
-               .IsEqualTo(Lib.Parity.Mark);
+            Check.That(DefaultSerialTransport.Convert(Parity.Mark)).IsEqualTo(Lib.Parity.Mark);
 
-            Check.That(DefaultSerialTransport.Convert(Parity.Space))
-               .IsEqualTo(Lib.Parity.Space);
+            Check.That(DefaultSerialTransport.Convert(Parity.Space)).IsEqualTo(Lib.Parity.Space);
 
-            Check.ThatCode(() => DefaultSerialTransport.Convert((Parity) 123))
-               .Throws<NotSupportedException>();
+            Check.ThatCode(() => DefaultSerialTransport.Convert((Parity)123)).Throws<NotSupportedException>();
         }
     }
 
@@ -50,17 +44,13 @@ public class Test_DefaultSerialTransport
         [Test]
         public void Test()
         {
-            Check.That(DefaultSerialTransport.Convert(StopBits.One))
-               .IsEqualTo(Lib.StopBits.One);
+            Check.That(DefaultSerialTransport.Convert(StopBits.One)).IsEqualTo(Lib.StopBits.One);
 
-            Check.That(DefaultSerialTransport.Convert(StopBits.OnePointFive))
-               .IsEqualTo(Lib.StopBits.One5);
+            Check.That(DefaultSerialTransport.Convert(StopBits.OnePointFive)).IsEqualTo(Lib.StopBits.One5);
 
-            Check.That(DefaultSerialTransport.Convert(StopBits.Two))
-               .IsEqualTo(Lib.StopBits.Two);
+            Check.That(DefaultSerialTransport.Convert(StopBits.Two)).IsEqualTo(Lib.StopBits.Two);
 
-            Check.ThatCode(() => DefaultSerialTransport.Convert((StopBits) 123))
-               .Throws<NotSupportedException>();
+            Check.ThatCode(() => DefaultSerialTransport.Convert((StopBits)123)).Throws<NotSupportedException>();
         }
     }
 
@@ -70,20 +60,15 @@ public class Test_DefaultSerialTransport
         [Test]
         public void Test()
         {
-            Check.That(DefaultSerialTransport.Convert(Handshake.None))
-               .IsEqualTo(Lib.Handshake.None);
+            Check.That(DefaultSerialTransport.Convert(Handshake.None)).IsEqualTo(Lib.Handshake.None);
 
-            Check.That(DefaultSerialTransport.Convert(Handshake.RequestToSend))
-               .IsEqualTo(Lib.Handshake.Rts);
+            Check.That(DefaultSerialTransport.Convert(Handshake.RequestToSend)).IsEqualTo(Lib.Handshake.Rts);
 
-            Check.That(DefaultSerialTransport.Convert(Handshake.RequestToSendXOnXOff))
-               .IsEqualTo(Lib.Handshake.RtsXOn);
+            Check.That(DefaultSerialTransport.Convert(Handshake.RequestToSendXOnXOff)).IsEqualTo(Lib.Handshake.RtsXOn);
 
-            Check.That(DefaultSerialTransport.Convert(Handshake.XOnXOff))
-               .IsEqualTo(Lib.Handshake.XOn);
+            Check.That(DefaultSerialTransport.Convert(Handshake.XOnXOff)).IsEqualTo(Lib.Handshake.XOn);
 
-            Check.ThatCode(() => DefaultSerialTransport.Convert((Handshake) 123))
-               .Throws<NotSupportedException>();
+            Check.ThatCode(() => DefaultSerialTransport.Convert((Handshake)123)).Throws<NotSupportedException>();
         }
     }
 
@@ -95,11 +80,7 @@ public class Test_DefaultSerialTransport
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
                 transportA.Open();
                 transportA.Close();
@@ -113,11 +94,7 @@ public class Test_DefaultSerialTransport
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
                 transportA.Open();
                 transportA.Close();
@@ -132,16 +109,11 @@ public class Test_DefaultSerialTransport
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
                 transportA.Open();
 
-                Check.ThatCode(() => transportA.Open())
-                   .Throws<InvalidOperationException>();
+                Check.ThatCode(() => transportA.Open()).Throws<InvalidOperationException>();
             }
         }
 
@@ -150,16 +122,11 @@ public class Test_DefaultSerialTransport
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
                 transportA.Dispose();
 
-                Check.ThatCode(() => transportA.Open())
-                   .Throws<ObjectDisposedException>();
+                Check.ThatCode(() => transportA.Open()).Throws<ObjectDisposedException>();
             }
         }
 
@@ -168,14 +135,9 @@ public class Test_DefaultSerialTransport
         {
             var settingsA = new SerialTransportSettings { PortName = "ABC" };
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
-                Check.ThatCode(() => transportA.Open())
-                   .Throws<IOException>();
+                Check.ThatCode(() => transportA.Open()).Throws<IOException>();
             }
         }
 
@@ -184,16 +146,11 @@ public class Test_DefaultSerialTransport
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
                 transportA.Dispose();
 
-                Check.ThatCode(() => transportA.Close())
-                   .Throws<ObjectDisposedException>();
+                Check.ThatCode(() => transportA.Close()).Throws<ObjectDisposedException>();
             }
         }
 
@@ -202,14 +159,9 @@ public class Test_DefaultSerialTransport
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
-                Check.ThatCode(() => transportA.Close())
-                   .DoesNotThrow();
+                Check.ThatCode(() => transportA.Close()).DoesNotThrow();
 
                 transportA.Open();
             }
@@ -220,14 +172,9 @@ public class Test_DefaultSerialTransport
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
-                Check.ThatCode(() => transportA.Dispose())
-                   .DoesNotThrow();
+                Check.ThatCode(() => transportA.Dispose()).DoesNotThrow();
             }
         }
     }
@@ -242,14 +189,9 @@ public class Test_DefaultSerialTransport
 
             var data = BufferSpan.From(0x12);
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
-                Check.ThatCode(() => transportA.Send(data))
-                   .Throws<InvalidOperationException>();
+                Check.ThatCode(() => transportA.Send(data)).Throws<InvalidOperationException>();
             }
         }
 
@@ -260,16 +202,11 @@ public class Test_DefaultSerialTransport
 
             var data = BufferSpan.From(0x12);
 
-            using (var transportA = new DefaultSerialTransport(
-                    settingsA,
-                    NullLogger.Instance,
-                    null
-                ))
+            using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
                 transportA.Dispose();
 
-                Check.ThatCode(() => transportA.Send(data))
-                   .Throws<ObjectDisposedException>();
+                Check.ThatCode(() => transportA.Send(data)).Throws<ObjectDisposedException>();
             }
         }
 
@@ -302,11 +239,7 @@ public class Test_DefaultSerialTransport
 
                     SpinWait.SpinUntil(() => recorder.Count == 1, 5000);
 
-                    Check.That(
-                            recorder.Events[0]
-                               .ToArray()
-                        )
-                       .ContainsExactly(0x12);
+                    Check.That(recorder.Events[0].ToArray()).ContainsExactly(0x12);
                 }
             }
         }
@@ -340,10 +273,7 @@ public class Test_DefaultSerialTransport
 
                     SpinWait.SpinUntil(() => recorder.Count == 8, 5000);
 
-                    Check.That(
-                            recorder.Events[0]
-                               .ToArray()
-                        )
+                    Check.That(recorder.Events[0].ToArray())
                        .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
                     transportA.Close();
@@ -385,8 +315,7 @@ public class Test_DefaultSerialTransport
 
                     SpinWait.SpinUntil(() => received.Count == buffer.Length, 5000);
 
-                    Check.That(received.ToArray())
-                       .ContainsExactly(buffer);
+                    Check.That(received.ToArray()).ContainsExactly(buffer);
                 }
             }
         }
@@ -424,38 +353,38 @@ public class Test_DefaultSerialTransport
                     SpinWait.SpinUntil(() => received.Count == 3 * 8, 5000);
 
                     Check.That(received.ToArray())
-                       .ContainsExactly(
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88,
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88,
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88
-                        );
+                   .ContainsExactly(
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88,
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88,
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88
+                    );
                 }
             }
         }
 
 
-        private class FakeSendHook : ITransportHooks
+        internal class FakeSendHook : ITransportHooks
         {
             public BufferSpan SentData;
             public BufferSpan DataToSend;
@@ -468,11 +397,11 @@ public class Test_DefaultSerialTransport
             public void BeforeSend(ref BufferSpan data)
             {
                 SentData = data;
-                data     = DataToSend;
+                data = DataToSend;
             }
         }
 
-        private class FakeReceiveHook : ITransportHooks
+        internal class FakeReceiveHook : ITransportHooks
         {
             public BufferSpan DataReceived;
             public BufferSpan DataToReceive;
@@ -480,7 +409,7 @@ public class Test_DefaultSerialTransport
             public void AfterReceived(ref BufferSpan data)
             {
                 DataReceived = data;
-                data         = DataToReceive;
+                data = DataToReceive;
             }
 
             public void BeforeSend(ref BufferSpan data)
@@ -522,14 +451,12 @@ public class Test_DefaultSerialTransport
 
                     SpinWait.SpinUntil(() => received.Count == 8, 5000);
 
-                    Check.That(received.ToArray())
-                       .ContainsExactly(0x55, 0x55, 0x55);
+                    Check.That(received.ToArray()).ContainsExactly(0x55, 0x55, 0x55);
 
                     transportA.Close();
                     transportB.Close();
 
-                    Check.That(hook.SentData.ToArray())
-                       .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                    Check.That(hook.SentData.ToArray()).ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
                 }
             }
         }
@@ -566,8 +493,7 @@ public class Test_DefaultSerialTransport
 
                     SpinWait.SpinUntil(() => received.Count == 8, 5000);
 
-                    Check.That(received.ToArray())
-                       .ContainsExactly(0x55, 0x55, 0x55);
+                    Check.That(received.ToArray()).ContainsExactly(0x55, 0x55, 0x55);
 
                     transportA.Close();
                     transportB.Close();

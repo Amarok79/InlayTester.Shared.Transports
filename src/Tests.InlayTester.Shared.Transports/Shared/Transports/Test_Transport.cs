@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Microsoft.Extensions.Logging;
@@ -20,30 +20,25 @@ public class Test_Transport
         public void Create()
         {
             // act
-            var       settings  = new SerialTransportSettings();
+            var settings = new SerialTransportSettings();
             using var transport = Transport.Create(settings);
 
             // assert
-            Check.That(transport)
-               .IsInstanceOf<DefaultSerialTransport>();
+            Check.That(transport).IsInstanceOf<DefaultSerialTransport>();
 
-            var transportImpl = (DefaultSerialTransport) transport;
+            var transportImpl = (DefaultSerialTransport)transport;
 
-            Check.That(transportImpl.Settings)
-               .Not.IsSameReferenceAs(settings);
+            Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings);
 
-            Check.That(transportImpl.Logger)
-               .IsSameReferenceAs(NullLogger.Instance);
+            Check.That(transportImpl.Logger).IsSameReferenceAs(NullLogger.Instance);
 
-            Check.That(transportImpl.Hooks)
-               .IsNull();
+            Check.That(transportImpl.Hooks).IsNull();
         }
 
         [Test]
         public void Exception_For_NullSettings()
         {
-            Check.ThatCode(() => Transport.Create(null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => Transport.Create(null)).Throws<ArgumentNullException>();
         }
     }
 
@@ -54,24 +49,20 @@ public class Test_Transport
         public void Create()
         {
             // act
-            var       hooks     = new Mock<ITransportHooks>();
-            var       settings  = new SerialTransportSettings();
+            var hooks = new Mock<ITransportHooks>();
+            var settings = new SerialTransportSettings();
             using var transport = Transport.Create(settings, hooks.Object);
 
             // assert
-            Check.That(transport)
-               .IsInstanceOf<DefaultSerialTransport>();
+            Check.That(transport).IsInstanceOf<DefaultSerialTransport>();
 
-            var transportImpl = (DefaultSerialTransport) transport;
+            var transportImpl = (DefaultSerialTransport)transport;
 
-            Check.That(transportImpl.Settings)
-               .Not.IsSameReferenceAs(settings);
+            Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings);
 
-            Check.That(transportImpl.Logger)
-               .IsSameReferenceAs(NullLogger.Instance);
+            Check.That(transportImpl.Logger).IsSameReferenceAs(NullLogger.Instance);
 
-            Check.That(transportImpl.Hooks)
-               .IsSameReferenceAs(hooks.Object);
+            Check.That(transportImpl.Hooks).IsSameReferenceAs(hooks.Object);
         }
 
         [Test]
@@ -79,8 +70,7 @@ public class Test_Transport
         {
             var hooks = new Mock<ITransportHooks>().Object;
 
-            Check.ThatCode(() => Transport.Create(null, hooks))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => Transport.Create(null, hooks)).Throws<ArgumentNullException>();
         }
 
         [Test]
@@ -88,8 +78,7 @@ public class Test_Transport
         {
             var settings = new SerialTransportSettings();
 
-            Check.ThatCode(() => Transport.Create(settings, (ITransportHooks) null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => Transport.Create(settings, (ITransportHooks)null)).Throws<ArgumentNullException>();
         }
     }
 
@@ -102,32 +91,26 @@ public class Test_Transport
             // act
             var settings = new SerialTransportSettings();
 
-            var logger = LoggerFactory.Create(builder => builder.AddSimpleConsole())
-               .CreateLogger("Test");
+            var logger = LoggerFactory.Create(builder => builder.AddSimpleConsole()).CreateLogger("Test");
 
             using var transport = Transport.Create(settings, logger);
 
             // assert
-            Check.That(transport)
-               .IsInstanceOf<DefaultSerialTransport>();
+            Check.That(transport).IsInstanceOf<DefaultSerialTransport>();
 
-            var transportImpl = (DefaultSerialTransport) transport;
+            var transportImpl = (DefaultSerialTransport)transport;
 
-            Check.That(transportImpl.Settings)
-               .Not.IsSameReferenceAs(settings);
+            Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings);
 
-            Check.That(transportImpl.Logger)
-               .IsSameReferenceAs(logger);
+            Check.That(transportImpl.Logger).IsSameReferenceAs(logger);
 
-            Check.That(transportImpl.Hooks)
-               .IsNull();
+            Check.That(transportImpl.Hooks).IsNull();
         }
 
         [Test]
         public void Exception_For_NullSettings()
         {
-            Check.ThatCode(() => Transport.Create(null, NullLogger.Instance))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => Transport.Create(null, NullLogger.Instance)).Throws<ArgumentNullException>();
         }
 
         [Test]
@@ -135,8 +118,7 @@ public class Test_Transport
         {
             var settings = new SerialTransportSettings();
 
-            Check.ThatCode(() => Transport.Create(settings, (ILogger) null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => Transport.Create(settings, (ILogger)null)).Throws<ArgumentNullException>();
         }
     }
 
@@ -147,28 +129,23 @@ public class Test_Transport
         public void Create_With_Logger()
         {
             // act
-            var hooks    = new Mock<ITransportHooks>();
+            var hooks = new Mock<ITransportHooks>();
             var settings = new SerialTransportSettings();
 
-            var logger = LoggerFactory.Create(builder => builder.AddSimpleConsole())
-               .CreateLogger("Test");
+            var logger = LoggerFactory.Create(builder => builder.AddSimpleConsole()).CreateLogger("Test");
 
             using var transport = Transport.Create(settings, logger, hooks.Object);
 
             // assert
-            Check.That(transport)
-               .IsInstanceOf<DefaultSerialTransport>();
+            Check.That(transport).IsInstanceOf<DefaultSerialTransport>();
 
-            var transportImpl = (DefaultSerialTransport) transport;
+            var transportImpl = (DefaultSerialTransport)transport;
 
-            Check.That(transportImpl.Settings)
-               .Not.IsSameReferenceAs(settings);
+            Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings);
 
-            Check.That(transportImpl.Logger)
-               .IsSameReferenceAs(logger);
+            Check.That(transportImpl.Logger).IsSameReferenceAs(logger);
 
-            Check.That(transportImpl.Hooks)
-               .IsSameReferenceAs(hooks.Object);
+            Check.That(transportImpl.Hooks).IsSameReferenceAs(hooks.Object);
         }
 
         [Test]
@@ -184,10 +161,9 @@ public class Test_Transport
         public void Exception_For_NullLogger()
         {
             var settings = new SerialTransportSettings();
-            var hooks    = new Mock<ITransportHooks>();
+            var hooks = new Mock<ITransportHooks>();
 
-            Check.ThatCode(() => Transport.Create(settings, null, hooks.Object))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => Transport.Create(settings, null, hooks.Object)).Throws<ArgumentNullException>();
         }
 
         [Test]
@@ -195,8 +171,7 @@ public class Test_Transport
         {
             var settings = new SerialTransportSettings();
 
-            Check.ThatCode(() => Transport.Create(settings, NullLogger.Instance, null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => Transport.Create(settings, NullLogger.Instance, null)).Throws<ArgumentNullException>();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Contracts;
@@ -99,11 +99,7 @@ public static class Transport
     /// <exception cref="ArgumentNullException">
     ///     A null reference was passed to a method that did not accept it as a valid argument.
     /// </exception>
-    public static ITransport Create(
-        SerialTransportSettings settings,
-        ILogger logger,
-        ITransportHooks hooks
-    )
+    public static ITransport Create(SerialTransportSettings settings, ILogger logger, ITransportHooks hooks)
     {
         Verify.NotNull(settings, nameof(settings));
         Verify.NotNull(logger, nameof(logger));
