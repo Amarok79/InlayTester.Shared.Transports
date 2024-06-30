@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 namespace InlayTester.Shared.Transports;
 
@@ -14,9 +14,9 @@ public enum Handshake
     None,
 
     /// <summary>
-    ///     Request-to-Send (RTS) hardware flow control is used. RTS signals that data is available for
-    ///     transmission. If the input buffer becomes full, the RTS line will be set to false. The RTS line
-    ///     will be set to true when more room becomes available in the input buffer.
+    ///     Request-to-Send (RTS) hardware flow control is used. RTS signals that data is available for transmission. If the
+    ///     input buffer becomes full, the RTS line will be set to false. The RTS line will be set to true when more room
+    ///     becomes available in the input buffer.
     /// </summary>
     RequestToSend,
 
@@ -26,9 +26,9 @@ public enum Handshake
     RequestToSendXOnXOff,
 
     /// <summary>
-    ///     The XON/XOFF software control protocol is used. The XOFF control is sent to stop the
-    ///     transmission of data. The XON control is sent to resume the transmission. These software
-    ///     controls are used instead of Request to Send (RTS) and Clear to Send (CTS) hardware controls.
+    ///     The XON/XOFF software control protocol is used. The XOFF control is sent to stop the transmission of data. The XON
+    ///     control is sent to resume the transmission. These software controls are used instead of Request to Send (RTS) and
+    ///     Clear to Send (CTS) hardware controls.
     /// </summary>
     XOnXOff,
 }

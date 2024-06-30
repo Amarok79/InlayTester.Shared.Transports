@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using Amarok.Shared;
 
@@ -12,8 +12,8 @@ namespace InlayTester.Shared.Transports;
 public interface ITransportHooks
 {
     /// <summary>
-    ///     This hook method is invoked before the data is sent. The implementer is able to monitor or even
-    ///     manipulate the data.
+    ///     This hook method is invoked before the data is sent. The implementer is able to monitor or even manipulate the
+    ///     data.
     /// </summary>
     /// 
     /// <param name="data">
@@ -22,8 +22,8 @@ public interface ITransportHooks
     void BeforeSend(ref BufferSpan data);
 
     /// <summary>
-    ///     This hook method is invoked after data has been received. The implementer is able to monitor or
-    ///     even manipulate the data.
+    ///     This hook method is invoked after data has been received. The implementer is able to monitor or even manipulate the
+    ///     data.
     /// </summary>
     /// 
     /// <param name="data">

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Microsoft.Extensions.Logging;
@@ -20,7 +20,7 @@ public class Test_Transport
         public void Create()
         {
             // act
-            var settings = new SerialTransportSettings();
+            var       settings  = new SerialTransportSettings();
             using var transport = Transport.Create(settings);
 
             // assert
@@ -49,8 +49,8 @@ public class Test_Transport
         public void Create()
         {
             // act
-            var hooks = new Mock<ITransportHooks>();
-            var settings = new SerialTransportSettings();
+            var       hooks     = new Mock<ITransportHooks>();
+            var       settings  = new SerialTransportSettings();
             using var transport = Transport.Create(settings, hooks.Object);
 
             // assert
@@ -129,7 +129,7 @@ public class Test_Transport
         public void Create_With_Logger()
         {
             // act
-            var hooks = new Mock<ITransportHooks>();
+            var hooks    = new Mock<ITransportHooks>();
             var settings = new SerialTransportSettings();
 
             var logger = LoggerFactory.Create(builder => builder.AddSimpleConsole()).CreateLogger("Test");
@@ -154,14 +154,14 @@ public class Test_Transport
             var hooks = new Mock<ITransportHooks>();
 
             Check.ThatCode(() => Transport.Create(null, NullLogger.Instance, hooks.Object))
-               .Throws<ArgumentNullException>();
+                .Throws<ArgumentNullException>();
         }
 
         [Test]
         public void Exception_For_NullLogger()
         {
             var settings = new SerialTransportSettings();
-            var hooks = new Mock<ITransportHooks>();
+            var hooks    = new Mock<ITransportHooks>();
 
             Check.ThatCode(() => Transport.Create(settings, null, hooks.Object)).Throws<ArgumentNullException>();
         }

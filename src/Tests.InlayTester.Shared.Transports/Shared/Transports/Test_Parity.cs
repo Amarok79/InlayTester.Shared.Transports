@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -15,6 +15,6 @@ public class Test_Parity
     public void TestValues()
     {
         Check.That(Enum.GetValues(typeof(Parity)))
-           .IsOnlyMadeOf(Parity.None, Parity.Even, Parity.Odd, Parity.Mark, Parity.Space);
+            .IsOnlyMadeOf(Parity.None, Parity.Even, Parity.Odd, Parity.Mark, Parity.Space);
     }
 }

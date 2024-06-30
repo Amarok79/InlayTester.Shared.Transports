@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using NFluent;
 using NUnit.Framework;
@@ -37,11 +37,11 @@ public class Test_SerialTransportSettings
     {
         // act
         var settings = new SerialTransportSettings {
-            PortName = "COM12",
-            Baud = 38400,
-            DataBits = 7,
-            Parity = Parity.Even,
-            StopBits = StopBits.Two,
+            PortName  = "COM12",
+            Baud      = 38400,
+            DataBits  = 7,
+            Parity    = Parity.Even,
+            StopBits  = StopBits.Two,
             Handshake = Handshake.XOnXOff,
         };
 
@@ -66,11 +66,11 @@ public class Test_SerialTransportSettings
     {
         // act
         var org = new SerialTransportSettings {
-            PortName = "COM12",
-            Baud = 38400,
-            DataBits = 7,
-            Parity = Parity.Even,
-            StopBits = StopBits.Two,
+            PortName  = "COM12",
+            Baud      = 38400,
+            DataBits  = 7,
+            Parity    = Parity.Even,
+            StopBits  = StopBits.Two,
             Handshake = Handshake.XOnXOff,
         };
 

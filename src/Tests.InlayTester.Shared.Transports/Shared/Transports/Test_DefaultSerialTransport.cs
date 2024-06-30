@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.IO;
@@ -224,7 +224,7 @@ public class Test_DefaultSerialTransport
                         builder.AddSimpleConsole();
                     }
                 )
-               .CreateLogger("Test");
+                .CreateLogger("Test");
 
             using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
             {
@@ -258,7 +258,7 @@ public class Test_DefaultSerialTransport
                         builder.AddSimpleConsole();
                     }
                 )
-               .CreateLogger("Test");
+                .CreateLogger("Test");
 
             using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
             {
@@ -274,7 +274,7 @@ public class Test_DefaultSerialTransport
                     SpinWait.SpinUntil(() => recorder.Count == 8, 5000);
 
                     Check.That(recorder.Events[0].ToArray())
-                       .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                        .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
                     transportA.Close();
                     transportB.Close();
@@ -299,7 +299,7 @@ public class Test_DefaultSerialTransport
                         builder.AddSimpleConsole();
                     }
                 )
-               .CreateLogger("Test");
+                .CreateLogger("Test");
 
             using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
             {
@@ -334,7 +334,7 @@ public class Test_DefaultSerialTransport
                         builder.AddSimpleConsole();
                     }
                 )
-               .CreateLogger("Test");
+                .CreateLogger("Test");
 
             using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
             {
@@ -353,32 +353,32 @@ public class Test_DefaultSerialTransport
                     SpinWait.SpinUntil(() => received.Count == 3 * 8, 5000);
 
                     Check.That(received.ToArray())
-                   .ContainsExactly(
-                        0x11,
-                        0x22,
-                        0x33,
-                        0x44,
-                        0x55,
-                        0x66,
-                        0x77,
-                        0x88,
-                        0x11,
-                        0x22,
-                        0x33,
-                        0x44,
-                        0x55,
-                        0x66,
-                        0x77,
-                        0x88,
-                        0x11,
-                        0x22,
-                        0x33,
-                        0x44,
-                        0x55,
-                        0x66,
-                        0x77,
-                        0x88
-                    );
+                        .ContainsExactly(
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88,
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88,
+                            0x11,
+                            0x22,
+                            0x33,
+                            0x44,
+                            0x55,
+                            0x66,
+                            0x77,
+                            0x88
+                        );
                 }
             }
         }
@@ -397,7 +397,7 @@ public class Test_DefaultSerialTransport
             public void BeforeSend(ref BufferSpan data)
             {
                 SentData = data;
-                data = DataToSend;
+                data     = DataToSend;
             }
         }
 
@@ -409,7 +409,7 @@ public class Test_DefaultSerialTransport
             public void AfterReceived(ref BufferSpan data)
             {
                 DataReceived = data;
-                data = DataToReceive;
+                data         = DataToReceive;
             }
 
             public void BeforeSend(ref BufferSpan data)
@@ -435,7 +435,7 @@ public class Test_DefaultSerialTransport
                         builder.AddSimpleConsole();
                     }
                 )
-               .CreateLogger("Test");
+                .CreateLogger("Test");
 
             using (var transportA = new DefaultSerialTransport(settingsA, logger, hook))
             {
@@ -477,7 +477,7 @@ public class Test_DefaultSerialTransport
                         builder.AddSimpleConsole();
                     }
                 )
-               .CreateLogger("Test");
+                .CreateLogger("Test");
 
             using (var transportA = new DefaultSerialTransport(settingsA, logger, null))
             {
@@ -499,7 +499,7 @@ public class Test_DefaultSerialTransport
                     transportB.Close();
 
                     Check.That(hook.DataReceived.ToArray())
-                       .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                        .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.IO;
@@ -31,10 +31,10 @@ internal sealed class DefaultSerialTransport : ITransport
     public DefaultSerialTransport(SerialTransportSettings settings, ILogger logger, ITransportHooks? hooks)
     {
         mSettings = settings;
-        mLogger = logger;
-        mHooks = hooks;
+        mLogger   = logger;
+        mHooks    = hooks;
 
-        mStream.DataReceived += _HandleDataReceived;
+        mStream.DataReceived  += _HandleDataReceived;
         mStream.ErrorReceived += _HandleErrorReceived;
     }
 
@@ -65,14 +65,14 @@ internal sealed class DefaultSerialTransport : ITransport
 
         try
         {
-            mStream.PortName = mSettings.PortName;
-            mStream.BaudRate = mSettings.Baud;
-            mStream.DataBits = mSettings.DataBits;
-            mStream.Parity = Convert(mSettings.Parity);
-            mStream.StopBits = Convert(mSettings.StopBits);
+            mStream.PortName  = mSettings.PortName;
+            mStream.BaudRate  = mSettings.Baud;
+            mStream.DataBits  = mSettings.DataBits;
+            mStream.Parity    = Convert(mSettings.Parity);
+            mStream.StopBits  = Convert(mSettings.StopBits);
             mStream.Handshake = Convert(mSettings.Handshake);
 
-            mStream.DiscardNull = false;
+            mStream.DiscardNull   = false;
             mStream.ParityReplace = 0xff;
 
             mStream.Open();
@@ -147,8 +147,7 @@ internal sealed class DefaultSerialTransport : ITransport
     }
 
     /// <summary>
-    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
-    ///     resources.
+    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
     public void Dispose()
     {
@@ -221,9 +220,9 @@ internal sealed class DefaultSerialTransport : ITransport
         {
             // receive data
             var bytesToRead = mStream.BytesToRead;
-            var buffer = new Byte[bytesToRead];
-            var bytesRead = mStream.Read(buffer, 0, bytesToRead);
-            var data = BufferSpan.From(buffer, bytesRead);
+            var buffer      = new Byte[bytesToRead];
+            var bytesRead   = mStream.Read(buffer, 0, bytesToRead);
+            var data        = BufferSpan.From(buffer, bytesRead);
 
             // invoke hook
             mHooks?.AfterReceived(ref data);
