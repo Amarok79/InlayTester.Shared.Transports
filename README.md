@@ -50,8 +50,7 @@ abstraction is mainly there to make writing tests easier by enabling one to mock
 Internally, transports use the excellent [SerialPortStream](https://github.com/jcurl/SerialPortStream) library for
 serial communication.
 
-If you want to get logging information for transport operations, you can specify an **ILogger** on **Transport.Create()
-**.
+If you want to get logging information for transport operations, you can specify an **ILogger** on **Transport.Create()**.
 
 ````cs
     var logger = // obtain from Microsoft.Extensions.Logging.Abstractions
