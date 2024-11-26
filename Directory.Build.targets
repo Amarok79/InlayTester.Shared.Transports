@@ -1,7 +1,7 @@
 ﻿<Project>
 
     <Target Name="ReportVersionToTeamCity" BeforeTargets="Build">
-        <Message Importance="High" Text="##teamcity[buildNumber '$(InformationalVersion)']" />
+        <Message Importance="High" Text="##teamcity[buildNumber '$(Version)']" />
     </Target>
 
 </Project>
