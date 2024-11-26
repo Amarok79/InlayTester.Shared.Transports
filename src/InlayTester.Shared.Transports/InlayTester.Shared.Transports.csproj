@@ -5,15 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <PackageIcon>inlaytester.png</PackageIcon>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</RepositoryUrl>
-        <PackageIcon>inlaytester.png</PackageIcon>
-        <PublishRepositoryUrl>True</PublishRepositoryUrl>
-        <EmbedUntrackedSources>True</EmbedUntrackedSources>
-        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-        <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
 
     <ItemGroup>

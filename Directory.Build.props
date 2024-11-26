@@ -22,14 +22,18 @@
 
     <PropertyGroup>
         <OutputPath>$(RootDir)bin\lib</OutputPath>
+        <PackageOutputPath>$(RootDir)out</PackageOutputPath>
         <Nullable>Enable</Nullable>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <IsPackable>True</IsPackable>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
         <SignAssembly>True</SignAssembly>
         <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)src\amarok.snk</AssemblyOriginatorKeyFile>
-        <Deterministic>True</Deterministic>
-        <PackageOutputPath>$(RootDir)out</PackageOutputPath>
+        <PublishRepositoryUrl>True</PublishRepositoryUrl>
+        <EmbedUntrackedSources>True</EmbedUntrackedSources>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
 
     <PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Tests.'))">
