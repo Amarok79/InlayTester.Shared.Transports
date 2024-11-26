@@ -30,7 +30,7 @@ jobs:
       - name: Build Debug
         run: dotnet build -c Debug
 
-      - name: Run tests
+      - name: Run Tests
         run: dotnet test --no-build --filter TestCategory!=com0com
 
   buildrelease:
