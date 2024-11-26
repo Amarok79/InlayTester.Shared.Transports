@@ -78,7 +78,9 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void Open_Close_Dispose()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
@@ -92,7 +94,9 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void Open_Close_Open_Dispose()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
@@ -107,7 +111,9 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void OpenThrowsException_When_AlreadyOpen()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
@@ -120,7 +126,9 @@ public class Test_DefaultSerialTransport
         [Test]
         public void OpenThrowsException_When_AlreadyDisposed()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
@@ -133,7 +141,9 @@ public class Test_DefaultSerialTransport
         [Test]
         public void OpenThrowsException_When_SettingsAreInvalid()
         {
-            var settingsA = new SerialTransportSettings { PortName = "ABC" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "ABC",
+            };
 
             using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
@@ -144,7 +154,9 @@ public class Test_DefaultSerialTransport
         [Test]
         public void CloseThrowsException_When_AlreadyDisposed()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
@@ -157,7 +169,9 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void Close_When_NotOpened()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
@@ -170,7 +184,9 @@ public class Test_DefaultSerialTransport
         [Test]
         public void Dispose_When_NotOpened()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             using (var transportA = new DefaultSerialTransport(settingsA, NullLogger.Instance, null))
             {
@@ -185,7 +201,9 @@ public class Test_DefaultSerialTransport
         [Test]
         public void SendThrowsException_When_NotOpened()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             var data = BufferSpan.From(0x12);
 
@@ -198,7 +216,9 @@ public class Test_DefaultSerialTransport
         [Test]
         public void SendThrowsException_When_AlreadyDisposed()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
 
             var data = BufferSpan.From(0x12);
 
@@ -213,8 +233,12 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void SendReceive_SingleByte()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
-            var settingsB = new SerialTransportSettings { PortName = "COMB" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
+            var settingsB = new SerialTransportSettings {
+                PortName = "COMB",
+            };
 
             var data = BufferSpan.From(0x12);
 
@@ -247,8 +271,12 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void SendReceive_MultipleBytes()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
-            var settingsB = new SerialTransportSettings { PortName = "COMB" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
+            var settingsB = new SerialTransportSettings {
+                PortName = "COMB",
+            };
 
             var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
@@ -285,8 +313,12 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void SendReceive_ManyBytes()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
-            var settingsB = new SerialTransportSettings { PortName = "COMB" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
+            var settingsB = new SerialTransportSettings {
+                PortName = "COMB",
+            };
 
             var random = new Random();
             var buffer = new Byte[1024];
@@ -323,8 +355,12 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void SendReceive_MultipleTransfers()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
-            var settingsB = new SerialTransportSettings { PortName = "COMB" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
+            var settingsB = new SerialTransportSettings {
+                PortName = "COMB",
+            };
 
             var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
@@ -353,32 +389,32 @@ public class Test_DefaultSerialTransport
                     SpinWait.SpinUntil(() => received.Count == 3 * 8, 5000);
 
                     Check.That(received.ToArray())
-                        .ContainsExactly(
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88,
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88,
-                            0x11,
-                            0x22,
-                            0x33,
-                            0x44,
-                            0x55,
-                            0x66,
-                            0x77,
-                            0x88
-                        );
+                    .ContainsExactly(
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88,
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88,
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88
+                    );
                 }
             }
         }
@@ -422,10 +458,16 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void SendReceive_BeforeSendHook()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
-            var settingsB = new SerialTransportSettings { PortName = "COMB" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
+            var settingsB = new SerialTransportSettings {
+                PortName = "COMB",
+            };
 
-            var hook = new FakeSendHook { DataToSend = BufferSpan.From(0x55, 0x55, 0x55) };
+            var hook = new FakeSendHook {
+                DataToSend = BufferSpan.From(0x55, 0x55, 0x55),
+            };
 
             var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
@@ -464,10 +506,16 @@ public class Test_DefaultSerialTransport
         [Test, NUnit.Framework.Category("com0com"), Serial]
         public void SendReceive_AfterReceivedHook()
         {
-            var settingsA = new SerialTransportSettings { PortName = "COMA" };
-            var settingsB = new SerialTransportSettings { PortName = "COMB" };
+            var settingsA = new SerialTransportSettings {
+                PortName = "COMA",
+            };
+            var settingsB = new SerialTransportSettings {
+                PortName = "COMB",
+            };
 
-            var hook = new FakeReceiveHook { DataToReceive = BufferSpan.From(0x55, 0x55, 0x55) };
+            var hook = new FakeReceiveHook {
+                DataToReceive = BufferSpan.From(0x55, 0x55, 0x55),
+            };
 
             var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
