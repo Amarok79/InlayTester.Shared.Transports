@@ -1,6 +1,8 @@
 ﻿<Project>
 
-    <Target Name="ReportVersionToTeamCity" BeforeTargets="Build">
+    <Target Name="ReportVersionToTeamCity"
+            BeforeTargets="Build"
+            Condition="'$(TEAMCITY_VERSION)' != ''">
         <Message Importance="High" Text="##teamcity[buildNumber '$(Version)']" />
     </Target>
 
