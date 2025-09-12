@@ -22,8 +22,8 @@ public interface ITransportHooks
     void BeforeSend(ref BufferSpan data);
 
     /// <summary>
-    ///     This hook method is invoked after data has been received. The implementer is able to monitor or even
-    ///     manipulate the data.
+    ///     This hook method is invoked after data has been received. The implementer is able to monitor or
+    ///     even manipulate the data.
     /// </summary>
     /// 
     /// <param name="data">

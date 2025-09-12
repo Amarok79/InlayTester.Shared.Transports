@@ -53,8 +53,11 @@ internal static class LoggerExtensions
         "[{PortName}]  CLOSED"
     );
 
-    private static readonly Action<ILogger, String, Exception?> sFailedToClose =
-        LoggerMessage.Define<String>(LogLevel.Error, 1002, "[{PortName}]  FAILED to close.");
+    private static readonly Action<ILogger, String, Exception?> sFailedToClose = LoggerMessage.Define<String>(
+        LogLevel.Error,
+        1002,
+        "[{PortName}]  FAILED to close."
+    );
 
 
     public static void LogClose(this ILogger logger, String portName)
@@ -110,8 +113,11 @@ internal static class LoggerExtensions
     private static readonly Action<ILogger, String, BufferSpan, Exception?> sReceive =
         LoggerMessage.Define<String, BufferSpan>(LogLevel.Trace, 5, "[{PortName}]  RECEIVED  {Data}");
 
-    private static readonly Action<ILogger, String, Exception?> sFailedToReceive =
-        LoggerMessage.Define<String>(LogLevel.Error, 1005, "[{PortName}]  FAILED to receive.");
+    private static readonly Action<ILogger, String, Exception?> sFailedToReceive = LoggerMessage.Define<String>(
+        LogLevel.Error,
+        1005,
+        "[{PortName}]  FAILED to receive."
+    );
 
 
     public static void LogReceive(this ILogger logger, String portName, BufferSpan data)

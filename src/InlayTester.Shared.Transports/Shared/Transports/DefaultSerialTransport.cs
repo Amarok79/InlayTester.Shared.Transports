@@ -147,7 +147,8 @@ internal sealed class DefaultSerialTransport : ITransport
     }
 
     /// <summary>
-    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+    ///     resources.
     /// </summary>
     public void Dispose()
     {
@@ -201,7 +202,9 @@ internal sealed class DefaultSerialTransport : ITransport
         try
         {
             if (e.EventType == Lib.SerialData.NoData)
+            {
                 return;
+            }
 
             var data = _ReadDataReceived();
             mReceivedEvent.Invoke(data);
@@ -241,7 +244,9 @@ internal sealed class DefaultSerialTransport : ITransport
     private void _HandleErrorReceived(Object? sender, Lib.SerialErrorReceivedEventArgs e)
     {
         if (e.EventType == Lib.SerialError.NoError)
+        {
             return;
+        }
 
         mLogger.LogSerialError(mSettings.PortName, e.EventType);
     }
@@ -250,18 +255,24 @@ internal sealed class DefaultSerialTransport : ITransport
     private void _ThrowIfDisposed()
     {
         if (mStream.IsDisposed)
+        {
             throw new ObjectDisposedException(nameof(DefaultSerialTransport));
+        }
     }
 
     private void _ThrowIfAlreadyOpen()
     {
         if (mStream.IsOpen)
+        {
             throw new InvalidOperationException("The transport has already been opened before.");
+        }
     }
 
     private void _ThrowIfNotOpen()
     {
         if (!mStream.IsOpen)
+        {
             throw new InvalidOperationException("The transport has not been opened yet.");
+        }
     }
 }

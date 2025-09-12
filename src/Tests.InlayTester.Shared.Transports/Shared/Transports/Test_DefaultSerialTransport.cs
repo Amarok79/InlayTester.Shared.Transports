@@ -278,7 +278,16 @@ public class Test_DefaultSerialTransport
                 PortName = "COMB",
             };
 
-            var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+            var data = BufferSpan.From(
+                0x11,
+                0x22,
+                0x33,
+                0x44,
+                0x55,
+                0x66,
+                0x77,
+                0x88
+            );
 
             var logger = LoggerFactory.Create(
                     builder => {
@@ -302,7 +311,16 @@ public class Test_DefaultSerialTransport
                     SpinWait.SpinUntil(() => recorder.Count == 8, 5000);
 
                     Check.That(recorder.Events[0].ToArray())
-                        .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                    .ContainsExactly(
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88
+                    );
 
                     transportA.Close();
                     transportB.Close();
@@ -362,7 +380,16 @@ public class Test_DefaultSerialTransport
                 PortName = "COMB",
             };
 
-            var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+            var data = BufferSpan.From(
+                0x11,
+                0x22,
+                0x33,
+                0x44,
+                0x55,
+                0x66,
+                0x77,
+                0x88
+            );
 
             var logger = LoggerFactory.Create(
                     builder => {
@@ -469,7 +496,16 @@ public class Test_DefaultSerialTransport
                 DataToSend = BufferSpan.From(0x55, 0x55, 0x55),
             };
 
-            var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+            var data = BufferSpan.From(
+                0x11,
+                0x22,
+                0x33,
+                0x44,
+                0x55,
+                0x66,
+                0x77,
+                0x88
+            );
 
             var logger = LoggerFactory.Create(
                     builder => {
@@ -498,7 +534,17 @@ public class Test_DefaultSerialTransport
                     transportA.Close();
                     transportB.Close();
 
-                    Check.That(hook.SentData.ToArray()).ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                    Check.That(hook.SentData.ToArray())
+                    .ContainsExactly(
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88
+                    );
                 }
             }
         }
@@ -517,7 +563,16 @@ public class Test_DefaultSerialTransport
                 DataToReceive = BufferSpan.From(0x55, 0x55, 0x55),
             };
 
-            var data = BufferSpan.From(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+            var data = BufferSpan.From(
+                0x11,
+                0x22,
+                0x33,
+                0x44,
+                0x55,
+                0x66,
+                0x77,
+                0x88
+            );
 
             var logger = LoggerFactory.Create(
                     builder => {
@@ -547,7 +602,16 @@ public class Test_DefaultSerialTransport
                     transportB.Close();
 
                     Check.That(hook.DataReceived.ToArray())
-                        .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
+                    .ContainsExactly(
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88
+                    );
                 }
             }
         }
